@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>About - Tushar Singh</title>
+    <link rel="icon" type="image/x-icon" href="profile.jpg" />
+    <link rel="stylesheet" href="style.css" />
+  </head>
+
+  <body>
+    <header>
+      <nav class="navbar">
+        <div class="logo"><a href="index.html">Tushar Singh</a></div>
+        <ul class="nav-links">
+          <li><a href="index.html">Home</a></li>
+          <li><a href="services.html">Services</a></li>
+          <li><a href="projects.html">Projects</a></li>
+          <li><a href="about.html" class="active">About</a></li>
+          <li><a href="contact.html">Contact Us</a></li>
+        </ul>
+
+        <button id="theme-toggle" aria-label="Toggle Theme" class="theme-btn">
+          🌙
+        </button>
+
+        <div class="menu-toggle">&#9776;</div>
+      </nav>
+    </header>
+
+    <!-- <main>
+  <section class="hero">
+    <h1>About <span class="highlight">Me</span></h1>
+    <p>
+      I'm a passionate tech explorer building AI tools, games, and full-stack apps with curiosity and purpose. 💡
+    </p>
+  </section>
+
+  <section class="about-section">
+    <article data-aos="fade-up" data-aos-delay="100">
+      <h2>🎯 Mission</h2>
+      <p>
+        My mission is to simplify lives through intelligent, user-centric digital solutions powered by AI and code.
+      </p>
+      <a href="mission.html" class="btn-read" target="_blank">Read More</a>
+    </article>
+
+    <article data-aos="fade-up" data-aos-delay="200">
+      <h2>💼 Experience</h2>
+      <p>
+        I bring hands-on experience in Java, Python, Web Development, AI Chatbots, and Android Game development.
+      </p>
+      <a href="experience.html" class="btn-read" target="_blank">Read More</a>
+      <a href="resume.pdf" class="btn-download" download>Download Resume</a>
+    </article>
+
+    <article data-aos="fade-up" data-aos-delay="300">
+      <h2>👨‍💻 Learning</h2>
+      <p>
+        I'm constantly upskilling — currently diving deep into LLMs, TensorFlow, Gemini API, and real-time AI applications.
+      </p>
+      <a href="learning.html" class="btn-read" target="_blank">Read More</a>
+    </article>
+  </section>
+</main> -->
+
+    <main>
+      <section class="about-hero">
+        <div class="about-container">
+          <div class="about-image">
+            <img src="profile.jpg" alt="Tushar Singh" />
+          </div>
+
+          <div class="about-content">
+            <h1>About Me</h1>
+            <!-- <h3>A Bit About Me</h3> -->
+            <p>
+              Hi, I'm <b>Tushar Singh</b>, a passionate developer with over <b>2 Years (6 Months) </b> of
+              hands-on experience in  <b> Python, Data Science, Data Analysis, and
+              building intelligent AI Agents</b>. I specialize in turning complex
+              data into actionable insights and crafting smart systems that
+              adapt, learn, and solve real-world challenges.
+              <br /><br />
+              My journey began with Python scripting and quickly evolved into a
+              deep dive into machine learning, data visualization, and AI
+              automation. I've worked on various projects, including:
+              <br /><br />
+              • A Data Science project that analyzes and visualizes complex
+              datasets to extract meaningful insights.
+              <br /><br />
+              • An <b>AI Study Assistant</b> that generates notes, quizzes, and
+              explanations from any topic. <br /><br />
+              • A <b>Chatbot with voice interaction and animations</b>.
+              <br /><br />
+              • Intelligent <b>AI Agents</b> that automate repetitive tasks and
+              decision-making processes. <br /><br />
+              I believe in writing clean, scalable code and using technology to
+              create practical, user-centric solutions. I’m always exploring new
+              ideas and pushing boundaries in the world of AI and data.
+            </p>
+
+            <div class="about-buttons">
+              <a
+                href="File\Tushar singh cv data Science.pdf"
+                class="circle-btn green"
+                download
+                >Resume</a
+              >
+              <a
+                href="https://www.linkedin.com/in/tusharsingh2011/"
+                class="circle-btn orange"
+                >LinkedIn</a
+              >
+              <a
+                href="https://github.com/Tusharsinghoffical"
+                class="circle-btn blue"
+                >Github</a
+              >
+              <a href="contact.html" class="circle-btn gray">Contact</a>
+            </div>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <footer>
+      <p>© 2025 Portfolio - Tushar Singh. All rights reserved.</p>
+    </footer>
+
+    <!-- AOS JS -->
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+
+    <script>
+      // Initialize AOS animations
+      AOS.init({
+        duration: 1000,
+        once: true,
+      });
+
+      // Navbar menu toggle for mobile
+      const menuToggle = document.querySelector(".menu-toggle");
+      const navLinks = document.querySelector(".nav-links");
+      menuToggle.addEventListener("click", () => {
+        navLinks.classList.toggle("active");
+      });
+
+      // Theme toggle
+      const themeBtn = document.getElementById("theme-toggle");
+      const html = document.documentElement;
+
+      // Load saved theme
+      const savedTheme = localStorage.getItem("theme");
+      if (savedTheme) {
+        html.setAttribute("data-theme", savedTheme);
+        themeBtn.textContent = savedTheme === "dark" ? "☀️" : "🌙";
+      } else {
+        html.setAttribute("data-theme", "light");
+      }
+
+      themeBtn.addEventListener("click", () => {
+        const currentTheme = html.getAttribute("data-theme");
+        const newTheme = currentTheme === "light" ? "dark" : "light";
+        html.setAttribute("data-theme", newTheme);
+        localStorage.setItem("theme", newTheme);
+        themeBtn.textContent = newTheme === "dark" ? "☀️" : "🌙";
+      });
+    </script>
+  </body>
+</html>
