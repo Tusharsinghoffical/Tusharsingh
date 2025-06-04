@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Tushar Singh</title>
+  <link rel="icon" type="image/x-icon" href="profile.jpg">
+
+  <!-- AOS CSS -->
+  <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet" />
+
+  <link rel="stylesheet" href="style.css" />
+</head>
+
+<body>
+  <header>
+    <nav class="navbar">
+      <div class="logo"><a href="index.html">Tushar Singh</a></div>
+
+      <ul class="nav-links">
+        <li><a href="index.html" class="active">Home</a></li>
+        <li><a href="services.html">Services</a></li>
+        <li><a href="projects.html">Projects</a></li>
+        <li><a href="about.html">About</a></li>
+        <li><a href="contact.html">Contact Us</a></li>
+      </ul>
+
+      <button id="theme-toggle" aria-label="Toggle Theme" class="theme-btn">
+        🌙
+      </button>
+
+      <div class="menu-toggle">&#9776;</div>
+    </nav>
+  </header>
+
+  <main>
+    <section class="hero" data-aos="fade-down">
+      <h1>🤝𝐖𝐄𝐋𝐂𝐎𝐌𝐄 𝐓𝐎 <span class="highlight">MY PORTFOLIO</span></h1>
+      <p>
+        I'm a Python developer passionate about Data Science, Data Analysis,
+        and building intelligent AI Agents. <br />
+        I turn data into insights and ideas into smart solutions.
+      </p>
+    </section>
+
+    <section class="tech-blocks">
+      <a href="services.html" class="tech-card" data-aos="fade-up" data-aos-delay="100">
+        <h3>Services</h3>
+        <p>
+          Transforming ideas into real products using the latest tech stack,
+          including Python, AI, and Data Science.
+        </p>
+      </a>
+
+      <a href="projects.html" class="tech-card" data-aos="fade-up" data-aos-delay="200">
+        <h3>Projects</h3>
+        <p>
+          Explore my projects showcasing AI, Data Science, and Web Development
+          skills. From chatbots to data analysis tools, see what I've built!
+        </p>
+      </a>
+
+      <a href="about.html" class="tech-card" data-aos="fade-up" data-aos-delay="300">
+        <h3>About</h3>
+        <p>
+          Learn more about my journey, mission, and the technologies I work
+          with. I'm passionate about using AI to solve real-world problems.
+        </p>
+      </a>
+
+      <a href="#" class="tech-card" data-aos="fade-up" data-aos-delay="400">
+        <h3>Comming Soon......</h3>
+        <p>
+          Stay tuned for more exciting updates and projects. I'm constantly
+          learning and building new things!
+        </p>
+      </a>
+    </section>
+  </main>
+
+  <footer>
+   <p>© 2025 Portfolio - Tushar Singh. All rights reserved.</p>
+  </footer>
+
+  <!-- AOS JS -->
+  <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+
+  <script>
+    // Initialize AOS animations
+    AOS.init({
+      duration: 1000,
+      once: true,
+    });
+
+    // Navbar menu toggle for mobile
+    const menuToggle = document.querySelector(".menu-toggle");
+    const navLinks = document.querySelector(".nav-links");
+    menuToggle.addEventListener("click", () => {
+      navLinks.classList.toggle("active");
+    });
+
+    // Theme toggle
+    const themeBtn = document.getElementById("theme-toggle");
+    const html = document.documentElement;
+
+    // Load saved theme
+    const savedTheme = localStorage.getItem("theme");
+    if (savedTheme) {
+      html.setAttribute("data-theme", savedTheme);
+      themeBtn.textContent = savedTheme === "dark" ? "☀️" : "🌙";
+    } else {
+      html.setAttribute("data-theme", "light");
+    }
+
+    themeBtn.addEventListener("click", () => {
+      const currentTheme = html.getAttribute("data-theme");
+      const newTheme = currentTheme === "light" ? "dark" : "light";
+      html.setAttribute("data-theme", newTheme);
+      localStorage.setItem("theme", newTheme);
+      themeBtn.textContent = newTheme === "dark" ? "☀️" : "🌙";
+    });
+  </script>
+</body>
+
+</html>

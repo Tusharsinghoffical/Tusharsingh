@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Services - Tushar Singh</title>
+  <link rel="icon" type="image/x-icon" href="profile.jpg">
+  <link rel="stylesheet" href="style.css" />
+</head>
+
+<body>
+  <header>
+    <nav class="navbar">
+      <div class="logo"><a href="index.html">Tushar Singh</a></div>
+      <ul class="nav-links">
+        <li><a href="index.html">Home</a></li>
+        <li><a href="services.html" class="active">Services</a></li>
+        <li><a href="projects.html">Projects</a></li>
+        <li><a href="about.html">About</a></li>
+        <li><a href="contact.html">Contact Us</a></li>
+      </ul>
+
+      <button id="theme-toggle" aria-label="Toggle Theme" class="theme-btn">
+        🌙
+      </button>
+
+      <div class="menu-toggle">&#9776;</div>
+    </nav>
+  </header>
+
+  <main>
+    <section class="hero">
+      <h1>My <span class="highlight">Services</span></h1>
+      <p>Transforming ideas into real products using latest tech stasck.</p>
+    </section>
+
+    <section class="tech-blocks">
+      <a href="#" class="tech-card" data-aos="fade-up" data-aos-delay="100">
+        <h3>🌐 Data Science</h3>
+        <p>
+          Fraud detection, data analysis, visualization, and machine learning
+          models using Python, Pandas, NumPy, Matplotlib, Scikit-learn, and
+          TensorFlow. I build data-driven solutions to extract insights and
+          automate decision-making processes.
+        </p>
+      </a>
+
+      <a href="#" class="tech-card" data-aos="fade-up" data-aos-delay="300">
+        <h3>📊 Data Analysis</h3>
+        <p>
+          Data analysis and visualization using Python, Pandas, NumPy, and
+          Matplotlib. I analyze datasets to uncover patterns, trends, and
+          insights, tablate, and Seaborn. I create interactive dashboards and
+          visualizations to present data insights effectively.
+        </p>
+      </a>
+
+      <a href="#" class="tech-card" data-aos="fade-up" data-aos-delay="200">
+        <h3>🤖 AI Assistants & Agents</h3>
+        <p>
+          AI agents for study, productivity, and automation using Gemini API,
+          Python, and GUI frameworks. Develop AI assistants for various
+          applications like study aids, productivity tools, and automation
+          tasks.
+        </p>
+      </a>
+
+      <a href="#" class="tech-card" data-aos="fade-up" data-aos-delay="300">
+        <h3>💻 Tech Support And Debug</h3>
+        <p>
+          Providing technical support and debugging services for software
+          applications. I troubleshoot issues, optimize performance, and
+          ensure smooth operation of applications across various platforms.
+        </p>
+      </a>
+    </section>
+  </main>
+
+  <footer>
+    <p>© 2025 Portfolio - Tushar Singh. All rights reserved.</p>
+  </footer>
+
+  <!-- AOS JS -->
+  <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+
+  <script>
+    // Initialize AOS animations
+    AOS.init({
+      duration: 1000,
+      once: true,
+    });
+
+    // Navbar menu toggle for mobile
+    const menuToggle = document.querySelector(".menu-toggle");
+    const navLinks = document.querySelector(".nav-links");
+    menuToggle.addEventListener("click", () => {
+      navLinks.classList.toggle("active");
+    });
+
+    // Theme toggle
+    const themeBtn = document.getElementById("theme-toggle");
+    const html = document.documentElement;
+
+    // Load saved theme
+    const savedTheme = localStorage.getItem("theme");
+    if (savedTheme) {
+      html.setAttribute("data-theme", savedTheme);
+      themeBtn.textContent = savedTheme === "dark" ? "☀️" : "🌙";
+    } else {
+      html.setAttribute("data-theme", "light");
+    }
+
+    themeBtn.addEventListener("click", () => {
+      const currentTheme = html.getAttribute("data-theme");
+      const newTheme = currentTheme === "light" ? "dark" : "light";
+      html.setAttribute("data-theme", newTheme);
+      localStorage.setItem("theme", newTheme);
+      themeBtn.textContent = newTheme === "dark" ? "☀️" : "🌙";
+    });
+  </script>
+</body>
+
+</html>

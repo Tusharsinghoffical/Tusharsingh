@@ -1,0 +1,89 @@
+<!-- contact.html -->
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Contact Us - Tushar Singh</title>
+  <link rel="icon" type="image/x-icon" href="profile.jpg">
+  <link rel="stylesheet" href="style.css" />
+</head>
+
+<body>
+  <header>
+    <nav class="navbar">
+      <div class="logo"><a href="index.html">Tushar Singh</a></div>
+      <ul class="nav-links">
+        <li><a href="index.html">Home</a></li>
+        <li><a href="services.html">Services</a></li>
+        <li><a href="projects.html">Projects</a></li>
+        <li><a href="about.html">About</a></li>
+        <li><a href="contact.html" class="active">Contact Us</a></li>
+      </ul>
+
+      <button id="theme-toggle" aria-label="Toggle Theme" class="theme-btn">
+        🌙
+      </button>
+      <div class="menu-toggle">&#9776;</div>
+    </nav>
+  </header>
+
+  <main>
+    <section class="contact-form" data-aos="fade-up">
+      <h2>Contact Us</h2>
+      <form action="https://formspree.io/f/xeokqbez" method="POST">
+        <input type="text" name="name" placeholder="Your Name" required />
+        <input type="email" name="email" placeholder="Your Email" required />
+        <textarea name="message" rows="5" placeholder="Your Message" required></textarea>
+        <button type="submit">Send Message</button>
+      </form>
+    </section>
+  </main>
+
+  <footer>
+    <p>© 2025 Portfolio - Tushar Singh. All rights reserved.</p>
+  </footer>
+
+  <!-- AOS JS -->
+  <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+
+  <script>
+    // Initialize AOS animations
+    AOS.init({
+      duration: 1000,
+      once: true,
+    });
+
+    // Navbar menu toggle for mobile
+    const menuToggle = document.querySelector('.menu-toggle');
+    const navLinks = document.querySelector('.nav-links');
+    menuToggle.addEventListener('click', () => {
+      navLinks.classList.toggle('active');
+    });
+
+    // Theme toggle
+    const themeBtn = document.getElementById('theme-toggle');
+    const html = document.documentElement;
+
+    // Load saved theme
+    const savedTheme = localStorage.getItem('theme');
+    if (savedTheme) {
+      html.setAttribute('data-theme', savedTheme);
+      themeBtn.textContent = savedTheme === 'dark' ? '☀️' : '🌙';
+    } else {
+      html.setAttribute('data-theme', 'light');
+    }
+
+    themeBtn.addEventListener('click', () => {
+      const currentTheme = html.getAttribute('data-theme');
+      const newTheme = currentTheme === 'light' ? 'dark' : 'light';
+      html.setAttribute('data-theme', newTheme);
+      localStorage.setItem('theme', newTheme);
+      themeBtn.textContent = newTheme === 'dark' ? '☀️' : '🌙';
+    });
+  </script>
+
+</body>
+
+</html>
