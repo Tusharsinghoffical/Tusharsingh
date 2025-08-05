@@ -1,7 +1,3 @@
-<!-- 
-git remote add origin https://github.com/Tusharsinghoffical/Tusharsingh.git
 git add .
-git branch -M main
-git push origin main --force -->
-
-<!-- git commit -m "Fresh upload without large files" -->
+git commit -m "Added all website and zip files in one commit"
+git push origin main
