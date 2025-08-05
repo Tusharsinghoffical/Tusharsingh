@@ -1,0 +1,346 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Projects - Tushar Singh | Data Scientist & AI Developer</title>
+  <meta name="description" content="Explore Tushar Singh's portfolio of AI, Data Science, and Web Development projects. From chatbots to data analysis tools, see innovative solutions built with cutting-edge technologies.">
+  <link rel="icon" type="image/x-icon" href="profile.jpg">
+  
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  
+  <!-- AOS CSS -->
+  <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet" />
+  
+  <link rel="stylesheet" href="style.css" />
+</head>
+
+<body>
+  <header>
+    <nav class="navbar">
+      <div class="logo"><a href="index.html">Tushar Singh</a></div>
+      <ul class="nav-links">
+        <li><a href="index.html">Home</a></li>
+        <li><a href="services.html">Services</a></li>
+        <li><a href="projects.html" class="active">Projects</a></li>
+        <li><a href="about.html">About</a></li>
+        <li><a href="contact.html">Contact</a></li>
+      </ul>
+
+      <button id="theme-toggle" aria-label="Toggle Theme" class="theme-btn">
+        🌙
+      </button>
+      <div class="menu-toggle">&#9776;</div>
+    </nav>
+  </header>
+
+  <main>
+    <section class="hero">
+      <h1>My <span class="highlight">Projects</span></h1>
+      <p>Explore my latest work in AI, Data Science, and Web Development. Each project showcases different skills and technologies.</p>
+    </section>
+
+    <section class="project-filters" data-aos="fade-up">
+      <div class="filter-buttons">
+        <button class="filter-btn active" data-filter="all">All Projects</button>
+        <button class="filter-btn" data-filter="ai">AI & ML</button>
+        <button class="filter-btn" data-filter="data">Data Analysis</button>
+        <button class="filter-btn" data-filter="web">Web Development</button>
+      </div>
+    </section>
+
+    <section class="tech-blocks">
+      <div class="tech-card" data-category="ai" data-aos="fade-up" data-aos-delay="100">
+        <div class="card-icon">🤖</div>
+        <h3>AI Study Assistant</h3>
+        <p>
+          An intelligent study companion that generates comprehensive notes, quizzes, and explanations from any topic using Gemini API. Features a user-friendly Python GUI interface designed to enhance learning experiences.
+        </p>
+        <div class="tech-stack">
+          <span class="tech-tag">Python</span>
+          <span class="tech-tag">Gemini API</span>
+          <span class="tech-tag">Tkinter</span>
+          <span class="tech-tag">GUI</span>
+        </div>
+        <div class="card-buttons">
+        <!--  <a href="readmore/test-basic.html" class="btn-read">Test Basic</a>
+          <a href="readmore/ai-study-simple.html" class="btn-read">View Details (Simple)</a>--> 
+          <a href="readmore/ai-study.html" class="btn-read">View Details</a>
+          <a href="AI ASSISTANT FILE/Study chatbot.zip" class="btn-download" download>Download</a>
+        </div>
+      </div>
+
+      <div class="tech-card" data-category="ai" data-aos="fade-up" data-aos-delay="200">
+        <div class="card-icon">💬</div>
+        <h3>AI Chatbot</h3>
+        <p>
+          A sophisticated AI chatbot powered by Gemini API with voice interaction capabilities and animated responses. Built with Python and Tkinter, providing an intuitive conversational experience.
+        </p>
+        <div class="tech-stack">
+          <span class="tech-tag">Python</span>
+          <span class="tech-tag">Gemini API</span>
+          <span class="tech-tag">Voice Recognition</span>
+          <span class="tech-tag">Tkinter</span>
+        </div>
+        <div class="card-buttons">
+          <a href="readmore/chatbot.html" class="btn-read">View Details</a>
+          <a href="AI ASSISTANT FILE/Chatbot.zip" class="btn-download" download>Download</a>
+        </div>
+      </div>
+
+      <div class="tech-card" data-category="data" data-aos="fade-up" data-aos-delay="300">
+        <div class="card-icon">📊</div>
+        <h3>HR Analysis Dashboard</h3>
+        <p>
+          Comprehensive HR analytics dashboard using Power BI to visualize employee data, performance metrics, attrition rates, and demographic insights. Provides actionable insights for HR decision-making.
+        </p>
+        <div class="tech-stack">
+          <span class="tech-tag">Power BI</span>
+          <span class="tech-tag">Data Visualization</span>
+          <span class="tech-tag">HR Analytics</span>
+          <span class="tech-tag">Dashboard</span>
+        </div>
+        <div class="card-buttons">
+          <a href="readmore/hr-analysis.html" class="btn-read">View Details</a>
+          <a href="Data Analysis File/HR Analysis.zip" class="btn-download" download>Download</a>
+        </div>
+      </div>
+
+      <div class="tech-card" data-category="data" data-aos="fade-up" data-aos-delay="400">
+        <div class="card-icon">🏥</div>
+        <h3>Hospital Analysis Dashboard</h3>
+        <p>
+          Advanced hospital analytics dashboard analyzing patient demographics, treatment outcomes, and hospital performance metrics. Built with Power BI for comprehensive healthcare data insights.
+        </p>
+        <div class="tech-stack">
+          <span class="tech-tag">Power BI</span>
+          <span class="tech-tag">Healthcare Analytics</span>
+          <span class="tech-tag">Data Visualization</span>
+          <span class="tech-tag">Patient Data</span>
+        </div>
+        <div class="card-buttons">
+          <a href="readmore/hospital-analysis.html" class="btn-read">View Details</a>
+          <a href="Data Analysis File/Hospital.zip" class="btn-download" download>Download</a>
+        </div>
+      </div>
+
+      <div class="tech-card" data-category="data" data-aos="fade-up" data-aos-delay="500">
+        <div class="card-icon">🛒</div>
+        <h3>SuperStore Sales Analysis</h3>
+        <p>
+          Comprehensive retail analytics dashboard analyzing sales trends, product performance, customer demographics, and regional insights. Built with Power BI for data-driven business decisions.
+        </p>
+        <div class="tech-stack">
+          <span class="tech-tag">Power BI</span>
+          <span class="tech-tag">Sales Analytics</span>
+          <span class="tech-tag">Business Intelligence</span>
+          <span class="tech-tag">Retail Data</span>
+        </div>
+        <div class="card-buttons">
+          <a href="readmore/superstore.html" class="btn-read">View Details</a>
+          <a href="Data Analysis File/SuperStore Sales Data.zip" class="btn-download" download>Download</a>
+        </div>
+      </div>
+
+      <div class="tech-card" data-category="ai" data-aos="fade-up" data-aos-delay="600">
+        <div class="card-icon">🌸</div>
+        <h3>Iris Classification Model</h3>
+        <p>
+          Machine learning project using Python and Jupyter Notebook to analyze the classic Iris dataset. Features data visualization, statistical analysis, and multiple ML models for flower classification.
+        </p>
+        <div class="tech-stack">
+          <span class="tech-tag">Python</span>
+          <span class="tech-tag">Scikit-learn</span>
+          <span class="tech-tag">Jupyter</span>
+          <span class="tech-tag">Classification</span>
+        </div>
+        <div class="card-buttons">
+          <a href="readmore/iris.html" class="btn-read">View Details</a>
+          <a href="Data Science File/Iris.zip" class="btn-download" download>Download</a>
+        </div>
+      </div>
+
+      <div class="tech-card" data-category="ai" data-aos="fade-up" data-aos-delay="700">
+        <div class="card-icon">🕵️</div>
+        <h3>Credit Card Fraud Detection</h3>
+        <p>
+          Advanced machine learning project for detecting fraudulent credit card transactions. Uses Python, Jupyter Notebook, and various ML algorithms to identify patterns in transaction data.
+        </p>
+        <div class="tech-stack">
+          <span class="tech-tag">Python</span>
+          <span class="tech-tag">Machine Learning</span>
+          <span class="tech-tag">Fraud Detection</span>
+          <span class="tech-tag">Classification</span>
+        </div>
+        <div class="card-buttons">
+          <a href="readmore/fraud.html" class="btn-read">View Details</a>
+          <a href="Data Science File/Fraud_Detection_with_Machine_Learning.zip" class="btn-download" download>Download</a>
+        </div>
+      </div>
+
+      <div class="tech-card" data-category="ai" data-aos="fade-up" data-aos-delay="800">
+        <div class="card-icon">📈</div>
+        <h3>Unemployment Prediction Model</h3>
+        <p>
+          Data science project analyzing unemployment patterns and building predictive models. Uses Python, Jupyter Notebook, and machine learning to forecast unemployment trends.
+        </p>
+        <div class="tech-stack">
+          <span class="tech-tag">Python</span>
+          <span class="tech-tag">Time Series</span>
+          <span class="tech-tag">Prediction</span>
+          <span class="tech-tag">Data Analysis</span>
+        </div>
+        <div class="card-buttons">
+          <a href="readmore/unemployment.html" class="btn-read">View Details</a>
+          <a href="Data Science File/Unemployement.zip" class="btn-download" download>Download</a>
+        </div>
+      </div>
+
+      <div class="tech-card" data-category="ai" data-aos="fade-up" data-aos-delay="900">
+        <div class="card-icon">📊</div>
+        <h3>Sales Advertising Analysis</h3>
+        <p>
+          Machine learning project analyzing the relationship between advertising spending and sales performance. Uses Python and Jupyter Notebook for data analysis and predictive modeling.
+        </p>
+        <div class="tech-stack">
+          <span class="tech-tag">Python</span>
+          <span class="tech-tag">Regression</span>
+          <span class="tech-tag">Advertising Analytics</span>
+          <span class="tech-tag">Data Science</span>
+        </div>
+        <div class="card-buttons">
+          <a href="readmore/sales.html" class="btn-read">View Details</a>
+          <a href="Data Science File/sales Advertising.zip" class="btn-download" download>Download</a>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <div class="footer-content">
+      <div class="footer-section">
+        <h3>Tushar Singh</h3>
+        <p>Data Scientist & AI Developer</p>
+      </div>
+      <div class="footer-section">
+        <h4>Quick Links</h4>
+        <ul>
+          <li><a href="index.html">Home</a></li>
+          <li><a href="about.html">About</a></li>
+          <li><a href="services.html">Services</a></li>
+          <li><a href="contact.html">Contact</a></li>
+        </ul>
+      </div>
+      <div class="footer-section">
+        <h4>Connect</h4>
+        <ul>
+          <li><a href="https://github.com/Tusharsinghoffical" target="_blank">GitHub</a></li>
+          <li><a href="https://www.linkedin.com/in/tusharsingh2011/" target="_blank">LinkedIn</a></li>
+          <li><a href="contact.html">Email</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p>© 2025 Tushar Singh. All rights reserved.</p>
+    </div>
+  </footer>
+
+  <!-- AOS JS -->
+  <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+
+  <script>
+    // Initialize AOS animations
+    AOS.init({
+      duration: 1000,
+      once: true,
+      offset: 100
+    });
+
+    // Navbar menu toggle for mobile
+    const menuToggle = document.querySelector(".menu-toggle");
+    const navLinks = document.querySelector(".nav-links");
+    
+    if (menuToggle && navLinks) {
+      menuToggle.addEventListener("click", () => {
+        navLinks.classList.toggle("active");
+        console.log("Menu toggle clicked"); // Debug log
+      });
+    }
+
+    // Theme toggle
+    const themeBtn = document.getElementById("theme-toggle");
+    const html = document.documentElement;
+
+    // Load saved theme
+    const savedTheme = localStorage.getItem("theme");
+    if (savedTheme) {
+      html.setAttribute("data-theme", savedTheme);
+      themeBtn.textContent = savedTheme === "dark" ? "☀️" : "🌙";
+    } else {
+      html.setAttribute("data-theme", "light");
+    }
+
+    if (themeBtn) {
+      themeBtn.addEventListener("click", () => {
+        const currentTheme = html.getAttribute("data-theme");
+        const newTheme = currentTheme === "light" ? "dark" : "light";
+        html.setAttribute("data-theme", newTheme);
+        localStorage.setItem("theme", newTheme);
+        themeBtn.textContent = newTheme === "dark" ? "☀️" : "🌙";
+      });
+    }
+
+    // Project filtering
+    const filterButtons = document.querySelectorAll('.filter-btn');
+    const projectCards = document.querySelectorAll('.tech-card');
+
+    filterButtons.forEach(button => {
+      button.addEventListener('click', () => {
+        // Remove active class from all buttons
+        filterButtons.forEach(btn => btn.classList.remove('active'));
+        // Add active class to clicked button
+        button.classList.add('active');
+        
+        const filter = button.getAttribute('data-filter');
+        
+        projectCards.forEach(card => {
+          if (filter === 'all' || card.getAttribute('data-category') === filter) {
+            card.style.display = 'block';
+            card.style.animation = 'fadeIn 0.5s ease-in-out';
+          } else {
+            card.style.display = 'none';
+          }
+        });
+      });
+    });
+
+    // Add fadeIn animation
+    const style = document.createElement('style');
+    style.textContent = `
+      @keyframes fadeIn {
+        from { opacity: 0; transform: translateY(20px); }
+        to { opacity: 1; transform: translateY(0); }
+      }
+    `;
+    document.head.appendChild(style);
+
+    // Add loading animation
+    window.addEventListener('load', () => {
+      document.body.classList.add('loaded');
+    });
+
+    // Debug: Check if all elements are loaded
+    console.log("Projects page loaded successfully");
+    console.log("Navbar elements:", {
+      menuToggle: !!menuToggle,
+      navLinks: !!navLinks,
+      themeBtn: !!themeBtn
+    });
+  </script>
+</body>
+
+</html>

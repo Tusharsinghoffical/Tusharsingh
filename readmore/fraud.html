@@ -1,0 +1,946 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Fraud Detection ML - Tushar Singh</title>
+    <meta
+      name="description"
+      content="Detailed analysis of the Fraud Detection with Machine Learning project - Advanced ML algorithms for detecting fraudulent transactions."
+    />
+    <link rel="icon" type="image/x-icon" href="../profile.jpg" />
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap"
+      rel="stylesheet"
+    />
+
+    <style>
+      /* Complete CSS - No external dependencies */
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+
+      /* Light Theme Variables */
+      :root {
+        --bg-color: #ffffff;
+        --text-color: #333;
+        --card-bg: #f8f9fa;
+        --border-color: #e1e5e9;
+        --shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        --shadow-hover: 0 8px 25px rgba(0, 0, 0, 0.15);
+        --highlight-color: #3498db;
+        --highlight-gradient: linear-gradient(135deg, #3498db, #2ecc71);
+      }
+
+      /* Dark Theme Variables */
+      [data-theme="dark"] {
+        --bg-color: #1a1a1a;
+        --text-color: #ffffff;
+        --card-bg: #2d2d2d;
+        --border-color: #404040;
+        --shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+        --shadow-hover: 0 8px 25px rgba(0, 0, 0, 0.4);
+        --highlight-color: #4dabf7;
+        --highlight-gradient: linear-gradient(135deg, #4dabf7, #51cf66);
+      }
+
+      body {
+        font-family: "Inter", sans-serif;
+        line-height: 1.6;
+        color: var(--text-color);
+        background-color: var(--bg-color);
+        transition: all 0.3s ease;
+        text-decoration: none;
+      }
+
+      /* Header and Navigation - Matching main site */
+      header {
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        background: rgba(255, 255, 255, 0.95);
+        backdrop-filter: blur(10px);
+        border-bottom: 1px solid var(--border-color);
+        z-index: 1000;
+        transition: all 0.3s ease;
+      }
+
+      [data-theme="dark"] header {
+        background: rgba(26, 26, 26, 0.95);
+      }
+
+      .navbar {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 1rem 5%;
+        max-width: 1200px;
+        margin: 0 auto;
+      }
+
+      .logo {
+        font-size: 1.5rem;
+        font-weight: 700;
+        color: var(--highlight-color);
+        transition: all 0.3s ease;
+      }
+      .logo a {
+        text-decoration: none;
+        color: var(--highlight-gradient);
+        transition: all 0.3s ease;
+      }
+      .logo:hover {
+        transform: scale(1.05);
+      }
+
+      .nav-links {
+        text-decoration: none;
+        display: flex;
+        list-style: none;
+        gap: 2rem;
+        align-items: center;
+      }
+
+      .nav-links li a {
+        position: relative;
+        font-weight: 500;
+        padding: 0.5rem 1rem;
+        border-radius: 12px;
+        transition: all 0.3s ease;
+        color: var(--text-color);
+        text-decoration: none;
+      }
+
+      .nav-links li a::before {
+        content: "";
+        position: absolute;
+        bottom: 0;
+        left: 50%;
+        width: 0;
+        height: 2px;
+        background: var(--highlight-gradient);
+        transition: all 0.3s ease;
+        transform: translateX(-50%);
+      }
+
+      .nav-links li a:hover::before,
+      .nav-links li a.active::before {
+        width: 80%;
+      }
+
+      .nav-links li a:hover,
+      .nav-links li a.active {
+        color: var(--highlight-color);
+        transform: translateY(-2px);
+      }
+
+      .theme-btn {
+        background: none;
+        border: none;
+        font-size: 1.5rem;
+        cursor: pointer;
+        padding: 0.5rem;
+        border-radius: 50%;
+        transition: all 0.3s ease;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+
+      .theme-btn:hover {
+        background: var(--card-bg);
+        transform: scale(1.1);
+      }
+
+      .menu-toggle {
+        display: none;
+        font-size: 1.5rem;
+        cursor: pointer;
+        padding: 0.5rem;
+        border-radius: 12px;
+        transition: all 0.3s ease;
+      }
+
+      .menu-toggle:hover {
+        background: var(--card-bg);
+      }
+
+      /* Main Content */
+      main {
+        margin-top: 80px;
+        min-height: calc(100vh - 80px);
+        padding: 2rem 5%;
+        max-width: 1200px;
+        margin-left: auto;
+        margin-right: auto;
+      }
+
+      /* Hero Section */
+      .hero {
+        text-align: center;
+        padding: 4rem 0;
+        max-width: 800px;
+        margin: 0 auto;
+      }
+
+      .hero h1 {
+        font-size: 3.5rem;
+        font-weight: 700;
+        margin-bottom: 1.5rem;
+        line-height: 1.1;
+        color: var(--text-color);
+      }
+
+      .highlight {
+        background: var(--highlight-gradient);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+      }
+
+      .hero p {
+        font-size: 1.2rem;
+        color: var(--text-color);
+        opacity: 0.8;
+        margin-bottom: 2rem;
+      }
+
+      /* Project Details */
+      .project-details {
+        max-width: 1000px;
+        margin: 0 auto;
+        padding: 2rem 0;
+      }
+
+      .project-overview {
+        margin-bottom: 4rem;
+      }
+
+      .project-overview h2 {
+        font-size: 2.5rem;
+        margin-bottom: 1.5rem;
+        background: var(--highlight-gradient);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+      }
+
+      .project-overview p {
+        font-size: 1.1rem;
+        line-height: 1.8;
+        margin-bottom: 2rem;
+        color: var(--text-color);
+        opacity: 0.9;
+      }
+
+      .project-stats {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+        gap: 2rem;
+        margin-top: 2rem;
+      }
+
+      .stat-item {
+        background: var(--card-bg);
+        padding: 2rem;
+        border-radius: 12px;
+        text-align: center;
+        box-shadow: var(--shadow);
+        transition: all 0.3s ease;
+      }
+
+      .stat-item:hover {
+        transform: translateY(-5px);
+        box-shadow: var(--shadow-hover);
+      }
+
+      .stat-number {
+        font-size: 2.5rem;
+        font-weight: 700;
+        color: var(--highlight-color);
+        margin-bottom: 0.5rem;
+      }
+
+      .stat-label {
+        color: var(--text-color);
+        opacity: 0.8;
+        font-weight: 500;
+      }
+
+      .project-features {
+        margin: 4rem 0;
+      }
+
+      .project-features h2 {
+        font-size: 2.5rem;
+        margin-bottom: 3rem;
+        text-align: center;
+        background: var(--highlight-gradient);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+      }
+
+      .features-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+        gap: 2rem;
+      }
+
+      .feature-item {
+        background: var(--card-bg);
+        padding: 2rem;
+        border-radius: 12px;
+        box-shadow: var(--shadow);
+        transition: all 0.3s ease;
+      }
+
+      .feature-item:hover {
+        transform: translateY(-5px);
+        box-shadow: var(--shadow-hover);
+      }
+
+      .feature-icon {
+        font-size: 3rem;
+        margin-bottom: 1rem;
+      }
+
+      .feature-item h3 {
+        font-size: 1.3rem;
+        margin-bottom: 1rem;
+        color: var(--highlight-color);
+      }
+
+      .feature-item p {
+        color: var(--text-color);
+        opacity: 0.8;
+        line-height: 1.6;
+      }
+
+      .technical-details {
+        margin: 4rem 0;
+      }
+
+      .technical-details h2 {
+        font-size: 2.5rem;
+        margin-bottom: 2rem;
+        background: var(--highlight-gradient);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+      }
+
+      .tech-stack {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 1rem;
+      }
+
+      .tech-tag {
+        background: var(--highlight-color);
+        color: white;
+        padding: 0.5rem 1rem;
+        border-radius: 20px;
+        font-size: 0.9rem;
+        font-weight: 500;
+        transition: all 0.3s ease;
+      }
+
+      .tech-tag:hover {
+        transform: scale(1.05);
+        box-shadow: var(--shadow-hover);
+      }
+
+      .project-process {
+        margin: 4rem 0;
+      }
+
+      .project-process h2 {
+        font-size: 2.5rem;
+        margin-bottom: 3rem;
+        text-align: center;
+        background: var(--highlight-gradient);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+      }
+
+      .process-steps {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+        gap: 2rem;
+      }
+
+      .step {
+        background: var(--card-bg);
+        padding: 2rem;
+        border-radius: 12px;
+        box-shadow: var(--shadow);
+        transition: all 0.3s ease;
+        position: relative;
+      }
+
+      .step:hover {
+        transform: translateY(-5px);
+        box-shadow: var(--shadow-hover);
+      }
+
+      .step-number {
+        width: 50px;
+        height: 50px;
+        background: var(--highlight-gradient);
+        color: white;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 1.5rem;
+        font-weight: 700;
+        margin-bottom: 1rem;
+      }
+
+      .step h3 {
+        font-size: 1.3rem;
+        margin-bottom: 1rem;
+        color: var(--highlight-color);
+      }
+
+      .step p {
+        color: var(--text-color);
+        opacity: 0.8;
+        line-height: 1.6;
+      }
+
+      .project-results {
+        margin: 4rem 0;
+      }
+
+      .project-results h2 {
+        font-size: 2.5rem;
+        margin-bottom: 3rem;
+        text-align: center;
+        background: var(--highlight-gradient);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+      }
+
+      .results-content {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+        gap: 2rem;
+      }
+
+      .result-item {
+        background: var(--card-bg);
+        padding: 2rem;
+        border-radius: 12px;
+        box-shadow: var(--shadow);
+        transition: all 0.3s ease;
+      }
+
+      .result-item:hover {
+        transform: translateY(-3px);
+        box-shadow: var(--shadow-hover);
+      }
+
+      .result-item h3 {
+        font-size: 1.3rem;
+        margin-bottom: 1rem;
+        color: var(--highlight-color);
+      }
+
+      .result-item ul {
+        list-style: none;
+        padding: 0;
+      }
+
+      .result-item ul li {
+        padding: 0.5rem 0;
+        border-bottom: 1px solid var(--border-color);
+        color: var(--text-color);
+        opacity: 0.8;
+        line-height: 1.6;
+      }
+
+      .result-item ul li:last-child {
+        border-bottom: none;
+      }
+
+      .cta-section {
+        background: var(--highlight-gradient);
+        color: white;
+        padding: 4rem 2rem;
+        border-radius: 12px;
+        text-align: center;
+        margin: 4rem 0;
+      }
+
+      .cta-content h2 {
+        font-size: 2.5rem;
+        margin-bottom: 1rem;
+      }
+
+      .cta-content p {
+        font-size: 1.1rem;
+        margin-bottom: 2rem;
+        opacity: 0.9;
+      }
+
+      .cta-buttons {
+        display: flex;
+        gap: 1rem;
+        justify-content: center;
+        flex-wrap: wrap;
+      }
+
+      .btn-primary,
+      .btn-secondary {
+        padding: 1rem 2rem;
+        border-radius: 12px;
+        font-weight: 600;
+        text-decoration: none;
+        transition: all 0.3s ease;
+        display: inline-block;
+      }
+
+      .btn-primary {
+        background: white;
+        color: var(--highlight-color);
+      }
+
+      .btn-primary:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 8px 25px rgba(0, 0, 0, 0.2);
+      }
+
+      .btn-secondary {
+        background: transparent;
+        color: white;
+        border: 2px solid white;
+      }
+
+      .btn-secondary:hover {
+        background: white;
+        color: var(--highlight-color);
+        transform: translateY(-2px);
+      }
+
+      footer {
+        background: #2d2d2d;
+        color: white;
+        padding: 3rem 0 1rem;
+        margin-top: 4rem;
+      }
+
+      .footer-content {
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 0 5%;
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+        gap: 2rem;
+      }
+
+      .footer-section h3,
+      .footer-section h4 {
+        margin-bottom: 1rem;
+        color: #3498db;
+      }
+
+      .footer-section ul {
+        list-style: none;
+        padding: 0;
+      }
+
+      .footer-section ul li {
+        margin-bottom: 0.5rem;
+      }
+
+      .footer-section ul li a {
+        color: white;
+        opacity: 0.8;
+        transition: opacity 0.3s ease;
+        text-decoration: none;
+      }
+
+      .footer-section ul li a:hover {
+        opacity: 1;
+      }
+
+      .footer-bottom {
+        text-align: center;
+        padding-top: 2rem;
+        border-top: 1px solid #404040;
+        margin-top: 2rem;
+      }
+
+      /* Mobile Responsive */
+      @media (max-width: 768px) {
+        .navbar {
+          padding: 1rem 2%;
+        }
+
+        .nav-links {
+          display: none;
+          position: absolute;
+          top: 100%;
+          left: 0;
+          right: 0;
+          background: rgba(255, 255, 255, 0.95);
+          backdrop-filter: blur(10px);
+          flex-direction: column;
+          padding: 1rem;
+          gap: 1rem;
+        }
+
+        [data-theme="dark"] .nav-links {
+          background: rgba(26, 26, 26, 0.95);
+        }
+
+        .nav-links.active {
+          display: flex;
+        }
+
+        .nav-links li {
+          width: 100%;
+        }
+
+        .nav-links li a {
+          display: block;
+          padding: 1rem;
+          text-align: center;
+        }
+
+        .menu-toggle {
+          display: block;
+        }
+
+        .hero h1 {
+          font-size: 2.5rem;
+        }
+
+        .project-stats {
+          grid-template-columns: 1fr;
+        }
+
+        .features-grid {
+          grid-template-columns: 1fr;
+        }
+
+        .process-steps {
+          grid-template-columns: 1fr;
+        }
+
+        .results-content {
+          grid-template-columns: 1fr;
+        }
+
+        .cta-buttons {
+          flex-direction: column;
+          align-items: center;
+        }
+
+        .footer-content {
+          grid-template-columns: 1fr;
+          text-align: center;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <header>
+      <nav class="navbar">
+        <div class="logo"><a href="../index.html">Tushar Singh</a></div>
+        <ul class="nav-links">
+          <li><a href="../index.html">Home</a></li>
+          <li><a href="../services.html">Services</a></li>
+          <li><a href="../projects.html" class="active">Projects</a></li>
+          <li><a href="../about.html">About</a></li>
+          <li><a href="../contact.html">Contact</a></li>
+        </ul>
+        <button id="theme-toggle" aria-label="Toggle Theme" class="theme-btn">
+          🌙
+        </button>
+        <div class="menu-toggle">&#9776;</div>
+      </nav>
+    </header>
+
+    <main>
+      <section class="hero">
+        <h1>Fraud Detection <span class="highlight">ML</span></h1>
+        <p>
+          Advanced machine learning algorithms for detecting fraudulent
+          transactions and financial anomalies with high accuracy and real-time
+          processing.
+        </p>
+      </section>
+
+      <section class="project-details">
+        <div class="project-overview">
+          <h2>Project Overview</h2>
+          <p>
+            This project implements sophisticated machine learning algorithms to
+            detect fraudulent transactions in financial data. Using advanced
+            techniques like anomaly detection, classification algorithms, and
+            real-time processing, the system can identify suspicious patterns
+            and prevent financial fraud with high accuracy.
+          </p>
+
+          <div class="project-stats">
+            <div class="stat-item">
+              <div class="stat-number">95%+</div>
+              <div class="stat-label">Accuracy</div>
+            </div>
+            <div class="stat-item">
+              <div class="stat-number">Real-time</div>
+              <div class="stat-label">Processing</div>
+            </div>
+            <div class="stat-item">
+              <div class="stat-number">Multi</div>
+              <div class="stat-label">Algorithm</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="project-features">
+          <h2>Key Features</h2>
+          <div class="features-grid">
+            <div class="feature-item">
+              <div class="feature-icon">🔍</div>
+              <h3>Anomaly Detection</h3>
+              <p>
+                Advanced algorithms to detect unusual patterns and suspicious
+                transactions in real-time.
+              </p>
+            </div>
+            <div class="feature-item">
+              <div class="feature-icon">📊</div>
+              <h3>Data Analysis</h3>
+              <p>
+                Comprehensive analysis of transaction patterns and behavioral
+                indicators for fraud detection.
+              </p>
+            </div>
+            <div class="feature-item">
+              <div class="feature-icon">⚡</div>
+              <h3>Real-time Processing</h3>
+              <p>
+                Instant fraud detection and alerting system for immediate
+                response to suspicious activities.
+              </p>
+            </div>
+            <div class="feature-item">
+              <div class="feature-icon">🎯</div>
+              <h3>High Accuracy</h3>
+              <p>
+                Multiple ML algorithms working together to achieve high
+                precision and recall rates.
+              </p>
+            </div>
+          </div>
+        </div>
+
+        <div class="technical-details">
+          <h2>Technical Implementation</h2>
+          <div class="tech-stack">
+            <span class="tech-tag">Python</span>
+            <span class="tech-tag">Machine Learning</span>
+            <span class="tech-tag">Scikit-learn</span>
+            <span class="tech-tag">Pandas</span>
+            <span class="tech-tag">NumPy</span>
+            <span class="tech-tag">Anomaly Detection</span>
+          </div>
+        </div>
+
+        <div class="project-process">
+          <h2>Project Process</h2>
+          <div class="process-steps">
+            <div class="step">
+              <div class="step-number">1</div>
+              <h3>Data Collection</h3>
+              <p>
+                Gathered and preprocessed financial transaction data for
+                training and testing the models.
+              </p>
+            </div>
+            <div class="step">
+              <div class="step-number">2</div>
+              <h3>Feature Engineering</h3>
+              <p>
+                Created relevant features and engineered new variables to
+                improve detection accuracy.
+              </p>
+            </div>
+            <div class="step">
+              <div class="step-number">3</div>
+              <h3>Model Development</h3>
+              <p>
+                Implemented multiple ML algorithms including Random Forest, SVM,
+                and Neural Networks.
+              </p>
+            </div>
+            <div class="step">
+              <div class="step-number">4</div>
+              <h3>Testing & Deployment</h3>
+              <p>
+                Comprehensive testing and deployment with continuous monitoring
+                and improvement.
+              </p>
+            </div>
+          </div>
+        </div>
+
+        <div class="project-results">
+          <h2>Results & Benefits</h2>
+          <div class="results-content">
+            <div class="result-item">
+              <h3>🛡️ Security Impact</h3>
+              <ul>
+                <li>
+                  Significantly reduced fraud incidents with 95%+ detection
+                  accuracy
+                </li>
+                <li>
+                  Real-time monitoring and alerting system for immediate
+                  response
+                </li>
+                <li>Reduced financial losses through early fraud detection</li>
+                <li>Enhanced customer trust and security measures</li>
+              </ul>
+            </div>
+            <div class="result-item">
+              <h3>🎯 Technical Achievements</h3>
+              <ul>
+                <li>
+                  Successfully implemented multiple ML algorithms for fraud
+                  detection
+                </li>
+                <li>Achieved high precision and recall rates in testing</li>
+                <li>Built scalable and real-time processing system</li>
+                <li>Created robust feature engineering pipeline</li>
+              </ul>
+            </div>
+            <div class="result-item">
+              <h3>💡 Innovation</h3>
+              <ul>
+                <li>
+                  Demonstrated practical application of ML in financial security
+                </li>
+                <li>Showcased advanced anomaly detection techniques</li>
+                <li>Created reusable framework for fraud detection systems</li>
+                <li>
+                  Contributed to financial technology and security solutions
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="cta-section">
+        <div class="cta-content">
+          <h2>Ready to Explore More Projects?</h2>
+          <p>
+            Check out my other AI and data science projects to see more of my
+            work.
+          </p>
+          <div class="cta-buttons">
+            <a href="../projects.html" class="btn-primary">View All Projects</a>
+            <a href="../contact.html" class="btn-secondary">Get In Touch</a>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <footer>
+      <div class="footer-content">
+        <div class="footer-section">
+          <h3>Tushar Singh</h3>
+          <p>Data Scientist & AI Developer</p>
+        </div>
+        <div class="footer-section">
+          <h4>Quick Links</h4>
+          <ul>
+            <li><a href="../about.html">About</a></li>
+            <li><a href="../projects.html">Projects</a></li>
+            <li><a href="../services.html">Services</a></li>
+            <li><a href="../contact.html">Contact</a></li>
+          </ul>
+        </div>
+        <div class="footer-section">
+          <h4>Connect</h4>
+          <ul>
+            <li>
+              <a href="https://github.com/Tusharsinghoffical" target="_blank"
+                >GitHub</a
+              >
+            </li>
+            <li>
+              <a
+                href="https://www.linkedin.com/in/tusharsingh2011/"
+                target="_blank"
+                >LinkedIn</a
+              >
+            </li>
+            <li><a href="contact.html">Email</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <p>© 2025 Tushar Singh. All rights reserved.</p>
+      </div>
+    </footer>
+
+    <script>
+      // Theme toggle functionality
+      console.log("Fraud Detection ML page loaded successfully");
+
+      // Navbar menu toggle for mobile
+      const menuToggle = document.querySelector(".menu-toggle");
+      const navLinks = document.querySelector(".nav-links");
+
+      if (menuToggle && navLinks) {
+        menuToggle.addEventListener("click", () => {
+          navLinks.classList.toggle("active");
+        });
+      }
+
+      // Theme toggle
+      const themeBtn = document.getElementById("theme-toggle");
+      const html = document.documentElement;
+
+      if (themeBtn) {
+        // Load saved theme
+        const savedTheme = localStorage.getItem("theme");
+        if (savedTheme) {
+          html.setAttribute("data-theme", savedTheme);
+          themeBtn.textContent = savedTheme === "dark" ? "☀️" : "🌙";
+        } else {
+          html.setAttribute("data-theme", "light");
+          themeBtn.textContent = "🌙";
+        }
+
+        themeBtn.addEventListener("click", () => {
+          const currentTheme = html.getAttribute("data-theme");
+          const newTheme = currentTheme === "light" ? "dark" : "light";
+
+          html.setAttribute("data-theme", newTheme);
+          localStorage.setItem("theme", newTheme);
+          themeBtn.textContent = newTheme === "dark" ? "☀️" : "🌙";
+
+          console.log("Theme changed to:", newTheme);
+        });
+      }
+
+      console.log("All scripts loaded successfully");
+    </script>
+  </body>
+</html>
