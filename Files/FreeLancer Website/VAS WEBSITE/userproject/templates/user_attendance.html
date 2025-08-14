@@ -1,0 +1,37 @@
+{% extends "index.html" %}
+{% block title %}My Attendance{% endblock %}
+
+{% block content %}
+<div class="container mt-5">
+  <h2 class="text-center mb-4">📅 My Attendance History</h2>
+
+  {% if attendances %}
+  <div class="table-responsive">
+    <table class="table table-bordered table-striped text-center">
+      <thead class="table-dark">
+        <tr>
+          <th>Date</th>
+          <th>Check In</th>
+          <th>Check Out</th>
+          <th>Location</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for record in attendances %}
+        <tr>
+          <td>{{ record.date }}</td>
+          <td>{{ record.check_in|default:"-" }}</td>
+          <td>{{ record.check_out|default:"-" }}</td>
+          <td>{{ record.location_name|default:"-" }}</td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+  {% else %}
+  <div class="alert alert-info text-center">
+    No attendance records found.
+  </div>
+  {% endif %}
+</div>
+{% endblock %}

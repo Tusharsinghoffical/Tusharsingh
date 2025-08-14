@@ -1,0 +1,117 @@
+{% extends "index.html" %}
+{% load static %}
+
+{% block title %}
+  Home | Venus Attendance System
+{% endblock %}
+
+{% block head %}
+<style>
+  .welcome-section {
+    padding: 2rem 1rem; /* reduced from 5rem */
+    transition: background-color 0.5s ease, color 0.5s ease;
+    min-height: 80vh; /* reduced slightly */
+    display: flex;
+    align-items: center;
+  }
+
+  .welcome-box {
+    background-color: rgba(255, 255, 255, 0.05);
+    border-radius: 16px;
+    padding: 3rem 2rem;
+    box-shadow: 0 0 20px rgba(0,0,0,0.05);
+  }
+
+  .welcome-section h1 span {
+    color: #0d6efd;
+  }
+
+  .welcome-section .btn {
+    font-size: 1.1rem;
+    padding: 0.75rem 1.5rem;
+    font-weight: 500;
+    border-radius: 0.5rem;
+    transition: background-color 0.3s, color 0.3s;
+  }
+
+  .welcome-logo {
+    width: 120px;
+    height: 120px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 4px solid #dee2e6;
+    box-shadow: 0 0 10px rgba(0,0,0,0.1);
+  }
+
+  /* Theme-specific styles */
+  body.theme-light .welcome-section {
+    background-color: #f8f9fa;
+    color: #212529;
+  }
+
+  body.theme-dark .welcome-section {
+    background-color: #121212;
+    color: #f1f1f1;
+  }
+
+  body.theme-navy .welcome-section {
+    background-color: #0a192f;
+    color: #dbeafe;
+  }
+
+  .footer {
+    padding: 1rem 0;
+    text-align: center;
+    font-size: 0.9rem;
+    color: #999;
+    background-color: transparent;
+    margin-top: auto;
+  }
+</style>
+{% endblock %}
+
+{% block body %}
+<section class="welcome-section">
+  <div class="container text-center">
+    <div class="welcome-box mx-auto">
+      <img
+        src="{% static 'logo2.jpg' %}"
+        alt="Venus Logo"
+        class="welcome-logo mb-4"
+      />
+      <h1 class="fw-bold display-5">
+        Welcome to <span>Venus Attendance System</span>
+      </h1>
+      <p class="lead mt-3 mb-4">
+        Smart, secure & efficient attendance management using
+        <strong>QR Code</strong> and <strong>Geo-Location</strong>.
+      </p>
+      <div class="d-flex flex-column flex-sm-row justify-content-center gap-3">
+        <a href="{% url 'attendance' %}" class="btn btn-primary shadow">
+          <i class="fas fa-qrcode me-2"></i>Mark Attendance
+        </a>
+        <a href="{% url 'attendance_history' %}" class="btn btn-primary shadow">
+          <i class="fas fa-calendar-alt me-2"></i>View History
+        </a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer class="footer">
+  &copy; {{ now|date:"Y" }} Venus Attendance System. All rights reserved.
+</footer>
+{% endblock %}
+
+{% block script %}
+<script>
+  function setTheme(theme) {
+    document.body.classList.remove("theme-light", "theme-dark", "theme-navy");
+    document.body.classList.add("theme-" + theme);
+    localStorage.setItem("theme", theme);
+  }
+
+  const savedTheme = localStorage.getItem("theme") || "light";
+  document.body.classList.add("theme-" + savedTheme);
+</script>
+{% endblock %}

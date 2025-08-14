@@ -1,0 +1,43 @@
+{% extends "index.html" %}
+{% block title %}Attendance Detail - {{ user_obj.username }}{% endblock %}
+
+{% block content %}
+<div class="container mt-5">
+  <h2 class="text-center mb-4">📋 Attendance Report for <b>{{ user_obj.get_full_name|default:user_obj.username }}</b></h2>
+
+  {% if records %}
+  <div class="table-responsive">
+    <table class="table table-bordered table-hover">
+      <thead class="table-dark">
+        <tr>
+          <th>#</th>
+          <th>Date</th>
+          <th>Check-In</th>
+          <th>Check-Out</th>
+          <th>Location</th>
+          <th>QR Code</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for record in records %}
+        <tr>
+          <td>{{ forloop.counter }}</td>
+          <td>{{ record.date }}</td>
+          <td>{{ record.check_in|default:"—" }}</td>
+          <td>{{ record.check_out|default:"—" }}</td>
+          <td>{{ record.location_name }}</td>
+          <td>{{ record.qr_code }}</td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+  {% else %}
+  <div class="alert alert-info text-center">No attendance records found.</div>
+  {% endif %}
+
+  <div class="text-center mt-4">
+    <a href="{% url 'attendance_report' %}" class="btn btn-secondary">← Back to Attendance Report</a>
+  </div>
+</div>
+{% endblock %}

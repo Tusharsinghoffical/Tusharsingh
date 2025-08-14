@@ -1,0 +1,107 @@
+{% extends "index.html" %}
+
+{% block content %}
+<div class="container mt-5">
+  <div class="card shadow-lg rounded">
+
+    <!-- Header -->
+    <div class="card-header bg-primary text-white d-flex justify-content-between align-items-center flex-wrap">
+      <h4 class="mb-2 mb-md-0">👤 Manage Users</h4>
+      <a href="{% url 'add_user' %}" class="btn btn-light btn-sm">
+        ➕ Add User
+      </a>
+    </div>
+
+    <!-- Filter Controls -->
+    <div class="card-body border-bottom">
+      <div class="row g-2">
+        <div class="col-md-6">
+          <input type="text" id="searchInput" class="form-control" placeholder="Search by username or email">
+        </div>
+        <div class="col-md-4">
+          <select id="roleFilter" class="form-select">
+            <option value="">Filter by Role</option>
+            <option value="admin">Admin</option>
+            <option value="staff">Staff</option>
+            <option value="user">User</option>
+          </select>
+        </div>
+      </div>
+    </div>
+
+    <!-- User Table -->
+    <div class="card-body">
+      {% if users %}
+        <div class="table-responsive">
+          <table class="table table-striped table-bordered align-middle" id="userTable">
+            <thead class="table-dark text-center">
+              <tr>
+                <th>User ID</th>
+                <th>Username</th>
+                <th>Email</th>
+                <th>Role</th>
+                <th>Actions</th>
+              </tr>
+            </thead>
+            <tbody>
+              {% for user in users %}
+              <tr>
+                <td class="text-center"><strong>VJAS-{{ user.id|stringformat:"04d" }}</strong></td>
+                <td class="username">{{ user.username }}</td>
+                <td class="email">{{ user.email }}</td>
+                <td class="role text-center">
+                  {% if user.is_superuser %}
+                    <span class="badge bg-danger">Admin</span>
+                  {% elif user.is_staff %}
+                    <span class="badge bg-warning text-dark">Staff</span>
+                  {% else %}
+                    <span class="badge bg-secondary">User</span>
+                  {% endif %}
+                </td>
+                <td class="text-center">
+                  <a href="{% url 'edit_user' user.id %}" class="btn btn-sm btn-warning me-1">✏️ Edit</a>
+                  <a href="{% url 'delete_user' user.id %}" class="btn btn-sm btn-danger" onclick="return confirm('Are you sure you want to delete this user?')">🗑️ Delete</a>
+                </td>
+              </tr>
+              {% endfor %}
+            </tbody>
+          </table>
+        </div>
+      {% else %}
+        <div class="alert alert-info text-center">
+          No users found.
+        </div>
+      {% endif %}
+    </div>
+
+  </div>
+</div>
+
+<!-- Search + Filter Script -->
+<script>
+  document.addEventListener("DOMContentLoaded", () => {
+    const searchInput = document.getElementById("searchInput");
+    const roleFilter = document.getElementById("roleFilter");
+    const rows = document.querySelectorAll("#userTable tbody tr");
+
+    function filterTable() {
+      const search = searchInput.value.toLowerCase();
+      const role = roleFilter.value;
+
+      rows.forEach(row => {
+        const username = row.querySelector(".username").textContent.toLowerCase();
+        const email = row.querySelector(".email").textContent.toLowerCase();
+        const roleBadge = row.querySelector(".role").textContent.toLowerCase();
+
+        const matchesSearch = username.includes(search) || email.includes(search);
+        const matchesRole = !role || roleBadge.includes(role);
+
+        row.style.display = matchesSearch && matchesRole ? "" : "none";
+      });
+    }
+
+    searchInput.addEventListener("input", filterTable);
+    roleFilter.addEventListener("change", filterTable);
+  });
+</script>
+{% endblock %}

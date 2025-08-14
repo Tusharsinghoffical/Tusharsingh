@@ -1,0 +1,67 @@
+{% extends "index.html" %}
+{% block title %} Admin Reports{% endblock %}
+{% block content %}
+<div class="container my-5">
+  <h1 class="text-center mb-5">📈 Admin Reports Dashboard</h1>
+  <!-- Summary Cards -->
+  <div class="row g-4 text-white">
+    <div class="col-md-4">
+      <div class="card bg-gradient-primary shadow rounded-4">
+        <div class="card-body text-center">
+          <h6 class="text-uppercase fw-bold">Total Users</h6>
+          <h2 class="display-5">{{ total_users }}</h2>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-4">
+      <div class="card bg-gradient-success shadow rounded-4">
+        <div class="card-body text-center">
+          <h6 class="text-uppercase fw-bold">Active Users</h6>
+          <h2 class="display-5">{{ active_users }}</h2>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-4">
+      <div class="card bg-gradient-warning shadow rounded-4">
+        <div class="card-body text-center">
+          <h6 class="text-uppercase fw-bold">Staff Users</h6>
+          <h2 class="display-5">{{ staff_users }}</h2>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- Recent Logins -->
+  <div class="d-flex justify-content-between align-items-center mt-5">
+    <h4 class="mb-0">🕒 Recent Logins</h4>
+    <a href="{% url 'download_users_csv_view' %}" class="btn btn-outline-dark bg-light btn-sm rounded-pill">⬇️ Download All Users (CSV)</a>
+  </div>
+  {% if recent_logins %}
+  <div class="table-responsive mt-3">
+    <table class="table table-bordered table-hover align-middle shadow-sm rounded-3 overflow-hidden">
+      <thead class="table-dark">
+        <tr>
+          <th>S no.</th>
+          <th>Username</th>
+          <th>Email</th>
+          <th>Last Login</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for user in recent_logins %}
+        <tr>
+          <td>{{ forloop.counter }}</td>
+          <td>{{ user.username }}</td>
+          <td>{{ user.email }}</td>
+          <td>{{ user.last_login|date:"D, M d, Y H:i" }}</td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+  {% else %}
+  <div class="alert alert-info mt-3">
+    <i class="bi bi-info-circle"></i> No recent login data available.
+  </div>
+  {% endif %}
+</div>
+{% endblock %}

@@ -1,0 +1,25 @@
+pip install gunicorn whitenoise
+pip freeze > requirements.txt
+
+
+Create render.yaml (for deployment settings) {
+    services:
+  - type: web
+    name: venus-attendance
+    env: python
+    plan: free
+    buildCommand: pip install -r requirements.txt
+    startCommand: gunicorn userproject.wsgi:application
+    envVars:
+      - key: DJANGO_SETTINGS_MODULE
+        value: userproject.settings
+      - key: SECRET_KEY
+        value: your_production_secret_key
+      - key: DEBUG
+        value: False
+
+}
+
+
+
+python manage.py collectstatic --noinput

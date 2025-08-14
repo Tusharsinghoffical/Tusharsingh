@@ -1,0 +1,156 @@
+{% extends "index.html" %}
+{% load static %}
+{% load form_tags %}
+{% block title%}Profile Page | Venus System{% endblock %}
+{% block head %}
+<link rel="icon" href="{% static 'logo2.jpg' %}" type="image/x-icon" />
+<link rel="shortcut icon" href="{% static 'logo2.jpg' %}" type="image/x-icon" />
+<style>
+  .theme-card {
+    transition: all 0.4s ease;
+    border-radius: 12px;
+  }
+  .theme-light {
+    background-color: #ffffff;
+    color: #000;
+  }
+  .theme-dark {
+    background-color: #343a40;
+    color: #f8f9fa;
+  }
+  .theme-navy {
+    background-color: #001f3f;
+    color: #ffffff;
+  }
+  .form-control {
+    border-radius: 10px;
+    border: 1px solid #ced4da;
+    padding: 10px 12px;
+    font-size: 1rem;
+    background-color: rgba(255, 255, 255, 0.95);
+    box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.075);
+    transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+  }
+  .form-control:focus {
+    border-color: #0d6efd;
+    box-shadow: 0 0 0 0.2rem rgba(13, 110, 253, 0.25);
+    outline: none;
+  }
+  .form-label {
+    font-weight: 600;
+    margin-bottom: 0.3rem;
+  }
+  .card-header {
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  }
+  .btn-outline-primary:hover {
+    background-color: #0d6efd;
+    color: white;
+  }
+</style>
+{% endblock %}
+{% block body %}
+<div class="container py-5">
+  <div class="row g-5 align-items-start">
+    <!-- ✅ Left: Profile Update Form -->
+    <div class="col-lg-6">
+      <div class="card shadow theme-card border-0">
+        <div class="card-header bg-primary text-white text-center rounded-top">
+          <h4>📝 Update Profile</h4>
+        </div>
+        <div class="card-body">
+          <form method="POST" novalidate>
+            {% csrf_token %}
+            <h5 class="mb-3">👤 Personal Info</h5>
+            <div class="mb-3">
+              {{ user_form.first_name.label_tag }} {{ user_form.first_name|add_class:'form-control' }}
+            </div>
+            <div class="mb-3">
+              {{ user_form.last_name.label_tag }} {{ user_form.last_name|add_class:'form-control' }}
+            </div>
+            <div class="mb-3">
+              {{ user_form.email.label_tag }} {{ user_form.email|add_class:'form-control' }}
+            </div>
+            <h5 class="mb-3">📄 Profile Details</h5>
+            <div class="mb-3">
+              {{ profile_form.phone.label_tag }} {{ profile_form.phone|add_class:'form-control' }}
+            </div>
+            <div class="mb-3">
+              {{ profile_form.position.label_tag }} {{ profile_form.position|add_class:'form-control' }}
+            </div>
+            <div class="mb-3">
+              {{ profile_form.address.label_tag }} {{ profile_form.address|add_class:'form-control' }}
+            </div>
+            <button type="submit" class="btn btn-primary">💾 Save</button>
+          </form>
+        </div>
+      </div>
+    </div>
+    <!-- ✅ Right: Profile Info Card -->
+    <div class="col-lg-6">
+      <div class="card shadow theme-card border-0" id="profileDetailsCard">
+        <div class="card-header bg-primary text-white text-center rounded-top">
+          <h4><i class="fas fa-user-circle me-2"></i>Your Profile</h4>
+        </div>
+        <div class="card-body">
+          <div class="row mb-3">
+            <div class="col-5 fw-semibold">Full Name:</div>
+            <div class="col-7">{{ user.get_full_name }}</div>
+          </div>
+          <div class="row mb-3">
+            <div class="col-5 fw-semibold">Email:</div>
+            <div class="col-7">{{ user.email }}</div>
+          </div>
+          <div class="row mb-3">
+            <div class="col-5 fw-semibold">Mobile Number:</div>
+            <div class="col-7">{{ profile.phone }}</div>
+          </div>
+          <div class="row mb-3">
+            <div class="col-5 fw-semibold">User ID:</div>
+            <div class="col-7">{{ user.id }}</div>
+          </div>
+          <div class="row mb-3">
+            <div class="col-5 fw-semibold">Username:</div>
+            <div class="col-7">{{ user.username }}</div>
+          </div>
+          <div class="row mb-3">
+            <div class="col-5 fw-semibold">Position:</div>
+            <div class="col-7">{{ profile.position }}</div>
+          </div>
+          <div class="text-center mt-4">
+            <a href="{% url 'home' %}" class="btn btn-outline-primary">
+              <i class="fas fa-home me-1"></i> Back to Dashboard
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- Theme Toggle Script -->
+<script>
+  document.addEventListener("DOMContentLoaded", () => {
+    const savedTheme = localStorage.getItem("theme") || "light";
+    applyTheme(savedTheme);
+  });
+  function setTheme(theme) {
+    localStorage.setItem("theme", theme);
+    applyTheme(theme);
+  }
+  function applyTheme(theme) {
+    document.body.className = "";
+    if (theme === "dark") {
+      document.body.classList.add("bg-dark", "text-light");
+    } else if (theme === "navy") {
+      document.body.style.backgroundColor = "#001f3f";
+      document.body.style.color = "white";
+    } else {
+      document.body.classList.add("bg-light", "text-dark");
+    }
+    document.querySelectorAll(".theme-card").forEach((card) => {
+      card.classList.remove("theme-light", "theme-dark", "theme-navy");
+      card.classList.add(`theme-${theme}`);
+    });
+  }
+</script>
+{% endblock %}

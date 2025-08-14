@@ -1,0 +1,107 @@
+{% extends "index.html" %}
+{% load static %}
+{% block title %}Admin Dashboard{% endblock %}
+{% block content %}
+<div class="container py-5">
+  <!-- Header -->
+  <div class="text-center mb-5">
+    <h1 class="display-5 fw-bold text-gradient">🛠️ Admin Dashboard</h1>
+    <p class="lead text-muted">Quick access to key administrative tasks and tools</p>
+  </div>
+  <!-- Grid -->
+  <div class="row g-4">
+    <!-- Add User -->
+    <div class="col-sm-6 col-lg-4">
+      <div class="card card-glow border-0 h-100">
+        <div class="card-body text-center">
+          <div class="icon-circle bg-primary mb-3">👤</div>
+          <h5 class="card-title fw-semibold">Add New User</h5>
+          <p class="text-muted small">Create a user account with system access.</p>
+          <a href="/admin/auth/user/add/" target="_blank" class="btn btn-primary w-100">➕ Add User</a>
+        </div>
+      </div>
+    </div>
+    <!-- Admin Panel -->
+    <div class="col-sm-6 col-lg-4">
+      <div class="card card-glow border-0 h-100">
+        <div class="card-body text-center">
+          <div class="icon-circle bg-dark mb-3">⚙️</div>
+          <h5 class="card-title fw-semibold">Django Admin Panel</h5>
+          <p class="text-muted small">Access Django models, permissions, and users.</p>
+          <a href="/admin/" target="_blank" class="btn btn-light w-100">Open Admin</a>
+        </div>
+      </div>
+    </div>
+    <!-- Attendance Report -->
+    <div class="col-sm-6 col-lg-4">
+      <div class="card card-glow border-0 h-100">
+        <div class="card-body text-center">
+          <div class="icon-circle bg-success mb-3">📋</div>
+          <h5 class="card-title fw-semibold">Attendance Report</h5>
+          <p class="text-muted small">Monitor and analyze attendance records.</p>
+          <a href="{% url 'attendance_report' %}" class="btn btn-success w-100">View Report</a>
+        </div>
+      </div>
+    </div>
+    <!-- Export CSV -->
+    <div class="col-sm-6 col-lg-4">
+      <div class="card card-glow border-0 h-100">
+        <div class="card-body text-center">
+          <div class="icon-circle bg-warning mb-3">⬇️</div>
+          <h5 class="card-title fw-semibold">Export CSV</h5>
+          <p class="text-muted small">Download user data in CSV format.</p>
+          <a href="{% url 'download_csv' %}" class="btn btn-warning w-100">Download CSV</a>
+        </div>
+      </div>
+    </div>
+    <!-- Manage Users -->
+    <div class="col-sm-6 col-lg-4">
+      <div class="card card-glow border-0 h-100">
+        <div class="card-body text-center">
+          <div class="icon-circle bg-info mb-3">🔧</div>
+          <h5 class="card-title fw-semibold">Manage Users</h5>
+          <p class="text-muted small">View, edit, or deactivate user accounts.</p>
+          <a href="{% url 'manage_users' %}" class="btn btn-info w-100">👥 Manage Users</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- Custom Styling -->
+<style>
+  .text-gradient {
+    background: linear-gradient(to right, #007bff, #6610f2);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+  .card-glow {
+    background-color: var(--bs-body-bg);
+    color: var(--bs-body-color);
+    transition: all 0.3s ease;
+    border-radius: 1rem;
+  }
+  .card-glow:hover {
+    transform: translateY(-6px);
+    box-shadow: 0 0 15px rgba(0, 123, 255, 0.15);
+  }
+  .icon-circle {
+    width: 60px;
+    height: 60px;
+    font-size: 28px;
+    line-height: 60px;
+    border-radius: 50%;
+    color: #fff;
+    margin: 0 auto;
+    box-shadow: 0 0 10px rgba(0,0,0,0.10);
+  }
+  @media (prefers-color-scheme: dark) {
+    .card-glow {
+      background-color: #1e1e2f !important;
+      color: #f1f1f1;
+    }
+    .text-muted {
+      color: #aaa !important;
+    }
+  }
+</style>
+{% endblock %}

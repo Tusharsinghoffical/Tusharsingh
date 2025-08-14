@@ -1,0 +1,39 @@
+{% extends "index.html" %} {% block content %}
+<div class="container mt-5">
+  <h2>User Details</h2>
+  <table class="table table-bordered mt-3">
+    <tr>
+      <th>ID</th>
+      <td>{{ user.id }}</td>
+    </tr>
+    <tr>
+      <th>Username</th>
+      <td>{{ user.username }}</td>
+    </tr>
+    <tr>
+      <th>Email</th>
+      <td>{{ user.email }}</td>
+    </tr>
+    <tr>
+      <th>First Name</th>
+      <td>{{ user.first_name }}</td>
+    </tr>
+    <tr>
+      <th>Last Name</th>
+      <td>{{ user.last_name }}</td>
+    </tr>
+    <tr>
+      <th>Is Staff</th>
+      <td>{{ user.is_staff }}</td>
+    </tr>
+    <tr>
+      <th>Is Active</th>
+      <td>{{ user.is_active }}</td>
+    </tr>
+  </table>
+
+  <a href="{% url 'download_user_csv' user.id %}" class="btn btn-success mt-3">
+    ⬇️ Download CSV
+  </a>
+</div>
+{% endblock %}
