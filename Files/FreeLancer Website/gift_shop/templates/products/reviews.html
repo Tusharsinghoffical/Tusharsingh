@@ -1,0 +1,245 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}{{ product.name }} Reviews - GiftNest{% endblock %}
+
+{% block content %}
+<div class="container py-5">
+    <div class="row">
+        <div class="col-md-8">
+            <h2 class="mb-4">Reviews for {{ product.name }}</h2>
+            
+            {% if user.is_authenticated %}
+            <div class="card mb-4">
+                <div class="card-body">
+                    <h5 class="card-title">Write a Review</h5>
+                    <form method="post" action="{% url 'products:add_review' product.id %}">
+                        {% csrf_token %}
+                        <div class="mb-3">
+                            <label class="form-label">Rating</label>
+                            <div class="rating">
+                                <input type="radio" name="rating" value="5" id="rating5" required>
+                                <label for="rating5"><i class="fas fa-star"></i></label>
+                                <input type="radio" name="rating" value="4" id="rating4">
+                                <label for="rating4"><i class="fas fa-star"></i></label>
+                                <input type="radio" name="rating" value="3" id="rating3">
+                                <label for="rating3"><i class="fas fa-star"></i></label>
+                                <input type="radio" name="rating" value="2" id="rating2">
+                                <label for="rating2"><i class="fas fa-star"></i></label>
+                                <input type="radio" name="rating" value="1" id="rating1">
+                                <label for="rating1"><i class="fas fa-star"></i></label>
+                            </div>
+                        </div>
+                        <div class="mb-3">
+                            <label for="reviewText" class="form-label">Your Review</label>
+                            <textarea class="form-control" id="reviewText" name="content" rows="4" required></textarea>
+                        </div>
+                        <button type="submit" class="btn btn-primary">Submit Review</button>
+                    </form>
+                </div>
+            </div>
+            {% endif %}
+            
+            {% if reviews %}
+            <div class="reviews">
+                {% for review in reviews %}
+                <div class="card mb-3">
+                    <div class="card-body">
+                        <div class="d-flex justify-content-between align-items-center mb-2">
+                            <div>
+                                <h6 class="card-subtitle mb-1">{{ review.user.username }}</h6>
+                                <div class="text-muted small">{{ review.created|date:"F j, Y" }}</div>
+                            </div>
+                            <div class="rating-display">
+                                {% for i in "12345"|make_list %}
+                                {% if forloop.counter <= review.rating %}
+                                <i class="fas fa-star text-warning"></i>
+                                {% else %}
+                                <i class="far fa-star text-warning"></i>
+                                {% endif %}
+                                {% endfor %}
+                            </div>
+                        </div>
+                        <p class="card-text">{{ review.content }}</p>
+                        {% if review.user == user %}
+                        <div class="mt-2">
+                            <button class="btn btn-sm btn-outline-primary" 
+                                    onclick="editReview('{{ review.id }}', '{{ review.content|escapejs }}', {{ review.rating }})">
+                                Edit
+                            </button>
+                            <form method="post" action="{% url 'products:delete_review' review.id %}" class="d-inline">
+                                {% csrf_token %}
+                                <button type="submit" class="btn btn-sm btn-outline-danger" 
+                                        onclick="return confirm('Are you sure you want to delete this review?')">
+                                    Delete
+                                </button>
+                            </form>
+                        </div>
+                        {% endif %}
+                    </div>
+                </div>
+                {% endfor %}
+                
+                {% if reviews.has_other_pages %}
+                <nav aria-label="Reviews pagination">
+                    <ul class="pagination justify-content-center">
+                        {% if reviews.has_previous %}
+                        <li class="page-item">
+                            <a class="page-link" href="?page={{ reviews.previous_page_number }}">Previous</a>
+                        </li>
+                        {% endif %}
+                        
+                        {% for num in reviews.paginator.page_range %}
+                        <li class="page-item {% if reviews.number == num %}active{% endif %}">
+                            <a class="page-link" href="?page={{ num }}">{{ num }}</a>
+                        </li>
+                        {% endfor %}
+                        
+                        {% if reviews.has_next %}
+                        <li class="page-item">
+                            <a class="page-link" href="?page={{ reviews.next_page_number }}">Next</a>
+                        </li>
+                        {% endif %}
+                    </ul>
+                </nav>
+                {% endif %}
+            </div>
+            {% else %}
+            <div class="text-center py-4">
+                <i class="fas fa-comments fa-3x text-muted mb-3"></i>
+                <h5>No reviews yet</h5>
+                <p class="text-muted">Be the first to review this product!</p>
+            </div>
+            {% endif %}
+        </div>
+        
+        <div class="col-md-4">
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title">Rating Summary</h5>
+                    <div class="rating-summary">
+                        <div class="overall-rating text-center mb-3">
+                            <h2 class="mb-0">{{ product.average_rating|floatformat:1 }}</h2>
+                            <div class="rating-stars">
+                                {% with ''|center:product.average_rating|make_list as stars %}
+                                {% for _ in stars %}
+                                <i class="fas fa-star text-warning"></i>
+                                {% endfor %}
+                                {% endwith %}
+                            </div>
+                            <div class="text-muted">{{ product.review_count }} reviews</div>
+                        </div>
+                        
+                        {% for rating in rating_distribution %}
+                        <div class="rating-bar mb-2">
+                            <div class="d-flex align-items-center">
+                                <div class="rating-label me-2">{{ forloop.revcounter }} stars</div>
+                                <div class="progress flex-grow-1">
+                                    <div class="progress-bar bg-warning" 
+                                         role="progressbar" 
+                                         style="width: {{ rating.percentage }}%"
+                                         aria-valuenow="{{ rating.percentage }}" 
+                                         aria-valuemin="0" 
+                                         aria-valuemax="100">
+                                    </div>
+                                </div>
+                                <div class="rating-count ms-2">{{ rating.count }}</div>
+                            </div>
+                        </div>
+                        {% endfor %}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Edit Review Modal -->
+<div class="modal fade" id="editReviewModal" tabindex="-1">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Edit Review</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+            </div>
+            <form id="editReviewForm" method="post">
+                {% csrf_token %}
+                <div class="modal-body">
+                    <div class="mb-3">
+                        <label class="form-label">Rating</label>
+                        <div class="rating">
+                            <input type="radio" name="edit_rating" value="5" id="edit_rating5">
+                            <label for="edit_rating5"><i class="fas fa-star"></i></label>
+                            <input type="radio" name="edit_rating" value="4" id="edit_rating4">
+                            <label for="edit_rating4"><i class="fas fa-star"></i></label>
+                            <input type="radio" name="edit_rating" value="3" id="edit_rating3">
+                            <label for="edit_rating3"><i class="fas fa-star"></i></label>
+                            <input type="radio" name="edit_rating" value="2" id="edit_rating2">
+                            <label for="edit_rating2"><i class="fas fa-star"></i></label>
+                            <input type="radio" name="edit_rating" value="1" id="edit_rating1">
+                            <label for="edit_rating1"><i class="fas fa-star"></i></label>
+                        </div>
+                    </div>
+                    <div class="mb-3">
+                        <label for="editReviewText" class="form-label">Your Review</label>
+                        <textarea class="form-control" id="editReviewText" name="content" rows="4" required></textarea>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    <button type="submit" class="btn btn-primary">Save Changes</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block extra_css %}
+<style>
+.rating {
+    display: flex;
+    flex-direction: row-reverse;
+    justify-content: flex-end;
+}
+
+.rating input {
+    display: none;
+}
+
+.rating label {
+    color: #ddd;
+    cursor: pointer;
+    font-size: 1.5rem;
+    padding: 0 0.1em;
+}
+
+.rating input:checked ~ label,
+.rating label:hover,
+.rating label:hover ~ label {
+    color: #ffc107;
+}
+
+.rating-bar .progress {
+    height: 0.5rem;
+}
+
+.rating-summary .rating-stars {
+    font-size: 1.5rem;
+    color: #ffc107;
+}
+</style>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+function editReview(reviewId, content, rating) {
+    const modal = new bootstrap.Modal(document.getElementById('editReviewModal'));
+    const form = document.getElementById('editReviewForm');
+    form.action = `/products/reviews/${reviewId}/edit/`;
+    document.getElementById('editReviewText').value = content;
+    document.querySelector(`input[name="edit_rating"][value="${rating}"]`).checked = true;
+    modal.show();
+}
+</script>
+{% endblock %}

@@ -255,6 +255,10 @@ main {
   margin: 4rem 0;
 }
 
+.tech-card[style*="display: none"] {
+  display: none !important;
+}
+
 .tech-card {
   background: var(--card-bg);
   padding: 2rem;

@@ -1,0 +1,92 @@
+{% extends 'base.html' %}
+{% block title %}Admin Dashboard - GiftNest{% endblock %}
+{% block content %}
+<div class="container py-5">
+  <h2 class="mb-4">Admin Dashboard</h2>
+  <div class="row mb-4">
+    <div class="col-md-4">
+      <div class="card text-center shadow">
+        <div class="card-body">
+          <h5 class="card-title">Total Users</h5>
+          <p class="display-4 fw-bold text-primary">{{ user_count }}</p>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-4">
+      <div class="card text-center shadow">
+        <div class="card-body">
+          <h5 class="card-title">Total Products</h5>
+          <p class="display-4 fw-bold text-success">{{ product_count }}</p>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-4">
+      <div class="card text-center shadow">
+        <div class="card-body">
+          <h5 class="card-title">Total Orders</h5>
+          <p class="display-4 fw-bold text-warning">{{ order_count }}</p>
+        </div>
+      </div>
+    </div>
+  </div>
+  <form method="get" class="mb-4">
+    <div class="input-group input-group-lg">
+      <input type="text" class="form-control" name="q" placeholder="Search users, products, orders..." value="{{ search_query }}">
+      <button class="btn btn-primary" type="submit"><i class="fas fa-search"></i> Search</button>
+    </div>
+  </form>
+  <div class="row g-4">
+    <div class="col-lg-4">
+      <div class="card shadow">
+        <div class="card-header bg-primary text-white">Users</div>
+        <div class="card-body p-0">
+          <table class="table mb-0">
+            <thead><tr><th>Username</th><th>Email</th></tr></thead>
+            <tbody>
+              {% for user in users %}
+              <tr><td>{{ user.username }}</td><td>{{ user.email }}</td></tr>
+              {% empty %}
+              <tr><td colspan="2" class="text-center">No users found.</td></tr>
+              {% endfor %}
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+    <div class="col-lg-4">
+      <div class="card shadow">
+        <div class="card-header bg-success text-white">Products</div>
+        <div class="card-body p-0">
+          <table class="table mb-0">
+            <thead><tr><th>Name</th><th>Price</th></tr></thead>
+            <tbody>
+              {% for product in products %}
+              <tr><td>{{ product.name }}</td><td>${{ product.price }}</td></tr>
+              {% empty %}
+              <tr><td colspan="2" class="text-center">No products found.</td></tr>
+              {% endfor %}
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+    <div class="col-lg-4">
+      <div class="card shadow">
+        <div class="card-header bg-warning text-white">Orders</div>
+        <div class="card-body p-0">
+          <table class="table mb-0">
+            <thead><tr><th>ID</th><th>User</th><th>Total</th></tr></thead>
+            <tbody>
+              {% for order in orders %}
+              <tr><td>{{ order.id }}</td><td>{{ order.user.username }}</td><td>${{ order.get_total_cost }}</td></tr>
+              {% empty %}
+              <tr><td colspan="3" class="text-center">No orders found.</td></tr>
+              {% endfor %}
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}

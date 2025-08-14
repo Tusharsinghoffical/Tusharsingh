@@ -1,0 +1,467 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Contact Us - GiftNest{% endblock %}
+
+{% block content %}
+<!-- Hero Section -->
+<section class="py-5 bg-gradient-primary text-white">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12 text-center">
+                <div class="text-center mb-4">
+                    <!-- Logo removed -->
+                </div>
+                <h1 class="hero-title mb-3">
+                    <i class="fas fa-envelope me-3"></i>Get in Touch
+                </h1>
+                <p class="hero-subtitle">We'd love to hear from you! Send us a message and we'll respond as soon as possible.</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Contact Section -->
+<section class="py-5">
+    <div class="container">
+        <div class="row g-5">
+            <!-- Contact Form -->
+            <div class="col-lg-8">
+                <div class="card contact-form-card">
+                    <div class="card-body p-5">
+                        <h3 class="card-title mb-4">
+                            <i class="fas fa-paper-plane me-2"></i>Send us a Message
+                        </h3>
+                        <form method="post" class="needs-validation" novalidate>
+                            {% csrf_token %}
+                            <div class="row g-3">
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label for="name" class="form-label">
+                                            <i class="fas fa-user me-2"></i>Your Name
+                                        </label>
+                                        <input type="text" class="form-control" id="name" name="name" required>
+                                        <div class="invalid-feedback">
+                                            Please provide your name.
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label for="email" class="form-label">
+                                            <i class="fas fa-envelope me-2"></i>Email Address
+                                        </label>
+                                        <input type="email" class="form-control" id="email" name="email" required>
+                                        <div class="invalid-feedback">
+                                            Please provide a valid email address.
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-12">
+                                    <div class="form-group">
+                                        <label for="subject" class="form-label">
+                                            <i class="fas fa-tag me-2"></i>Subject
+                                        </label>
+                                        <input type="text" class="form-control" id="subject" name="subject" required>
+                                        <div class="invalid-feedback">
+                                            Please provide a subject.
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-12">
+                                    <div class="form-group">
+                                        <label for="message" class="form-label">
+                                            <i class="fas fa-comment me-2"></i>Message
+                                        </label>
+                                        <textarea class="form-control" id="message" name="message" rows="6" required 
+                                                  placeholder="Tell us how we can help you..."></textarea>
+                                        <div class="invalid-feedback">
+                                            Please provide your message.
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-12">
+                                    <button type="submit" class="btn btn-primary btn-lg w-100">
+                                        <i class="fas fa-paper-plane me-2"></i>Send Message
+                                    </button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Contact Info -->
+            <div class="col-lg-4">
+                <div class="contact-info">
+                    <h3 class="mb-4">
+                        <i class="fas fa-info-circle me-2"></i>Contact Information
+                    </h3>
+                    
+                    <!-- Address -->
+                    <div class="contact-item animate-fade-in">
+                        <div class="contact-icon">
+                            <i class="fas fa-map-marker-alt"></i>
+                        </div>
+                        <div class="contact-details">
+                            <h5>Our Location</h5>
+                            <p>123 Gift Street<br>Shopping City, SC 12345<br>United States</p>
+                        </div>
+                    </div>
+
+                    <!-- Phone -->
+                    <div class="contact-item animate-fade-in">
+                        <div class="contact-icon">
+                            <i class="fas fa-phone"></i>
+                        </div>
+                        <div class="contact-details">
+                            <h5>Phone Numbers</h5>
+                            <p>
+                                <a href="tel:+15551234567" class="text-decoration-none">
+                                    <i class="fas fa-phone me-2"></i>(555) 123-4567
+                                </a><br>
+                                <a href="tel:18004438637" class="text-decoration-none">
+                                    <i class="fas fa-phone me-2"></i>1-800-GIFTNEST
+                                </a>
+                            </p>
+                        </div>
+                    </div>
+
+                    <!-- Email -->
+                    <div class="contact-item animate-fade-in">
+                        <div class="contact-icon">
+                            <i class="fas fa-envelope"></i>
+                        </div>
+                        <div class="contact-details">
+                            <h5>Email Addresses</h5>
+                            <p>
+                                <a href="mailto:info@giftnest.com" class="text-decoration-none">
+                                    <i class="fas fa-envelope me-2"></i>info@giftnest.com
+                                </a><br>
+                                <a href="mailto:support@giftnest.com" class="text-decoration-none">
+                                    <i class="fas fa-envelope me-2"></i>support@giftnest.com
+                                </a>
+                            </p>
+                        </div>
+                    </div>
+
+                    <!-- Business Hours -->
+                    <div class="contact-item animate-fade-in">
+                        <div class="contact-icon">
+                            <i class="fas fa-clock"></i>
+                        </div>
+                        <div class="contact-details">
+                            <h5>Business Hours</h5>
+                            <p>
+                                Monday - Friday: 9:00 AM - 6:00 PM<br>
+                                Saturday: 10:00 AM - 4:00 PM<br>
+                                Sunday: Closed
+                            </p>
+                        </div>
+                    </div>
+
+                    <!-- Social Media -->
+                    <div class="contact-item animate-fade-in">
+                        <div class="contact-icon">
+                            <i class="fas fa-share-alt"></i>
+                        </div>
+                        <div class="contact-details">
+                            <h5>Follow Us</h5>
+                            <div class="social-links">
+                                <a href="#" class="social-link">
+                                    <i class="fab fa-facebook-f"></i>
+                                </a>
+                                <a href="#" class="social-link">
+                                    <i class="fab fa-twitter"></i>
+                                </a>
+                                <a href="#" class="social-link">
+                                    <i class="fab fa-instagram"></i>
+                                </a>
+                                <a href="#" class="social-link">
+                                    <i class="fab fa-linkedin-in"></i>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+{% comment %} <!-- Map Section -->
+<section class="py-5 bg-light">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12 text-center mb-4">
+                <h2 class="text-gradient">Find Us on the Map</h2>
+                <p class="lead text-muted">Visit our store or get directions</p>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-12">
+                <div class="card map-card">
+                    <div class="card-body p-0">
+                        <div class="map-placeholder">
+                            <div class="map-content">
+                                <i class="fas fa-map-marked-alt fa-4x text-primary mb-3"></i>
+                                <h4>Our Store Location</h4>
+                                <p class="text-muted">123 Gift Street, Shopping City, SC 12345</p>
+                                <div class="mt-3">
+                                    <a href="#" class="btn btn-primary me-2">
+                                        <i class="fas fa-directions me-2"></i>Get Directions
+                                    </a>
+                                    <a href="#" class="btn btn-outline-primary">
+                                        <i class="fas fa-phone me-2"></i>Call Us
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section> {% endcomment %}
+
+<!-- FAQ Section -->
+<section class="py-5">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12 text-center mb-5">
+                <h2 class="text-gradient">Frequently Asked Questions</h2>
+                <p class="lead text-muted">Find answers to common questions</p>
+            </div>
+        </div>
+        <div class="row g-4">
+            <div class="col-lg-6">
+                <div class="faq-item animate-fade-in">
+                    <h5>
+                        <i class="fas fa-question-circle me-2 text-primary"></i>
+                        How long does shipping take?
+                    </h5>
+                    <p class="text-muted">Standard shipping takes 3-5 business days, while express shipping takes 1-2 business days.</p>
+                </div>
+            </div>
+            <div class="col-lg-6">
+                <div class="faq-item animate-fade-in">
+                    <h5>
+                        <i class="fas fa-question-circle me-2 text-primary"></i>
+                        Do you offer gift wrapping?
+                    </h5>
+                    <p class="text-muted">Yes! We offer beautiful gift wrapping for an additional $5.99 per item.</p>
+                </div>
+            </div>
+            <div class="col-lg-6">
+                <div class="faq-item animate-fade-in">
+                    <h5>
+                        <i class="fas fa-question-circle me-2 text-primary"></i>
+                        What is your return policy?
+                    </h5>
+                    <p class="text-muted">We offer a 30-day return policy for all unused items in original packaging.</p>
+                </div>
+            </div>
+            <div class="col-lg-6">
+                <div class="faq-item animate-fade-in">
+                    <h5>
+                        <i class="fas fa-question-circle me-2 text-primary"></i>
+                        Can I customize my order?
+                    </h5>
+                    <p class="text-muted">Absolutely! Contact us for custom orders and personalized gift options.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<style>
+/* Contact Form Card */
+.contact-form-card {
+    background: rgba(255, 255, 255, 0.9);
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    border-radius: var(--border-radius-lg);
+    box-shadow: var(--shadow-lg);
+}
+
+/* Contact Info */
+.contact-info {
+    background: rgba(255, 255, 255, 0.9);
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    border-radius: var(--border-radius-lg);
+    padding: 2rem;
+    box-shadow: var(--shadow-md);
+}
+
+.contact-item {
+    display: flex;
+    align-items: flex-start;
+    margin-bottom: 2rem;
+    padding: 1rem;
+    border-radius: var(--border-radius);
+    transition: all 0.3s ease;
+}
+
+.contact-item:hover {
+    background: rgba(99, 102, 241, 0.1);
+    transform: translateX(5px);
+}
+
+.contact-icon {
+    width: 50px;
+    height: 50px;
+    background: var(--gradient-primary);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-right: 1rem;
+    flex-shrink: 0;
+}
+
+.contact-icon i {
+    color: white;
+    font-size: 1.2rem;
+}
+
+.contact-details h5 {
+    margin-bottom: 0.5rem;
+    color: var(--gray-800);
+}
+
+.contact-details p {
+    margin-bottom: 0;
+    color: var(--gray-600);
+}
+
+.contact-details a {
+    color: var(--primary-color);
+    transition: color 0.3s ease;
+}
+
+.contact-details a:hover {
+    color: var(--primary-dark);
+}
+
+/* Social Links */
+.social-links {
+    display: flex;
+    gap: 0.5rem;
+}
+
+.social-link {
+    width: 40px;
+    height: 40px;
+    background: var(--gradient-primary);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    text-decoration: none;
+    transition: all 0.3s ease;
+}
+
+.social-link:hover {
+    transform: translateY(-3px);
+    box-shadow: var(--shadow-md);
+    color: white;
+}
+
+/* Map Card */
+.map-card {
+    border: none;
+    border-radius: var(--border-radius-lg);
+    overflow: hidden;
+    box-shadow: var(--shadow-lg);
+}
+
+.map-placeholder {
+    height: 400px;
+    background: var(--gray-100);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+}
+
+.map-content {
+    text-align: center;
+    padding: 2rem;
+}
+
+/* FAQ Items */
+.faq-item {
+    background: white;
+    padding: 1.5rem;
+    border-radius: var(--border-radius);
+    box-shadow: var(--shadow-sm);
+    transition: all 0.3s ease;
+}
+
+.faq-item:hover {
+    transform: translateY(-3px);
+    box-shadow: var(--shadow-md);
+}
+
+.faq-item h5 {
+    color: var(--gray-800);
+    margin-bottom: 0.75rem;
+}
+
+/* Form Styling */
+.form-control {
+    border: 2px solid var(--gray-200);
+    border-radius: var(--border-radius);
+    padding: 0.75rem 1rem;
+    transition: all 0.3s ease;
+}
+
+.form-control:focus {
+    border-color: var(--primary-color);
+    box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.1);
+}
+
+.form-label {
+    font-weight: 500;
+    color: var(--gray-700);
+    margin-bottom: 0.5rem;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .contact-form-card,
+    .contact-info {
+        margin-bottom: 2rem;
+    }
+    
+    .contact-item {
+        flex-direction: column;
+        text-align: center;
+    }
+    
+    .contact-icon {
+        margin-right: 0;
+        margin-bottom: 1rem;
+    }
+}
+</style>
+
+<script>
+// Form validation
+(function () {
+    'use strict'
+    const forms = document.querySelectorAll('.needs-validation')
+    Array.from(forms).forEach(function (form) {
+        form.addEventListener('submit', function (event) {
+            if (!form.checkValidity()) {
+                event.preventDefault()
+                event.stopPropagation()
+            }
+            form.classList.add('was-validated')
+        }, false)
+    })
+})()
+</script>
+{% endblock %}

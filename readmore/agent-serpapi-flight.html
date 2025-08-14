@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>SerpAPI Flight Agent (JSON) - Tushar Singh</title>
+  <meta name="description" content="Details for SerpAPI Flight Agent configuration JSON. Overview, features, tech stack, and download link." />
+  <link rel="icon" type="image/x-icon" href="../profile.jpg">
+  <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet" />
+  <link rel="stylesheet" href="../style.css" />
+</head>
+<body>
+  <header>
+    <nav class="navbar">
+      <div class="logo"><a href="../index.html">Tushar Singh</a></div>
+      <ul class="nav-links">
+        <li><a href="../index.html">Home</a></li>
+        <li><a href="../services.html">Services</a></li>
+        <li><a href="../projects.html" class="active">Projects</a></li>
+        <li><a href="../about.html">About</a></li>
+        <li><a href="../contact.html">Contact</a></li>
+      </ul>
+      <button id="theme-toggle" aria-label="Toggle Theme" class="theme-btn">🌙</button>
+      <div class="menu-toggle">&#9776;</div>
+    </nav>
+  </header>
+
+  <main>
+    <section class="hero" data-aos="fade-down">
+      <h1>SerpAPI <span class="highlight">Flight</span> Agent (JSON)</h1>
+      <p>Agent configuration for flight search via SerpAPI, tailored for research and travel assistance.</p>
+    </section>
+
+    <section class="project-details" data-aos="fade-up">
+      <div class="project-overview">
+        <h2>Overview</h2>
+        <p>This JSON describes tools and prompts to query SerpAPI for flight information: routes, prices, and schedules. Insert your SerpAPI key and run.</p>
+        <div class="project-stats">
+          <div class="stat-item"><div class="stat-number">Search</div><div class="stat-label">Flights</div></div>
+          <div class="stat-item"><div class="stat-number">API</div><div class="stat-label">Driven</div></div>
+          <div class="stat-item"><div class="stat-number">Config</div><div class="stat-label">Based</div></div>
+        </div>
+      </div>
+
+      <div class="technical-details">
+        <h2>Tech Stack</h2>
+        <div class="tech-stack">
+          <span class="tech-tag">JSON</span>
+          <span class="tech-tag">SerpAPI</span>
+          <span class="tech-tag">Agents</span>
+        </div>
+      </div>
+
+      <div class="project-features">
+        <h2>Key Features</h2>
+        <div class="features-grid">
+          <div class="step">
+            <div class="step-number">1</div>
+            <h3>Route Queries</h3>
+            <p>Query by origin, destination, and dates.</p>
+          </div>
+          <div class="step">
+            <div class="step-number">2</div>
+            <h3>Result Parsing</h3>
+            <p>Structured outputs for downstream processing.</p>
+          </div>
+          <div class="step">
+            <div class="step-number">3</div>
+            <h3>API Key Slot</h3>
+            <p>Simple placeholder to inject SerpAPI key.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="cta-section" data-aos="fade-up">
+      <div class="cta-content">
+        <h2>Download</h2>
+        <p>Pull the JSON and connect your API key.</p>
+        <div class="cta-buttons">
+          <a href="../Files/AI AGENTS/serpapiflight.json" class="btn-primary" download>Download JSON</a>
+          <a href="../projects.html" class="btn-secondary">Back to Projects</a>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <div class="footer-content">
+      <div class="footer-section">
+        <h3>Tushar Singh</h3>
+        <p>Data Scientist & AI Developer</p>
+      </div>
+      <div class="footer-section">
+        <h4>Quick Links</h4>
+        <ul>
+          <li><a href="../about.html">About</a></li>
+          <li><a href="../projects.html">Projects</a></li>
+          <li><a href="../services.html">Services</a></li>
+          <li><a href="../contact.html">Contact</a></li>
+        </ul>
+      </div>
+      <div class="footer-section">
+        <h4>Connect</h4>
+        <ul>
+          <li><a href="https://github.com/Tusharsinghoffical" target="_blank">GitHub</a></li>
+          <li><a href="https://www.linkedin.com/in/tusharsingh2011/" target="_blank">LinkedIn</a></li>
+          <li><a href="../contact.html">Email</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p>© 2025 Tushar Singh. All rights reserved.</p>
+    </div>
+  </footer>
+
+  <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+  <script>
+    AOS.init({ duration: 1000, once: true, offset: 100 });
+    const menuToggle = document.querySelector(".menu-toggle");
+    const navLinks = document.querySelector(".nav-links");
+    if (menuToggle && navLinks) menuToggle.addEventListener("click", () => navLinks.classList.toggle("active"));
+    const themeBtn = document.getElementById("theme-toggle");
+    const html = document.documentElement;
+    const savedTheme = localStorage.getItem("theme");
+    if (savedTheme) { html.setAttribute("data-theme", savedTheme); themeBtn.textContent = savedTheme === "dark" ? "☀️" : "🌙"; } else { html.setAttribute("data-theme", "light"); }
+    themeBtn.addEventListener("click", () => { const t = html.getAttribute("data-theme") === "light" ? "dark" : "light"; html.setAttribute("data-theme", t); localStorage.setItem("theme", t); themeBtn.textContent = t === "dark" ? "☀️" : "🌙"; });
+    window.addEventListener('load', () => { document.body.classList.add('loaded'); });
+  </script>
+</body>
+</html>

@@ -1,0 +1,209 @@
+{% extends 'base.html' %}
+{% load crispy_forms_tags %}
+
+{% block title %}Contact Us - FreelancerPro{% endblock %}
+
+{% block extra_css %}
+<style>
+    .contact-hero {
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        color: white;
+        padding: 80px 0;
+        position: relative;
+        overflow: hidden;
+    }
+    .contact-hero::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><defs><pattern id="grain" width="100" height="100" patternUnits="userSpaceOnUse"><circle cx="50" cy="50" r="1" fill="white" opacity="0.1"/></pattern></defs><rect width="100" height="100" fill="url(%23grain)"/></svg>');
+        opacity: 0.3;
+    }
+    .contact-card {
+        background: white;
+        border-radius: 20px;
+        box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+        overflow: hidden;
+    }
+    .contact-info {
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        color: white;
+        padding: 3rem;
+    }
+    .contact-info i {
+        font-size: 2rem;
+        margin-bottom: 1rem;
+    }
+    .form-control {
+        border-radius: 12px;
+        border: 2px solid #e5e7eb;
+        padding: 15px 20px;
+        font-size: 16px;
+        transition: all 0.3s ease;
+    }
+    .form-control:focus {
+        border-color: #667eea;
+        box-shadow: 0 0 0 3px rgba(102,126,234,0.1);
+        transform: translateY(-2px);
+    }
+    .btn-submit {
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        border: none;
+        border-radius: 12px;
+        padding: 15px 30px;
+        font-size: 16px;
+        font-weight: 600;
+        color: white;
+        transition: all 0.3s ease;
+    }
+    .btn-submit:hover {
+        transform: translateY(-3px);
+        box-shadow: 0 15px 40px rgba(102, 126, 234, 0.4);
+        color: white;
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<!-- Hero Section -->
+<section class="contact-hero">
+    <div class="container position-relative">
+        <div class="row align-items-center">
+            <div class="col-lg-8 mx-auto text-center">
+                <h1 class="display-4 fw-bold mb-4">Get In Touch</h1>
+                <p class="lead mb-0">Ready to start your project? Let's discuss how we can help bring your ideas to life.</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Contact Form Section -->
+<section class="py-5">
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-lg-10">
+                <div class="contact-card">
+                    <div class="row g-0">
+                        <div class="col-lg-5">
+                            <div class="contact-info">
+                                <h3 class="mb-4">Let's Start a Conversation</h3>
+                                <p class="mb-4">Ready to bring your vision to life? We're here to help you create something amazing.</p>
+                                
+                                <div class="mb-4">
+                                    <i class="fas fa-envelope"></i>
+                                    <h5>Email Us</h5>
+                                    <p class="mb-0">hello@freelancerpro.com</p>
+                                </div>
+                                
+                                <div class="mb-4">
+                                    <i class="fas fa-phone"></i>
+                                    <h5>Call Us</h5>
+                                    <p class="mb-0">+1 (555) 123-4567</p>
+                                </div>
+                                
+                                <div class="mb-4">
+                                    <i class="fas fa-map-marker-alt"></i>
+                                    <h5>Visit Us</h5>
+                                    <p class="mb-0">123 Innovation Street<br>Tech City, TC 12345</p>
+                                </div>
+                                
+                                <div class="d-flex gap-3">
+                                    <a href="#" class="btn btn-light btn-sm">
+                                        <i class="fab fa-facebook-f"></i>
+                                    </a>
+                                    <a href="#" class="btn btn-light btn-sm">
+                                        <i class="fab fa-twitter"></i>
+                                    </a>
+                                    <a href="#" class="btn btn-light btn-sm">
+                                        <i class="fab fa-linkedin-in"></i>
+                                    </a>
+                                    <a href="#" class="btn btn-light btn-sm">
+                                        <i class="fab fa-github"></i>
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="col-lg-7">
+                            <div class="p-4 p-lg-5">
+                                <h4 class="mb-4">Send us a Message</h4>
+                                
+                                <form action="https://formspree.io/f/xldldqgy" method="POST" id="contactForm">
+                                    <div class="row">
+                                        <div class="col-md-6 mb-3">
+                                            <label for="name" class="form-label">Full Name *</label>
+                                            <input type="text" class="form-control" id="name" name="name" placeholder="Enter your full name" required>
+                                        </div>
+                                        <div class="col-md-6 mb-3">
+                                            <label for="email" class="form-label">Email Address *</label>
+                                            <input type="email" class="form-control" id="email" name="email" placeholder="your.email@example.com" required>
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="row">
+                                        <div class="col-md-6 mb-3">
+                                            <label for="phone" class="form-label">Phone Number</label>
+                                            <input type="tel" class="form-control" id="phone" name="phone" placeholder="+1 (555) 123-4567">
+                                        </div>
+                                        <div class="col-md-6 mb-3">
+                                            <label for="subject" class="form-label">Subject *</label>
+                                            <input type="text" class="form-control" id="subject" name="subject" placeholder="What is this about?" required>
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="mb-3">
+                                        <label for="service" class="form-label">Service Required</label>
+                                        <select class="form-control" id="service" name="service">
+                                            <option value="">Select a service</option>
+                                            <option value="web-development">Web Development</option>
+                                            <option value="mobile-development">Mobile Development</option>
+                                            <option value="ui-ux-design">UI/UX Design</option>
+                                            <option value="seo-optimization">SEO Optimization</option>
+                                            <option value="consultation">Consultation</option>
+                                            <option value="other">Other</option>
+                                        </select>
+                                    </div>
+                                    
+                                    <div class="mb-4">
+                                        <label for="message" class="form-label">Message *</label>
+                                        <textarea class="form-control" id="message" name="message" rows="6" placeholder="Tell us about your project, requirements, timeline, and budget..." required></textarea>
+                                    </div>
+                                    
+                                    <button type="submit" class="btn btn-submit w-100">
+                                        <i class="fas fa-paper-plane me-2"></i>Send Message
+                                    </button>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+document.getElementById('contactForm').addEventListener('submit', function(e) {
+    // Form will be handled by Formspree
+    // You can add custom validation here if needed
+});
+
+// Handle Formspree success
+if (window.location.search.includes('submission-successful')) {
+    // Show success message
+    const successDiv = document.createElement('div');
+    successDiv.className = 'alert alert-success alert-dismissible fade show';
+    successDiv.innerHTML = `
+        <i class="fas fa-check-circle me-2"></i>
+        Thank you! Your message has been sent successfully. We'll get back to you soon.
+        <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+    `;
+    document.querySelector('.contact-card').insertBefore(successDiv, document.querySelector('.contact-card').firstChild);
+}
+</script>
+{% endblock %} 

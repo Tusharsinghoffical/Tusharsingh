@@ -1,0 +1,224 @@
+{
+  "name": "Google Sheet  Agent",
+  "nodes": [
+    {
+      "parameters": {},
+      "type": "n8n-nodes-base.manualTrigger",
+      "typeVersion": 1,
+      "position": [
+        -360,
+        -60
+      ],
+      "id": "1fba5e6f-8a0a-4e0e-aae9-8b403fb0ec8e",
+      "name": "When clicking ‘Test workflow’"
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.chatTrigger",
+      "typeVersion": 1.1,
+      "position": [
+        -360,
+        140
+      ],
+      "id": "e1dad469-e778-40d4-ab78-e8678a344afc",
+      "name": "When chat message received",
+      "webhookId": "14dce75c-0273-47ce-bd5b-7786c89c87c3"
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "typeVersion": 1.9,
+      "position": [
+        -108,
+        40
+      ],
+      "id": "6fbd1992-a5d7-47ae-9081-8e6f154ad2ad",
+      "name": "AI Agent"
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatGroq",
+      "typeVersion": 1,
+      "position": [
+        -360,
+        400
+      ],
+      "id": "25d0928a-8162-4cda-9fca-0766c5d46ea5",
+      "name": "Groq Chat Model",
+      "credentials": {
+        "groqApi": {
+          "id": "TTu24kulPzQj4m2T",
+          "name": "Groq account 2"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "modelName": "models/gemini-1.5-flash",
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatGoogleGemini",
+      "typeVersion": 1,
+      "position": [
+        -140,
+        260
+      ],
+      "id": "254ed7c9-4400-482b-82d0-6d347ace53b0",
+      "name": "Google Gemini Chat Model",
+      "credentials": {
+        "googlePalmApi": {
+          "id": "Pa477XoLjEpviaOk",
+          "name": "Google Gemini(PaLM) Api account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "appendOrUpdate",
+        "documentId": {
+          "__rl": true,
+          "value": "1GsD_6wFyq2qqSbx3LFnBUE4sfuKvajPVdoFlMPGoZ3A",
+          "mode": "list",
+          "cachedResultName": "FYMCA_Seminar Report WritingEVEN25",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1GsD_6wFyq2qqSbx3LFnBUE4sfuKvajPVdoFlMPGoZ3A/edit?usp=drivesdk"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": "gid=0",
+          "mode": "list",
+          "cachedResultName": "FYMCA_SRW",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1GsD_6wFyq2qqSbx3LFnBUE4sfuKvajPVdoFlMPGoZ3A/edit#gid=0"
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {},
+          "matchingColumns": [
+            "MIT College of Management (MITCOM), Pune "
+          ],
+          "schema": [
+            {
+              "id": "MIT College of Management (MITCOM), Pune ",
+              "displayName": "MIT College of Management (MITCOM), Pune ",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleSheetsTool",
+      "typeVersion": 4.5,
+      "position": [
+        100,
+        260
+      ],
+      "id": "438dcae8-320d-4513-b83c-f61e61f57d9d",
+      "name": "Google Sheets",
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "FXKzHHQj8aMsIE85",
+          "name": "Google Sheets account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "contextWindowLength": 10
+      },
+      "type": "@n8n/n8n-nodes-langchain.memoryBufferWindow",
+      "typeVersion": 1.3,
+      "position": [
+        -20,
+        260
+      ],
+      "id": "70f27a16-fa23-42cf-a3dd-6ce4c761423f",
+      "name": "Simple Memory"
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "When clicking ‘Test workflow’": {
+      "main": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "When chat message received": {
+      "main": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Groq Chat Model": {
+      "ai_languageModel": [
+        []
+      ]
+    },
+    "Google Gemini Chat Model": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Google Sheets": {
+      "ai_tool": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Simple Memory": {
+      "ai_memory": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_memory",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "versionId": "33181855-9254-419b-a5cb-6d3e97f6c7b5",
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": "84defe53a0047af17c989f63e1408e65f11c5435ed2172f77947c629f72f324f"
+  },
+  "id": "N9MulLeNuM3i64cQ",
+  "tags": []
+}

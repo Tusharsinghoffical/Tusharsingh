@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Chatbot AI Agents (JSON) - Tushar Singh</title>
+  <meta name="description" content="Details for Chatbot AI Agents configuration JSON. Overview, features, tech stack, and download link." />
+  <link rel="icon" type="image/x-icon" href="../profile.jpg">
+  <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet" />
+  <link rel="stylesheet" href="../style.css" />
+</head>
+<body>
+  <header>
+    <nav class="navbar">
+      <div class="logo"><a href="../index.html">Tushar Singh</a></div>
+      <ul class="nav-links">
+        <li><a href="../index.html">Home</a></li>
+        <li><a href="../services.html">Services</a></li>
+        <li><a href="../projects.html" class="active">Projects</a></li>
+        <li><a href="../about.html">About</a></li>
+        <li><a href="../contact.html">Contact</a></li>
+      </ul>
+      <button id="theme-toggle" aria-label="Toggle Theme" class="theme-btn">🌙</button>
+      <div class="menu-toggle">&#9776;</div>
+    </nav>
+  </header>
+
+  <main>
+    <section class="hero" data-aos="fade-down">
+      <h1>Chatbot <span class="highlight">AI Agents</span> (JSON)</h1>
+      <p>Prebuilt chatbot agent JSON for rapid experimentation and deployment.</p>
+    </section>
+
+    <section class="project-details" data-aos="fade-up">
+      <div class="project-overview">
+        <h2>Overview</h2>
+        <p>This JSON includes a chatbot agent configuration with modular prompts, tool stubs, and default safety settings. Ideal for quick POCs and demos.</p>
+        <div class="project-stats">
+          <div class="stat-item"><div class="stat-number">Ready</div><div class="stat-label">To Use</div></div>
+          <div class="stat-item"><div class="stat-number">Fast</div><div class="stat-label">Setup</div></div>
+          <div class="stat-item"><div class="stat-number">Flexible</div><div class="stat-label">Editing</div></div>
+        </div>
+      </div>
+
+      <div class="technical-details">
+        <h2>Tech Stack</h2>
+        <div class="tech-stack">
+          <span class="tech-tag">JSON</span>
+          <span class="tech-tag">Agents</span>
+          <span class="tech-tag">LLM</span>
+        </div>
+      </div>
+
+      <div class="project-features">
+        <h2>Key Features</h2>
+        <div class="features-grid">
+          <div class="step">
+            <div class="step-number">1</div>
+            <h3>Prompt Templates</h3>
+            <p>Editable system and behavior prompts for customization.</p>
+          </div>
+          <div class="step">
+            <div class="step-number">2</div>
+            <h3>Tool Stubs</h3>
+            <p>Defined placeholders to connect external APIs when needed.</p>
+          </div>
+          <div class="step">
+            <div class="step-number">3</div>
+            <h3>Safety Defaults</h3>
+            <p>Conservative defaults for safe outputs out of the box.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="cta-section" data-aos="fade-up">
+      <div class="cta-content">
+        <h2>Download</h2>
+        <p>Grab the JSON and adapt to your runtime.</p>
+        <div class="cta-buttons">
+          <a href="../Files/AI AGENTS/Chatbot_Ai_Agents (1).json" class="btn-primary" download>Download JSON</a>
+          <a href="../projects.html" class="btn-secondary">Back to Projects</a>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <div class="footer-content">
+      <div class="footer-section">
+        <h3>Tushar Singh</h3>
+        <p>Data Scientist & AI Developer</p>
+      </div>
+      <div class="footer-section">
+        <h4>Quick Links</h4>
+        <ul>
+          <li><a href="../about.html">About</a></li>
+          <li><a href="../projects.html">Projects</a></li>
+          <li><a href="../services.html">Services</a></li>
+          <li><a href="../contact.html">Contact</a></li>
+        </ul>
+      </div>
+      <div class="footer-section">
+        <h4>Connect</h4>
+        <ul>
+          <li><a href="https://github.com/Tusharsinghoffical" target="_blank">GitHub</a></li>
+          <li><a href="https://www.linkedin.com/in/tusharsingh2011/" target="_blank">LinkedIn</a></li>
+          <li><a href="../contact.html">Email</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p>© 2025 Tushar Singh. All rights reserved.</p>
+    </div>
+  </footer>
+
+  <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+  <script>
+    AOS.init({ duration: 1000, once: true, offset: 100 });
+    const menuToggle = document.querySelector(".menu-toggle");
+    const navLinks = document.querySelector(".nav-links");
+    if (menuToggle && navLinks) menuToggle.addEventListener("click", () => navLinks.classList.toggle("active"));
+    const themeBtn = document.getElementById("theme-toggle");
+    const html = document.documentElement;
+    const savedTheme = localStorage.getItem("theme");
+    if (savedTheme) { html.setAttribute("data-theme", savedTheme); themeBtn.textContent = savedTheme === "dark" ? "☀️" : "🌙"; } else { html.setAttribute("data-theme", "light"); }
+    themeBtn.addEventListener("click", () => { const t = html.getAttribute("data-theme") === "light" ? "dark" : "light"; html.setAttribute("data-theme", t); localStorage.setItem("theme", t); themeBtn.textContent = t === "dark" ? "☀️" : "🌙"; });
+    window.addEventListener('load', () => { document.body.classList.add('loaded'); });
+  </script>
+</body>
+</html>

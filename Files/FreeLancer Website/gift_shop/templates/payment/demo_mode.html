@@ -1,0 +1,111 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Demo Payment - GiftNest{% endblock %}
+
+{% block content %}
+<div class="container py-5">
+    <div class="row justify-content-center">
+        <div class="col-lg-8">
+            <div class="card demo-payment-card">
+                <div class="card-body p-5 text-center">
+                    <div class="demo-icon mb-4">
+                        <i class="fas fa-flask fa-4x text-warning"></i>
+                    </div>
+                    
+                    <h2 class="card-title mb-4">Demo Payment Mode</h2>
+                    
+                    <div class="alert alert-info mb-4">
+                        <i class="fas fa-info-circle me-2"></i>
+                        <strong>Demo Mode Active:</strong> This is a demonstration of the payment system. 
+                        No real payments will be processed.
+                    </div>
+                    
+                    <div class="order-summary mb-4">
+                        <h4>Order Summary</h4>
+                        <div class="table-responsive">
+                            <table class="table table-borderless">
+                                <tbody>
+                                    {% for item in order.items.all %}
+                                    <tr>
+                                        <td>{{ item.product.name }}</td>
+                                        <td class="text-end">${{ item.price }}</td>
+                                    </tr>
+                                    {% endfor %}
+                                    <tr class="border-top">
+                                        <td><strong>Total</strong></td>
+                                        <td class="text-end"><strong>${{ order.get_total_cost }}</strong></td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                    
+                    <div class="demo-actions">
+                        <form method="post" action="{% url 'payment:success' order.id %}">
+                            {% csrf_token %}
+                            <button type="submit" class="btn btn-success btn-lg me-3">
+                                <i class="fas fa-check me-2"></i>Simulate Successful Payment
+                            </button>
+                        </form>
+                        
+                        <a href="{% url 'payment:cancel' order.id %}" class="btn btn-outline-secondary btn-lg">
+                            <i class="fas fa-times me-2"></i>Cancel Order
+                        </a>
+                    </div>
+                    
+                    <div class="mt-4">
+                        <small class="text-muted">
+                            <i class="fas fa-lightbulb me-1"></i>
+                            To enable real payments, configure Stripe API keys in settings.py
+                        </small>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<style>
+.demo-payment-card {
+    background: rgba(255, 255, 255, 0.9);
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    border-radius: var(--border-radius-lg);
+    box-shadow: var(--shadow-lg);
+}
+
+.demo-icon {
+    animation: pulse 2s infinite;
+}
+
+@keyframes pulse {
+    0% { transform: scale(1); }
+    50% { transform: scale(1.1); }
+    100% { transform: scale(1); }
+}
+
+.order-summary {
+    background: rgba(248, 249, 250, 0.8);
+    border-radius: var(--border-radius);
+    padding: 1.5rem;
+}
+
+.demo-actions {
+    display: flex;
+    gap: 1rem;
+    justify-content: center;
+    flex-wrap: wrap;
+}
+
+@media (max-width: 768px) {
+    .demo-actions {
+        flex-direction: column;
+    }
+    
+    .demo-actions .btn {
+        width: 100%;
+    }
+}
+</style>
+{% endblock %} 

@@ -1,0 +1,98 @@
+{% extends "emails/base_email.html" %}
+
+{% block title %}Welcome to GiftNest! 🎁{% endblock %}
+{% block subtitle %}Your Perfect Gift Journey Starts Here{% endblock %}
+
+{% block content %}
+<div class="card">
+    <div class="card-header">
+        <h1 style="margin: 0; color: white;">🎉 Welcome to GiftNest!</h1>
+    </div>
+    
+    <p style="font-size: 18px; color: #4a5568; margin-bottom: 25px;">
+        Dear <strong>{{ user.first_name|default:user.username }}</strong>,
+    </p>
+
+    <p style="font-size: 16px; line-height: 1.8; color: #4a5568;">
+        Welcome to the GiftNest family! 🎁 We're absolutely thrilled to have you join our community of gift enthusiasts. 
+        You're now part of a world where finding the perfect gift is not just easy, but truly magical.
+    </p>
+
+    <div style="background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%); color: white; padding: 25px; border-radius: 12px; margin: 30px 0; text-align: center;">
+        <h2 style="margin: 0 0 15px 0; color: white;">🎯 Your Gift Journey Awaits</h2>
+        <p style="margin: 0; font-size: 16px; opacity: 0.9;">
+            Discover thousands of unique gifts, personalized recommendations, and exclusive deals just for you!
+        </p>
+    </div>
+
+    <h2 style="color: #2d3748; margin: 30px 0 20px 0;">🚀 What You Can Do Now:</h2>
+    
+    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin: 25px 0;">
+        <div style="background: #f8fafc; padding: 20px; border-radius: 8px; border-left: 4px solid #667eea;">
+            <h3 style="margin: 0 0 10px 0; color: #2d3748; font-size: 18px;">🛍️ Browse Collections</h3>
+            <p style="margin: 0; color: #4a5568; font-size: 14px;">Explore our curated gift collections for every occasion and personality.</p>
+        </div>
+        
+        <div style="background: #f8fafc; padding: 20px; border-radius: 8px; border-left: 4px solid #f093fb;">
+            <h3 style="margin: 0 0 10px 0; color: #2d3748; font-size: 18px;">❤️ Create Wishlist</h3>
+            <p style="margin: 0; color: #4a5568; font-size: 14px;">Save your favorite items and share them with friends and family.</p>
+        </div>
+        
+        <div style="background: #f8fafc; padding: 20px; border-radius: 8px; border-left: 4px solid #f5576c;">
+            <h3 style="margin: 0 0 10px 0; color: #2d3748; font-size: 18px;">💰 Exclusive Deals</h3>
+            <p style="margin: 0; color: #4a5568; font-size: 14px;">Get access to member-only discounts and early access to sales.</p>
+        </div>
+        
+        <div style="background: #f8fafc; padding: 20px; border-radius: 8px; border-left: 4px solid #764ba2;">
+            <h3 style="margin: 0 0 10px 0; color: #2d3748; font-size: 18px;">👤 Complete Profile</h3>
+            <p style="margin: 0; color: #4a5568; font-size: 14px;">Add your preferences for personalized gift recommendations.</p>
+        </div>
+    </div>
+
+    <div style="text-align: center; margin: 40px 0;">
+        <a href="http://localhost:8000{% url 'products:product_list' %}" class="button" style="font-size: 18px; padding: 16px 32px;">
+            🛍️ Start Shopping Now
+        </a>
+    </div>
+
+    <div style="background: #f8fafc; border-radius: 12px; padding: 25px; margin: 30px 0; border: 1px solid #e2e8f0;">
+        <h3 style="color: #2d3748; margin: 0 0 15px 0;">🎁 Special Welcome Gift</h3>
+        <p style="margin: 0 0 15px 0; color: #4a5568;">
+            As a special welcome, enjoy <strong>10% off your first order</strong> when you spend $50 or more!
+        </p>
+        <p style="margin: 0; color: #667eea; font-weight: 600;">
+            Use code: <span style="background: #667eea; color: white; padding: 5px 10px; border-radius: 4px; font-family: monospace;">WELCOME10</span>
+        </p>
+    </div>
+
+    <div style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; padding: 25px; border-radius: 12px; margin: 30px 0; text-align: center;">
+        <h3 style="margin: 0 0 15px 0; color: white;">💬 Need Help?</h3>
+        <p style="margin: 0 0 20px 0; opacity: 0.9;">
+            Our friendly customer service team is here to help you find the perfect gift!
+        </p>
+        <a href="mailto:support@giftnest.com" style="color: white; text-decoration: none; font-weight: 600; border: 2px solid white; padding: 10px 20px; border-radius: 25px; display: inline-block;">
+            📧 Contact Support
+        </a>
+    </div>
+
+    <p style="font-size: 16px; color: #4a5568; margin: 30px 0 20px 0;">
+        We can't wait to help you discover amazing gifts that will bring joy to your loved ones!
+    </p>
+
+    <p style="font-size: 16px; color: #4a5568; margin: 20px 0;">
+        Happy gifting! 🎉<br>
+        <strong>The GiftNest Team</strong>
+    </p>
+
+    <div style="text-align: center; margin: 30px 0; padding: 20px; background: #f8fafc; border-radius: 8px;">
+        <p style="margin: 0; color: #4a5568; font-size: 14px;">
+            Follow us on social media for gift inspiration and exclusive offers!
+        </p>
+        <div style="margin-top: 15px;">
+            <a href="#" style="display: inline-block; margin: 0 10px; color: #667eea; text-decoration: none; font-weight: 600;">Facebook</a>
+            <a href="#" style="display: inline-block; margin: 0 10px; color: #667eea; text-decoration: none; font-weight: 600;">Instagram</a>
+            <a href="#" style="display: inline-block; margin: 0 10px; color: #667eea; text-decoration: none; font-weight: 600;">Twitter</a>
+        </div>
+    </div>
+</div>
+{% endblock %}

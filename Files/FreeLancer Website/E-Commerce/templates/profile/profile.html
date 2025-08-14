@@ -1,0 +1,177 @@
+{% extends 'base.html' %}
+{% load crispy_forms_tags %}
+
+{% block title %}Profile - FreelancerPro{% endblock %}
+
+{% block extra_css %}
+<style>
+    .profile-hero {
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        color: white;
+        padding: 60px 0 40px;
+        border-radius: 0 0 40px 40px;
+        box-shadow: 0 10px 40px rgba(102,126,234,0.10);
+        position: relative;
+        overflow: hidden;
+    }
+    .profile-hero::before {
+        content: '';
+        position: absolute;
+        top: 0; left: 0; right: 0; bottom: 0;
+        background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><defs><pattern id="grain" width="100" height="100" patternUnits="userSpaceOnUse"><circle cx="50" cy="50" r="1" fill="white" opacity="0.08"/></pattern></defs><rect width="100" height="100" fill="url(%23grain)"/></svg>');
+        opacity: 0.2;
+    }
+    .profile-section {
+        margin-top: -60px;
+        z-index: 2;
+        position: relative;
+    }
+    .profile-card {
+        background: rgba(255,255,255,0.95);
+        border-radius: 24px;
+        box-shadow: 0 10px 40px rgba(102,126,234,0.10);
+        border: 1px solid rgba(102,126,234,0.08);
+        padding: 2.5rem 1.5rem 2rem 1.5rem;
+        margin-bottom: 2rem;
+        transition: box-shadow 0.3s;
+    }
+    .profile-card:hover {
+        box-shadow: 0 20px 60px rgba(102,126,234,0.18);
+    }
+    .profile-card img {
+        border: 4px solid #667eea;
+        box-shadow: 0 4px 24px rgba(102,126,234,0.10);
+    }
+    .profile-card .gradient-text {
+        background: linear-gradient(135deg, #667eea, #764ba2);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+    }
+    .profile-card .badge {
+        font-size: 0.95rem;
+        margin-bottom: 0.3rem;
+        background: #f3f4f6;
+        color: #374151;
+        border-radius: 8px;
+        padding: 0.5em 1em;
+    }
+    .profile-image-upload {
+        position: relative;
+        display: inline-block;
+    }
+    .profile-image-upload input[type="file"] {
+        opacity: 0;
+        width: 0.1px;
+        height: 0.1px;
+        position: absolute;
+        z-index: -1;
+    }
+    .profile-image-upload label {
+        display: inline-block;
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        color: #fff;
+        padding: 7px 18px;
+        border-radius: 999px;
+        font-size: 0.95rem;
+        font-weight: 500;
+        cursor: pointer;
+        margin-bottom: 0;
+        margin-top: 10px;
+        transition: background 0.3s;
+    }
+    .profile-image-upload label:hover {
+        background: linear-gradient(135deg, #764ba2 0%, #667eea 100%);
+    }
+    .profile-image-upload .btn-update {
+        margin-left: 10px;
+        border-radius: 999px;
+        font-size: 0.95rem;
+        padding: 7px 18px;
+    }
+    .alert {
+        border-radius: 12px;
+        border: none;
+        box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+    }
+    @media (max-width: 991px) {
+        .profile-section {
+            margin-top: 0;
+        }
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<!-- Hero Section -->
+<section class="profile-hero mb-5">
+    <div class="container position-relative">
+        <div class="row align-items-center">
+            <div class="col-lg-8 mx-auto text-center">
+                <h1 class="display-4 mb-2">Your Profile</h1>
+                <p class="lead mb-0">Manage your personal information and profile image.</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Profile Main Section -->
+<section class="profile-section">
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-lg-6">
+                <div class="card profile-card text-center">
+                    <form method="post" enctype="multipart/form-data" class="mb-3">
+                        {% csrf_token %}
+                        {{ update_form.non_field_errors }}
+                        <div class="mb-3">
+                            {% if user.profile.image and user.profile.image.url %}
+                                <img src="{{ user.profile.get_image_url }}" alt="Profile" class="rounded-circle shadow" style="width: 120px; height: 120px; object-fit: cover;">
+                            {% else %}
+                                <div class="rounded-circle bg-primary d-inline-flex align-items-center justify-content-center shadow" style="width: 120px; height: 120px; font-size: 3rem; color: white;">
+                                    <i class="fas fa-user"></i>
+                                </div>
+                            {% endif %}
+                        </div>
+                        <div class="profile-image-upload mb-3">
+                            {{ image_form.image }}
+                            <label for="id_image"><i class="fas fa-upload me-2"></i>Choose Image</label>
+                        </div>
+                        <div class="mb-3">
+                            {{ update_form.first_name.label_tag }}
+                            {{ update_form.first_name }}
+                            {{ update_form.first_name.errors }}
+                        </div>
+                        <div class="mb-3">
+                            {{ update_form.last_name.label_tag }}
+                            {{ update_form.last_name }}
+                            {{ update_form.last_name.errors }}
+                        </div>
+                        <div class="mb-3">
+                            {{ update_form.email.label_tag }}
+                            {{ update_form.email }}
+                            {{ update_form.email.errors }}
+                        </div>
+                        <div class="mb-3">
+                            {{ update_form.bio.label_tag }}
+                            {{ update_form.bio }}
+                            {{ update_form.bio.errors }}
+                        </div>
+                        <div class="mb-3">
+                            {{ update_form.location.label_tag }}
+                            {{ update_form.location }}
+                            {{ update_form.location.errors }}
+                        </div>
+                        <div class="mb-3">
+                            {{ update_form.birth_date.label_tag }}
+                            {{ update_form.birth_date }}
+                            {{ update_form.birth_date.errors }}
+                        </div>
+                        <button type="submit" class="btn btn-primary w-100">Update Profile</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %} 

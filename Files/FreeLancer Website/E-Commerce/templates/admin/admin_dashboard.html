@@ -1,0 +1,846 @@
+{% extends "admin/base_site.html" %}
+{% load i18n static %}
+
+{% block extrastyle %}
+{{ block.super }}
+<link rel="stylesheet" type="text/css" href="{% static "admin/css/dashboard.css" %}">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<style>
+    :root {
+        --primary-color: #667eea;
+        --secondary-color: #764ba2;
+        --success-color: #28a745;
+        --warning-color: #ffc107;
+        --danger-color: #dc3545;
+        --info-color: #17a2b8;
+        --light-bg: #f8f9fa;
+        --dark-bg: #343a40;
+        --text-dark: #495057;
+        --text-light: #6c757d;
+        --border-color: #e9ecef;
+        --shadow-light: rgba(102,126,234,0.1);
+        --shadow-medium: rgba(102,126,234,0.15);
+        --shadow-heavy: rgba(102,126,234,0.25);
+    }
+    
+    body { 
+        background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    }
+    
+    .admin-dashboard {
+        padding: 0;
+        background: transparent;
+        min-height: 100vh;
+        position: relative;
+    }
+    
+    .admin-header {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        margin: 0 0 32px 0;
+        padding: 32px 40px;
+        background: linear-gradient(135deg, var(--primary-color) 0%, var(--secondary-color) 100%);
+        border-radius: 0 0 24px 24px;
+        box-shadow: 0 8px 32px var(--shadow-medium);
+        color: white;
+        position: relative;
+        overflow: hidden;
+    }
+    
+    .admin-header::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><defs><pattern id="grain" width="100" height="100" patternUnits="userSpaceOnUse"><circle cx="50" cy="50" r="1" fill="white" opacity="0.1"/></pattern></defs><rect width="100" height="100" fill="url(%23grain)"/></svg>');
+        opacity: 0.3;
+    }
+    
+    .admin-header .avatar {
+        width: 72px;
+        height: 72px;
+        border-radius: 50%;
+        background: rgba(255,255,255,0.2);
+        backdrop-filter: blur(10px);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 2.5rem;
+        color: white;
+        box-shadow: 0 4px 20px rgba(0,0,0,0.2);
+        margin-right: 24px;
+        border: 2px solid rgba(255,255,255,0.3);
+        position: relative;
+        z-index: 1;
+    }
+    
+    .admin-header .welcome {
+        font-size: 2.4rem;
+        font-weight: 800;
+        margin-bottom: 0.3rem;
+        letter-spacing: -1px;
+        position: relative;
+        z-index: 1;
+    }
+    
+    .admin-header .subtitle {
+        font-size: 1.2rem;
+        color: rgba(255,255,255,0.9);
+        font-weight: 400;
+        position: relative;
+        z-index: 1;
+    }
+    
+    .admin-controls {
+        display: flex;
+        align-items: center;
+        gap: 16px;
+        position: relative;
+        z-index: 1;
+    }
+    
+    .control-btn {
+        background: rgba(255,255,255,0.2);
+        border: 1px solid rgba(255,255,255,0.3);
+        color: white;
+        padding: 12px 16px;
+        border-radius: 12px;
+        text-decoration: none;
+        font-weight: 600;
+        transition: all 0.3s ease;
+        backdrop-filter: blur(10px);
+    }
+    
+    .control-btn:hover {
+        background: rgba(255,255,255,0.3);
+        transform: translateY(-2px);
+        color: white;
+        text-decoration: none;
+    }
+    
+    .dashboard-container {
+        max-width: 1400px;
+        margin: 0 auto;
+        padding: 0 24px;
+    }
+    
+    .stats-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+        gap: 24px;
+        margin-bottom: 32px;
+    }
+    
+    .stat-card {
+        background: white;
+        border-radius: 20px;
+        padding: 32px 28px;
+        box-shadow: 0 8px 32px var(--shadow-light);
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+        position: relative;
+        overflow: hidden;
+        transition: all 0.3s ease;
+        border: 1px solid rgba(255,255,255,0.8);
+    }
+    
+    .stat-card::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        height: 4px;
+        background: linear-gradient(90deg, var(--primary-color), var(--secondary-color));
+    }
+    
+    .stat-card:hover {
+        transform: translateY(-8px);
+        box-shadow: 0 16px 48px var(--shadow-medium);
+    }
+    
+    .stat-icon {
+        font-size: 2.5rem;
+        margin-bottom: 16px;
+        color: var(--primary-color);
+        background: linear-gradient(135deg, #e0e7ff 0%, #f3e8ff 100%);
+        border-radius: 16px;
+        padding: 16px;
+        box-shadow: 0 4px 16px var(--shadow-light);
+        position: relative;
+    }
+    
+    .stat-icon::after {
+        content: '';
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        width: 100%;
+        height: 100%;
+        background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+        border-radius: 16px;
+        opacity: 0.1;
+        z-index: -1;
+    }
+    
+    .stat-label {
+        font-size: 1.1rem;
+        color: var(--text-light);
+        font-weight: 600;
+        margin-bottom: 8px;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+    }
+    
+    .stat-number {
+        font-size: 2.8rem;
+        font-weight: 900;
+        color: var(--secondary-color);
+        margin-bottom: 8px;
+        line-height: 1;
+    }
+    
+    .stat-extra {
+        font-size: 1rem;
+        color: var(--text-light);
+        font-weight: 500;
+        opacity: 0.8;
+    }
+    
+    .dashboard-sections {
+        display: grid;
+        grid-template-columns: 2fr 1fr;
+        gap: 32px;
+        margin-bottom: 32px;
+    }
+    
+    .section-card {
+        background: white;
+        border-radius: 20px;
+        padding: 32px 28px;
+        box-shadow: 0 8px 32px var(--shadow-light);
+        margin-bottom: 24px;
+        border: 1px solid rgba(255,255,255,0.8);
+        position: relative;
+        overflow: hidden;
+    }
+    
+    .section-card::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        height: 3px;
+        background: linear-gradient(90deg, var(--primary-color), var(--secondary-color));
+    }
+    
+    .section-title {
+        font-size: 1.4rem;
+        font-weight: 800;
+        color: var(--secondary-color);
+        margin-bottom: 24px;
+        letter-spacing: -0.5px;
+        display: flex;
+        align-items: center;
+        gap: 12px;
+    }
+    
+    .section-title i {
+        font-size: 1.2em;
+        color: var(--primary-color);
+    }
+    
+    .activity-item {
+        display: flex;
+        align-items: center;
+        padding: 16px 0;
+        border-bottom: 1px solid var(--border-color);
+        transition: all 0.2s ease;
+    }
+    
+    .activity-item:hover {
+        background: var(--light-bg);
+        margin: 0 -16px;
+        padding: 16px;
+        border-radius: 12px;
+    }
+    
+    .activity-item:last-child { 
+        border-bottom: none; 
+    }
+    
+    .activity-icon {
+        width: 48px;
+        height: 48px;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin-right: 16px;
+        color: white;
+        font-size: 1.4rem;
+        box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+    }
+    
+    .activity-icon.user { background: linear-gradient(135deg, var(--success-color), #20c997); }
+    .activity-icon.verification { background: linear-gradient(135deg, var(--warning-color), #fd7e14); }
+    .activity-icon.contact { background: linear-gradient(135deg, var(--info-color), #6f42c1); }
+    
+    .activity-details h4 {
+        margin: 0;
+        font-size: 1.1rem;
+        font-weight: 700;
+        color: var(--text-dark);
+        display: flex;
+        align-items: center;
+        gap: 8px;
+    }
+    
+    .activity-details p {
+        margin: 4px 0 0 0;
+        font-size: 0.95rem;
+        color: var(--text-light);
+    }
+    
+    .quick-actions {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+        gap: 16px;
+        margin-top: 24px;
+    }
+    
+    .action-btn {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 12px;
+        padding: 16px 20px;
+        background: linear-gradient(135deg, var(--primary-color) 0%, var(--secondary-color) 100%);
+        color: white;
+        text-decoration: none;
+        border-radius: 12px;
+        font-weight: 700;
+        font-size: 1.05rem;
+        transition: all 0.3s ease;
+        box-shadow: 0 4px 16px var(--shadow-light);
+        border: none;
+        cursor: pointer;
+        position: relative;
+        overflow: hidden;
+    }
+    
+    .action-btn::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: -100%;
+        width: 100%;
+        height: 100%;
+        background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+        transition: left 0.5s;
+    }
+    
+    .action-btn:hover::before {
+        left: 100%;
+    }
+    
+    .action-btn:hover {
+        transform: translateY(-4px);
+        box-shadow: 0 8px 24px var(--shadow-medium);
+        color: white;
+        text-decoration: none;
+    }
+    
+    .action-btn.success {
+        background: linear-gradient(135deg, var(--success-color), #20c997);
+    }
+    
+    .action-btn.warning {
+        background: linear-gradient(135deg, var(--warning-color), #fd7e14);
+    }
+    
+    .action-btn.danger {
+        background: linear-gradient(135deg, var(--danger-color), #e83e8c);
+    }
+    
+    .pending-list {
+        max-height: 400px;
+        overflow-y: auto;
+        padding-right: 8px;
+    }
+    
+    .pending-list::-webkit-scrollbar {
+        width: 6px;
+    }
+    
+    .pending-list::-webkit-scrollbar-track {
+        background: var(--light-bg);
+        border-radius: 3px;
+    }
+    
+    .pending-list::-webkit-scrollbar-thumb {
+        background: var(--primary-color);
+        border-radius: 3px;
+    }
+    
+    .pending-item {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 16px 0;
+        border-bottom: 1px solid var(--border-color);
+        transition: all 0.2s ease;
+    }
+    
+    .pending-item:hover {
+        background: var(--light-bg);
+        margin: 0 -16px;
+        padding: 16px;
+        border-radius: 12px;
+    }
+    
+    .pending-item:last-child { 
+        border-bottom: none; 
+    }
+    
+    .pending-info h4 {
+        margin: 0;
+        font-size: 1.05rem;
+        font-weight: 700;
+        color: var(--text-dark);
+    }
+    
+    .pending-info p {
+        margin: 4px 0 0 0;
+        font-size: 0.9rem;
+        color: var(--text-light);
+    }
+    
+    .pending-actions {
+        display: flex;
+        gap: 8px;
+    }
+    
+    .btn-sm {
+        padding: 8px 16px;
+        font-size: 0.9rem;
+        border-radius: 8px;
+        text-decoration: none;
+        color: white;
+        font-weight: 600;
+        border: none;
+        cursor: pointer;
+        transition: all 0.2s ease;
+        box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+    }
+    
+    .btn-sm.approve { 
+        background: linear-gradient(135deg, var(--success-color), #20c997); 
+    }
+    
+    .btn-sm.reject { 
+        background: linear-gradient(135deg, var(--danger-color), #e83e8c); 
+    }
+    
+    .btn-sm:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+    }
+    
+    .badge-status {
+        display: inline-block;
+        padding: 0.4em 0.8em;
+        font-size: 0.8em;
+        border-radius: 12px;
+        font-weight: 600;
+        margin-left: 8px;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+    }
+    
+    .badge-pending { 
+        background: linear-gradient(135deg, #fff3cd, #ffeaa7); 
+        color: #856404; 
+    }
+    
+    .badge-approved { 
+        background: linear-gradient(135deg, #d4edda, #c3f0ca); 
+        color: #155724; 
+    }
+    
+    .badge-rejected { 
+        background: linear-gradient(135deg, #f8d7da, #f5c6cb); 
+        color: #721c24; 
+    }
+    
+    .chart-container {
+        background: white;
+        border-radius: 20px;
+        padding: 32px 28px;
+        box-shadow: 0 8px 32px var(--shadow-light);
+        margin-bottom: 24px;
+        border: 1px solid rgba(255,255,255,0.8);
+    }
+    
+    .notification-badge {
+        position: absolute;
+        top: -8px;
+        right: -8px;
+        background: var(--danger-color);
+        color: white;
+        border-radius: 50%;
+        width: 20px;
+        height: 20px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 0.7rem;
+        font-weight: 700;
+    }
+    
+    @media (max-width: 1200px) {
+        .dashboard-sections { 
+            grid-template-columns: 1fr; 
+        }
+    }
+    
+    @media (max-width: 768px) {
+        .admin-header { 
+            flex-direction: column; 
+            align-items: flex-start; 
+            padding: 24px 20px; 
+            text-align: center;
+        }
+        
+        .admin-controls {
+            margin-top: 20px;
+            width: 100%;
+            justify-content: center;
+        }
+        
+        .stats-grid {
+            grid-template-columns: 1fr;
+        }
+        
+        .quick-actions {
+            grid-template-columns: 1fr;
+        }
+        
+        .dashboard-container {
+            padding: 0 16px;
+        }
+    }
+    
+    /* Animations */
+    @keyframes fadeInUp {
+        from {
+            opacity: 0;
+            transform: translateY(30px);
+        }
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
+    
+    .stat-card, .section-card, .chart-container {
+        animation: fadeInUp 0.6s ease-out;
+    }
+    
+    .stat-card:nth-child(1) { animation-delay: 0.1s; }
+    .stat-card:nth-child(2) { animation-delay: 0.2s; }
+    .stat-card:nth-child(3) { animation-delay: 0.3s; }
+    .stat-card:nth-child(4) { animation-delay: 0.4s; }
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="admin-dashboard">
+    <div class="admin-header">
+        <div style="display: flex; align-items: center;">
+            <div class="avatar">
+                <i class="fas fa-user-shield"></i>
+            </div>
+            <div>
+                <div class="welcome">Welcome, Admin!</div>
+                <div class="subtitle">Complete control over your platform</div>
+            </div>
+        </div>
+        <div class="admin-controls">
+            <div style="font-size: 1.1rem; font-weight: 600; color: rgba(255,255,255,0.9);">
+                <i class="fas fa-calendar-alt me-2"></i> {{ now|date:"M d, Y H:i" }}
+            </div>
+            <a href="{% url 'admin:index' %}" class="control-btn">
+                <i class="fas fa-cog me-2"></i> Settings
+            </a>
+            <form method="post" action="{% url 'admin:logout' %}" style="display: inline;">
+                {% csrf_token %}
+                <button type="submit" class="control-btn" style="background: rgba(255,255,255,0.2); border: 1px solid rgba(255,255,255,0.3); color: white; padding: 12px 16px; border-radius: 12px; text-decoration: none; font-weight: 600; transition: all 0.3s ease; backdrop-filter: blur(10px); cursor: pointer;">
+                    <i class="fas fa-sign-out-alt me-2"></i> Logout
+                </button>
+            </form>
+        </div>
+    </div>
+    
+    <div class="dashboard-container">
+        <!-- Statistics Grid -->
+        <div class="stats-grid">
+            <div class="stat-card users">
+                <div class="stat-icon"><i class="fas fa-users"></i></div>
+                <div class="stat-label">Total Users</div>
+                <div class="stat-number">{{ total_users }}</div>
+                <div class="stat-extra">{{ new_users_today }} new today • {{ new_users_week }} this week</div>
+            </div>
+            <div class="stat-card verifications">
+                <div class="stat-icon"><i class="fas fa-envelope-open-text"></i></div>
+                <div class="stat-label">Pending Verifications</div>
+                <div class="stat-number">{{ pending_verifications }}</div>
+                <div class="stat-extra">{{ approved_today }} approved today • {{ total_verifications }} total</div>
+            </div>
+            <div class="stat-card contacts">
+                <div class="stat-icon"><i class="fas fa-comments"></i></div>
+                <div class="stat-label">Unread Messages</div>
+                <div class="stat-number">{{ unread_contacts }}</div>
+                <div class="stat-extra">{{ new_contacts_today }} new today • {{ total_contacts }} total</div>
+            </div>
+            <div class="stat-card content">
+                <div class="stat-icon"><i class="fas fa-layer-group"></i></div>
+                <div class="stat-label">Active Content</div>
+                <div class="stat-number">{{ active_services }}/{{ total_services }}</div>
+                <div class="stat-extra">Services: {{ active_services }}/{{ total_services }} • Projects: {{ active_projects }}/{{ total_projects }}</div>
+            </div>
+        </div>
+        
+        <!-- Quick Actions -->
+        <div class="section-card">
+            <h2 class="section-title">
+                <i class="fas fa-bolt"></i> Quick Actions
+            </h2>
+            <div class="quick-actions">
+                <a href="{% url 'admin:core_emailverification_changelist' %}?status__exact=pending" class="action-btn warning">
+                    <i class="fas fa-envelope"></i>
+                    Review Pending Verifications
+                    {% if pending_verifications > 0 %}
+                    <span class="notification-badge">{{ pending_verifications }}</span>
+                    {% endif %}
+                </a>
+                <a href="{% url 'admin:core_profile_changelist' %}?admin_verified__exact=False" class="action-btn">
+                    <i class="fas fa-user-check"></i>
+                    Manage Unverified Users
+                </a>
+                <a href="{% url 'admin:contact_contact_changelist' %}?is_read__exact=False" class="action-btn info">
+                    <i class="fas fa-comment-dots"></i>
+                    View Unread Messages
+                    {% if unread_contacts > 0 %}
+                    <span class="notification-badge">{{ unread_contacts }}</span>
+                    {% endif %}
+                </a>
+                <a href="{% url 'admin:services_service_changelist' %}" class="action-btn success">
+                    <i class="fas fa-tools"></i>
+                    Manage Services
+                </a>
+                <a href="{% url 'admin:portfolio_project_changelist' %}" class="action-btn success">
+                    <i class="fas fa-palette"></i>
+                    Manage Portfolio
+                </a>
+                <a href="{% url 'admin:testimonials_testimonial_changelist' %}" class="action-btn success">
+                    <i class="fas fa-star"></i>
+                    Manage Testimonials
+                </a>
+            </div>
+        </div>
+        
+        <div class="dashboard-sections">
+            <!-- Recent Activities -->
+            <div class="section-card">
+                <h2 class="section-title">
+                    <i class="fas fa-chart-line"></i> Recent Activities
+                </h2>
+                
+                <h3 style="font-size: 1.2rem; color: var(--text-dark); margin: 24px 0 16px 0; display: flex; align-items: center; gap: 8px;">
+                    <i class="fas fa-user" style="color: var(--success-color);"></i> Recent Users
+                </h3>
+                {% for user in recent_users %}
+                <div class="activity-item">
+                    <div class="activity-icon user">
+                        <i class="fas fa-user"></i>
+                    </div>
+                    <div class="activity-details">
+                        <h4>{{ user.username }}</h4>
+                        <p>Joined {{ user.date_joined|date:"M d, Y H:i" }}</p>
+                    </div>
+                </div>
+                {% empty %}
+                <p style="color: var(--text-light); font-style: italic; padding: 16px; background: var(--light-bg); border-radius: 12px;">No recent users</p>
+                {% endfor %}
+                
+                <h3 style="font-size: 1.2rem; color: var(--text-dark); margin: 24px 0 16px 0; display: flex; align-items: center; gap: 8px;">
+                    <i class="fas fa-envelope" style="color: var(--warning-color);"></i> Recent Verifications
+                </h3>
+                {% for verification in recent_verifications %}
+                <div class="activity-item">
+                    <div class="activity-icon verification">
+                        <i class="fas fa-envelope"></i>
+                    </div>
+                    <div class="activity-details">
+                        <h4>
+                            {{ verification.user.username }}
+                            <span class="badge-status badge-{{ verification.status }}">
+                                {{ verification.status|title }}
+                            </span>
+                        </h4>
+                        <p>{{ verification.created_at|date:"M d, Y H:i" }}</p>
+                    </div>
+                </div>
+                {% empty %}
+                <p style="color: var(--text-light); font-style: italic; padding: 16px; background: var(--light-bg); border-radius: 12px;">No recent verifications</p>
+                {% endfor %}
+                
+                <h3 style="font-size: 1.2rem; color: var(--text-dark); margin: 24px 0 16px 0; display: flex; align-items: center; gap: 8px;">
+                    <i class="fas fa-comment" style="color: var(--info-color);"></i> Recent Messages
+                </h3>
+                {% for contact in recent_contacts %}
+                <div class="activity-item">
+                    <div class="activity-icon contact">
+                        <i class="fas fa-comment"></i>
+                    </div>
+                    <div class="activity-details">
+                        <h4>{{ contact.subject }}</h4>
+                        <p>From {{ contact.email }} - {{ contact.created_at|date:"M d, Y H:i" }}</p>
+                    </div>
+                </div>
+                {% empty %}
+                <p style="color: var(--text-light); font-style: italic; padding: 16px; background: var(--light-bg); border-radius: 12px;">No recent messages</p>
+                {% endfor %}
+            </div>
+            
+            <!-- Pending Actions -->
+            <div class="section-card">
+                <h2 class="section-title">
+                    <i class="fas fa-clock"></i> Pending Actions
+                </h2>
+                
+                <h3 style="font-size: 1.2rem; color: var(--text-dark); margin: 24px 0 16px 0; display: flex; align-items: center; gap: 8px;">
+                    <i class="fas fa-user-clock" style="color: var(--warning-color);"></i> Unverified Users
+                </h3>
+                <div class="pending-list">
+                    {% for user in pending_users %}
+                    <div class="pending-item">
+                        <div class="pending-info">
+                            <h4>{{ user.username }}</h4>
+                            <p>{{ user.email }}</p>
+                        </div>
+                        <div class="pending-actions">
+                            <form method="post" action="{% url 'admin_approve_verification' user.id %}" style="display:inline;">
+                                {% csrf_token %}
+                                <button type="submit" class="btn-sm approve">
+                                    <i class="fas fa-check me-1"></i> Approve
+                                </button>
+                            </form>
+                            <form method="post" action="{% url 'admin_reject_verification' user.id %}" style="display:inline;">
+                                {% csrf_token %}
+                                <button type="submit" class="btn-sm reject">
+                                    <i class="fas fa-times me-1"></i> Reject
+                                </button>
+                            </form>
+                        </div>
+                    </div>
+                    {% empty %}
+                    <p style="color: var(--text-light); font-style: italic; padding: 16px; background: var(--light-bg); border-radius: 12px;">No pending users</p>
+                    {% endfor %}
+                </div>
+                
+                <h3 style="font-size: 1.2rem; color: var(--text-dark); margin: 24px 0 16px 0; display: flex; align-items: center; gap: 8px;">
+                    <i class="fas fa-envelope-open" style="color: var(--info-color);"></i> Pending Verifications
+                </h3>
+                <div class="pending-list">
+                    {% for verification in pending_verifications_list %}
+                    <div class="pending-item">
+                        <div class="pending-info">
+                            <h4>{{ verification.user.username }}</h4>
+                            <p>{{ verification.email }}</p>
+                        </div>
+                        <div class="pending-actions">
+                            <form method="post" action="{% url 'admin_approve_email_verification' verification.id %}" style="display:inline;">
+                                {% csrf_token %}
+                                <button type="submit" class="btn-sm approve">
+                                    <i class="fas fa-check me-1"></i> Approve
+                                </button>
+                            </form>
+                            <form method="post" action="{% url 'admin_reject_email_verification' verification.id %}" style="display:inline;">
+                                {% csrf_token %}
+                                <button type="submit" class="btn-sm reject">
+                                    <i class="fas fa-times me-1"></i> Reject
+                                </button>
+                            </form>
+                        </div>
+                    </div>
+                    {% empty %}
+                    <p style="color: var(--text-light); font-style: italic; padding: 16px; background: var(--light-bg); border-radius: 12px;">No pending verifications</p>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+        
+        <!-- Analytics Chart -->
+        <div class="chart-container" style="max-width: 600px; margin: 0 auto 24px auto;">
+            <h2 class="section-title">
+                <i class="fas fa-chart-bar"></i> User Growth Analytics
+            </h2>
+            <div style="height:260px;">
+                <canvas id="userGrowthChart" width="400" height="180"></canvas>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+// User Growth Chart
+const ctx = document.getElementById('userGrowthChart').getContext('2d');
+const userGrowthChart = new Chart(ctx, {
+    type: 'line',
+    data: {
+        labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul'],
+        datasets: [{
+            label: 'New Users',
+            data: [12, 19, 15, 25, 22, 30, 28],
+            borderColor: '#667eea',
+            backgroundColor: 'rgba(102, 126, 234, 0.1)',
+            borderWidth: 3,
+            fill: true,
+            tension: 0.4
+        }]
+    },
+    options: {
+        responsive: true,
+        maintainAspectRatio: false,
+        plugins: {
+            legend: {
+                display: false
+            }
+        },
+        scales: {
+            y: {
+                beginAtZero: true,
+                grid: {
+                    color: 'rgba(0,0,0,0.1)'
+                }
+            },
+            x: {
+                grid: {
+                    display: false
+                }
+            }
+        }
+    }
+});
+</script>
+{% endblock %} 

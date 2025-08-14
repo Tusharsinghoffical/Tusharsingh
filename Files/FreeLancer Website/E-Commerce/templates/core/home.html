@@ -1,0 +1,380 @@
+{% extends 'base.html' %}
+{% load crispy_forms_tags %}
+
+{% block title %}FreelancerPro - Professional Freelancer Services{% endblock %}
+
+{% block content %}
+<!-- Hero Section -->
+<section class="hero-section d-flex align-items-center min-vh-100 position-relative overflow-hidden" style="background: linear-gradient(135deg, #6366f1 0%, #8b5cf6 100%);">
+    <div class="container position-relative z-2">
+        <div class="row align-items-center">
+            <div class="col-lg-6" data-aos="fade-right">
+                <div class="mb-4">
+                    <div class="d-flex align-items-center mb-3">
+                        <div class="me-3">
+                            {% for i in "12345" %}
+                                <i class="fas fa-star text-warning"></i>
+                            {% endfor %}
+                        </div>
+                        <span class="text-white-50">5.0 (200+ reviews)</span>
+                    </div>
+                </div>
+                <h1 class="display-3 fw-bold mb-4 gradient-text" style="line-height:1.1;">
+                    Transforming Ideas<br><span class="gradient-text">Into Digital Reality</span>
+                </h1>
+                <p class="lead mb-4 text-white-50">
+                    Expert web, mobile, and design solutions for your business. Reliable, creative, and results-driven.
+                </p>
+                <div class="d-flex flex-column flex-sm-row gap-3 mb-4">
+                    <a href="{% url 'contact:contact' %}" class="btn btn-primary btn-lg shadow">
+                        Get Started <i class="fas fa-arrow-right ms-2"></i>
+                    </a>
+                    <a href="{% url 'portfolio:portfolio_list' %}" class="btn btn-outline-light btn-lg shadow">
+                        View Portfolio
+                    </a>
+                </div>
+                <div class="d-flex flex-wrap gap-4 text-white-50">
+                    <div class="d-flex align-items-center">
+                        <i class="fas fa-check-circle text-success me-2"></i>
+                        <span>100% Satisfaction</span>
+                    </div>
+                    <div class="d-flex align-items-center">
+                        <i class="fas fa-check-circle text-success me-2"></i>
+                        <span>24/7 Support</span>
+                    </div>
+                    <div class="d-flex align-items-center">
+                        <i class="fas fa-check-circle text-success me-2"></i>
+                        <span>Fast Delivery</span>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-6 d-flex justify-content-center align-items-center" data-aos="fade-left">
+                <div class="card border-0 shadow-lg glassmorphism p-4" style="backdrop-filter: blur(16px); background: rgba(255,255,255,0.15);">
+                    <div class="card-body p-4">
+                        <div class="d-flex align-items-center mb-4">
+                            <div class="bg-primary rounded-circle d-flex align-items-center justify-content-center me-3 floating-animation" style="width: 60px; height: 60px;">
+                                <span class="text-white fw-bold fs-3">JD</span>
+                            </div>
+                            <div>
+                                <h5 class="mb-0">John Doe</h5>
+                                <p class="text-muted mb-0">Full Stack Developer</p>
+                            </div>
+                        </div>
+                        <div class="mb-4">
+                            <h6 class="fw-bold">Services Offered</h6>
+                            <div class="d-flex flex-wrap gap-2">
+                                <span class="badge bg-primary">Web Development</span>
+                                <span class="badge bg-primary">UI/UX Design</span>
+                                <span class="badge bg-primary">Mobile Apps</span>
+                                <span class="badge bg-primary">SEO</span>
+                            </div>
+                        </div>
+                        <div class="mb-4">
+                            <h6 class="fw-bold">Starting From</h6>
+                            <h3 class="text-primary mb-1">$50/hour</h3>
+                            <p class="text-muted small">Flexible pricing for all projects</p>
+                        </div>
+                        <a href="{% url 'contact:contact' %}" class="btn btn-primary w-100">
+                            Hire Now
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="position-absolute top-0 start-0 w-100 h-100" style="background: url('https://www.transparenttextures.com/patterns/cubes.png'); opacity: 0.08;"></div>
+</section>
+
+<!-- Services Section -->
+<section class="py-5 bg-light position-relative">
+    <div class="container">
+        <div class="text-center mb-5" data-aos="fade-up">
+            <h2 class="section-title mb-3">My Services</h2>
+            <p class="section-subtitle">Professional services tailored to meet your business needs.</p>
+        </div>
+        <div class="row g-4">
+            <div class="col-md-6 col-lg-3" data-aos="fade-up" data-aos-delay="100">
+                <div class="card service-card h-100 text-center">
+                    <div class="card-body p-4">
+                        <div class="service-icon mb-3">
+                            <i class="fas fa-code"></i>
+                        </div>
+                        <h5 class="card-title">Web Development</h5>
+                        <p class="card-text text-muted">Custom websites and web applications built with modern technologies.</p>
+                        <h4 class="text-primary mb-3">$50/hour</h4>
+                        <ul class="list-unstyled text-start mb-4">
+                            <li><i class="fas fa-check text-success me-2"></i>React/Next.js</li>
+                            <li><i class="fas fa-check text-success me-2"></i>Node.js/Express</li>
+                            <li><i class="fas fa-check text-success me-2"></i>Database Design</li>
+                            <li><i class="fas fa-check text-success me-2"></i>API Development</li>
+                        </ul>
+                        <a href="{% url 'contact:contact' %}" class="btn btn-outline-primary w-100">Get Started</a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6 col-lg-3" data-aos="fade-up" data-aos-delay="200">
+                <div class="card service-card h-100 text-center border-primary">
+                    <div class="card-body p-4">
+                        <div class="position-absolute top-0 start-50 translate-middle">
+                            <span class="badge bg-primary">Most Popular</span>
+                        </div>
+                        <div class="service-icon mb-3">
+                            <i class="fas fa-palette"></i>
+                        </div>
+                        <h5 class="card-title">UI/UX Design</h5>
+                        <p class="card-text text-muted">Beautiful and intuitive user interfaces that enhance user experience.</p>
+                        <h4 class="text-primary mb-3">$45/hour</h4>
+                        <ul class="list-unstyled text-start mb-4">
+                            <li><i class="fas fa-check text-success me-2"></i>Wireframing</li>
+                            <li><i class="fas fa-check text-success me-2"></i>Prototyping</li>
+                            <li><i class="fas fa-check text-success me-2"></i>User Research</li>
+                            <li><i class="fas fa-check text-success me-2"></i>Design Systems</li>
+                        </ul>
+                        <a href="{% url 'contact:contact' %}" class="btn btn-primary w-100">Get Started</a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6 col-lg-3" data-aos="fade-up" data-aos-delay="300">
+                <div class="card service-card h-100 text-center">
+                    <div class="card-body p-4">
+                        <div class="service-icon mb-3">
+                            <i class="fas fa-mobile-alt"></i>
+                        </div>
+                        <h5 class="card-title">Mobile Development</h5>
+                        <p class="card-text text-muted">Native and cross-platform mobile applications for iOS and Android.</p>
+                        <h4 class="text-primary mb-3">$60/hour</h4>
+                        <ul class="list-unstyled text-start mb-4">
+                            <li><i class="fas fa-check text-success me-2"></i>React Native</li>
+                            <li><i class="fas fa-check text-success me-2"></i>Flutter</li>
+                            <li><i class="fas fa-check text-success me-2"></i>iOS Development</li>
+                            <li><i class="fas fa-check text-success me-2"></i>Android Development</li>
+                        </ul>
+                        <a href="{% url 'contact:contact' %}" class="btn btn-outline-primary w-100">Get Started</a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6 col-lg-3" data-aos="fade-up" data-aos-delay="400">
+                <div class="card service-card h-100 text-center">
+                    <div class="card-body p-4">
+                        <div class="service-icon mb-3">
+                            <i class="fas fa-search"></i>
+                        </div>
+                        <h5 class="card-title">SEO Optimization</h5>
+                        <p class="card-text text-muted">Improve your website's visibility and ranking in search engines.</p>
+                        <h4 class="text-primary mb-3">$40/hour</h4>
+                        <ul class="list-unstyled text-start mb-4">
+                            <li><i class="fas fa-check text-success me-2"></i>Keyword Research</li>
+                            <li><i class="fas fa-check text-success me-2"></i>On-Page SEO</li>
+                            <li><i class="fas fa-check text-success me-2"></i>Technical SEO</li>
+                            <li><i class="fas fa-check text-success me-2"></i>Content Strategy</li>
+                        </ul>
+                        <a href="{% url 'contact:contact' %}" class="btn btn-outline-primary w-100">Get Started</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="position-absolute top-0 start-0 w-100 h-100" style="background: url('https://www.transparenttextures.com/patterns/diamond-upholstery.png'); opacity: 0.04;"></div>
+</section>
+
+<!-- Portfolio Section -->
+<section class="py-5 bg-white position-relative">
+    <div class="container">
+        <div class="text-center mb-5" data-aos="fade-up">
+            <h2 class="section-title mb-3">My Portfolio</h2>
+            <p class="section-subtitle">Explore my latest projects and see how I've helped businesses achieve their goals.</p>
+        </div>
+        <div class="row g-4">
+            <div class="col-md-6 col-lg-4" data-aos="fade-up" data-aos-delay="100">
+                <div class="card portfolio-item h-100">
+                    <img src="https://images.unsplash.com/photo-1556742049-0cfed4f6a45d?w=500&h=300&fit=crop" class="card-img-top" alt="E-Commerce Platform">
+                    <div class="card-body">
+                        <span class="badge bg-primary mb-2">Web Development</span>
+                        <h5 class="card-title">E-Commerce Platform</h5>
+                        <p class="card-text">Full-stack e-commerce solution with payment integration and admin dashboard.</p>
+                        <div class="d-flex flex-wrap gap-2 mb-3">
+                            <span class="badge bg-light text-dark">React</span>
+                            <span class="badge bg-light text-dark">Node.js</span>
+                            <span class="badge bg-light text-dark">MongoDB</span>
+                            <span class="badge bg-light text-dark">Stripe</span>
+                        </div>
+                        <div class="d-flex gap-2">
+                            <a href="{% url 'portfolio:portfolio_detail' 1 %}" class="btn btn-primary flex-fill">View Project</a>
+                            <a href="https://github.com/freelancerpro/ecommerce-platform" class="btn btn-outline-secondary" target="_blank">View Code</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6 col-lg-4" data-aos="fade-up" data-aos-delay="200">
+                <div class="card portfolio-item h-100">
+                    <img src="https://images.unsplash.com/photo-1563013544-824ae1b704d3?w=500&h=300&fit=crop" class="card-img-top" alt="Mobile Banking App">
+                    <div class="card-body">
+                        <span class="badge bg-success mb-2">Mobile Development</span>
+                        <h5 class="card-title">Mobile Banking App</h5>
+                        <p class="card-text">Cross-platform mobile application for banking services with biometric authentication.</p>
+                        <div class="d-flex flex-wrap gap-2 mb-3">
+                            <span class="badge bg-light text-dark">React Native</span>
+                            <span class="badge bg-light text-dark">Firebase</span>
+                            <span class="badge bg-light text-dark">Redux</span>
+                            <span class="badge bg-light text-dark">TypeScript</span>
+                        </div>
+                        <div class="d-flex gap-2">
+                            <a href="{% url 'portfolio:portfolio_detail' 2 %}" class="btn btn-primary flex-fill">View Project</a>
+                            <a href="https://github.com/freelancerpro/mobile-banking-app" class="btn btn-outline-secondary" target="_blank">View Code</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6 col-lg-4" data-aos="fade-up" data-aos-delay="300">
+                <div class="card portfolio-item h-100">
+                    <img src="https://images.unsplash.com/photo-1561070791-2526d30994b5?w=500&h=300&fit=crop" class="card-img-top" alt="UI/UX Design System">
+                    <div class="card-body">
+                        <span class="badge bg-warning mb-2">UI/UX Design</span>
+                        <h5 class="card-title">UI/UX Design System</h5>
+                        <p class="card-text">Comprehensive design system with reusable components and documentation.</p>
+                        <div class="d-flex flex-wrap gap-2 mb-3">
+                            <span class="badge bg-light text-dark">Figma</span>
+                            <span class="badge bg-light text-dark">Design Tokens</span>
+                            <span class="badge bg-light text-dark">Storybook</span>
+                        </div>
+                        <div class="d-flex gap-2">
+                            <a href="{% url 'portfolio:portfolio_detail' 3 %}" class="btn btn-primary flex-fill">View Project</a>
+                            <a href="https://github.com/freelancerpro/uiux-design-system" class="btn btn-outline-secondary" target="_blank">View Code</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="position-absolute top-0 start-0 w-100 h-100" style="background: url('https://www.transparenttextures.com/patterns/food.png'); opacity: 0.03;"></div>
+</section>
+
+<!-- Testimonials Section -->
+<section class="py-5 bg-light">
+    <div class="container">
+        <div class="text-center mb-5">
+            <h2 class="display-5 fw-bold mb-3">What Clients Say</h2>
+            <p class="lead text-muted">Don't just take my word for it. Here's what my clients have to say about working together.</p>
+        </div>
+        
+        <div class="row g-4">
+            <div class="col-md-6 col-lg-4">
+                <div class="testimonial-card">
+                    <div class="d-flex align-items-center mb-3">
+                        <img src="https://images.unsplash.com/photo-1494790108755-2616b612b786?w=100&h=100&fit=crop&crop=face" 
+                             class="rounded-circle me-3" style="width: 50px; height: 50px; object-fit: cover;" alt="Sarah Johnson">
+                        <div>
+                            <h6 class="mb-0">Sarah Johnson</h6>
+                            <small class="text-muted">CEO, TechStart Inc.</small>
+                        </div>
+                    </div>
+                    <div class="mb-3">
+                        {% for i in "12345" %}
+                            <i class="fas fa-star text-warning"></i>
+                        {% endfor %}
+                    </div>
+                    <p class="mb-0">"Working with this freelancer was an absolute pleasure. They delivered our e-commerce platform on time and exceeded our expectations."</p>
+                </div>
+            </div>
+            
+            <div class="col-md-6 col-lg-4">
+                <div class="testimonial-card">
+                    <div class="d-flex align-items-center mb-3">
+                        <img src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=100&h=100&fit=crop&crop=face" 
+                             class="rounded-circle me-3" style="width: 50px; height: 50px; object-fit: cover;" alt="Michael Chen">
+                        <div>
+                            <h6 class="mb-0">Michael Chen</h6>
+                            <small class="text-muted">Founder, DesignStudio</small>
+                        </div>
+                    </div>
+                    <div class="mb-3">
+                        {% for i in "12345" %}
+                            <i class="fas fa-star text-warning"></i>
+                        {% endfor %}
+                    </div>
+                    <p class="mb-0">"The UI/UX design work was exceptional. They understood our brand perfectly and created a design system that we continue to use."</p>
+                </div>
+            </div>
+            
+            <div class="col-md-6 col-lg-4">
+                <div class="testimonial-card">
+                    <div class="d-flex align-items-center mb-3">
+                        <img src="https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=100&h=100&fit=crop&crop=face" 
+                             class="rounded-circle me-3" style="width: 50px; height: 50px; object-fit: cover;" alt="Emily Rodriguez">
+                        <div>
+                            <h6 class="mb-0">Emily Rodriguez</h6>
+                            <small class="text-muted">Product Manager, MobileApp</small>
+                        </div>
+                    </div>
+                    <div class="mb-3">
+                        {% for i in "12345" %}
+                            <i class="fas fa-star text-warning"></i>
+                        {% endfor %}
+                    </div>
+                    <p class="mb-0">"The mobile app development was flawless. They handled complex requirements with ease and delivered a high-performance app."</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Contact Section -->
+<section class="py-5">
+    <div class="container">
+        <div class="text-center mb-5">
+            <h2 class="display-5 fw-bold mb-3">Let's Work Together</h2>
+            <p class="lead text-muted">Ready to start your next project? Get in touch and let's discuss how I can help bring your ideas to life.</p>
+        </div>
+        
+        {% if contact_success %}
+        <div class="alert alert-success text-center mb-4">
+            <i class="fas fa-check-circle me-2"></i>
+            Thank you for your message! We will get back to you soon.
+        </div>
+        {% endif %}
+        
+        <div class="row justify-content-center">
+            <div class="col-lg-8">
+                <div class="contact-form">
+                    <form method="POST" action="https://formspree.io/f/xldldqgy" id="homeContactForm">
+                        {% csrf_token %}
+                        <div class="row g-3">
+                            <div class="col-md-6">
+                                <input type="text" class="form-control" name="name" placeholder="Your Name" required>
+                            </div>
+                            <div class="col-md-6">
+                                <input type="email" class="form-control" name="email" placeholder="Your Email" required>
+                            </div>
+                            <div class="col-12">
+                                <textarea class="form-control" name="message" rows="4" placeholder="Tell us about your project..." required></textarea>
+                            </div>
+                            <div class="col-12">
+                                <button type="submit" class="btn btn-primary btn-lg w-100">
+                                    <i class="fas fa-paper-plane me-2"></i>Send Message
+                                </button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %} 
+
+{% block extra_js %}
+<script>
+// Handle Formspree success for home page form
+if (window.location.search.includes('submission-successful')) {
+    // Show success message
+    const successDiv = document.createElement('div');
+    successDiv.className = 'alert alert-success alert-dismissible fade show';
+    successDiv.innerHTML = `
+        <i class="fas fa-check-circle me-2"></i>
+        Thank you! Your message has been sent successfully. We'll get back to you soon.
+        <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+    `;
+    document.querySelector('.contact-form').insertBefore(successDiv, document.querySelector('.contact-form').firstChild);
+}
+</script>
+{% endblock %} 

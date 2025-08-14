@@ -1,0 +1,189 @@
+{% extends 'base.html' %}
+
+{% block title %}{{ project.title }} - Portfolio - FreelancerPro{% endblock %}
+
+{% block extra_css %}
+<style>
+    .project-hero {
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        color: white;
+        padding: 80px 0;
+        position: relative;
+        overflow: hidden;
+    }
+    .project-hero::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><defs><pattern id="grain" width="100" height="100" patternUnits="userSpaceOnUse"><circle cx="50" cy="50" r="1" fill="white" opacity="0.1"/></pattern></defs><rect width="100" height="100" fill="url(%23grain)"/></svg>');
+        opacity: 0.3;
+    }
+    .project-image {
+        border-radius: 20px;
+        box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+    }
+    .tech-badge {
+        background: #f3f4f6;
+        color: #374151;
+        padding: 8px 16px;
+        border-radius: 8px;
+        font-size: 0.9rem;
+        font-weight: 500;
+        margin: 5px;
+        display: inline-block;
+    }
+    .project-info-card {
+        background: white;
+        border-radius: 16px;
+        padding: 2rem;
+        box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+        margin-bottom: 2rem;
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<!-- Hero Section -->
+<section class="project-hero">
+    <div class="container position-relative">
+        <div class="row align-items-center">
+            <div class="col-lg-8 mx-auto text-center">
+                <h1 class="display-4 fw-bold mb-4">{{ project.title }}</h1>
+                <p class="lead mb-4">{{ project.description }}</p>
+                <div class="d-flex flex-wrap justify-content-center gap-3">
+                    {% if project.live_url %}
+                    <a href="{{ project.live_url }}" class="btn btn-light btn-lg" target="_blank">
+                        <i class="fas fa-external-link-alt me-2"></i>Live Demo
+                    </a>
+                    {% endif %}
+                    {% if project.github_url %}
+                    <a href="{{ project.github_url }}" class="btn btn-outline-light btn-lg" target="_blank">
+                        <i class="fab fa-github me-2"></i>View Code
+                    </a>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Project Details -->
+<section class="py-5">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8">
+                {% if project.image %}
+                <img src="{{ project.image.url }}" class="img-fluid project-image mb-4" alt="{{ project.title }}">
+                {% else %}
+                <div class="bg-light rounded-3 d-flex align-items-center justify-content-center mb-4" style="height: 400px;">
+                    <i class="fas fa-image fa-4x text-muted"></i>
+                </div>
+                {% endif %}
+                
+                <div class="project-info-card">
+                    <h3 class="mb-4">Project Overview</h3>
+                    <p class="lead">{{ project.detailed_description|default:project.description }}</p>
+                    
+                    {% if project.challenges %}
+                    <h5 class="mt-4 mb-3">Challenges & Solutions</h5>
+                    <p>{{ project.challenges }}</p>
+                    {% endif %}
+                </div>
+            </div>
+            
+            <div class="col-lg-4">
+                <div class="project-info-card">
+                    <h4 class="mb-4">Project Details</h4>
+                    
+                    <div class="mb-4">
+                        <h6 class="fw-bold">Category</h6>
+                        <span class="badge bg-primary">{{ project.get_category_display }}</span>
+                    </div>
+                    
+                    {% if project.client %}
+                    <div class="mb-4">
+                        <h6 class="fw-bold">Client</h6>
+                        <p class="mb-0">{{ project.client }}</p>
+                    </div>
+                    {% endif %}
+                    
+                    {% if project.technologies %}
+                    <div class="mb-4">
+                        <h6 class="fw-bold">Technologies Used</h6>
+                        <div class="mt-2">
+                            {% for tech in project.technologies.split %}
+                            <span class="tech-badge">{{ tech }}</span>
+                            {% endfor %}
+                        </div>
+                    </div>
+                    {% endif %}
+                    
+                    {% if project.features.all %}
+                    <div class="mb-4">
+                        <h6 class="fw-bold">Key Features</h6>
+                        <ul class="list-unstyled">
+                            {% for feature in project.features.all %}
+                            <li><i class="fas fa-check text-success me-2"></i>{{ feature.name }}</li>
+                            {% endfor %}
+                        </ul>
+                    </div>
+                    {% endif %}
+                    
+                    <div class="d-grid gap-2">
+                        {% if project.live_url %}
+                        <a href="{{ project.live_url }}" class="btn btn-primary" target="_blank">
+                            <i class="fas fa-external-link-alt me-2"></i>View Live Demo
+                        </a>
+                        {% endif %}
+                        {% if project.github_url %}
+                        <a href="{{ project.github_url }}" class="btn btn-outline-primary" target="_blank">
+                            <i class="fab fa-github me-2"></i>View Source Code
+                        </a>
+                        {% endif %}
+                        <a href="{% url 'contact:contact' %}" class="btn btn-success">
+                            <i class="fas fa-paper-plane me-2"></i>Start Similar Project
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Related Projects -->
+        <div class="mt-5">
+            <h3 class="mb-4">Related Projects</h3>
+            <div class="row g-4">
+                <div class="col-md-6 col-lg-4">
+                    <div class="card h-100">
+                        <div class="card-body">
+                            <h5 class="card-title">E-Commerce Platform</h5>
+                            <p class="card-text">Full-stack e-commerce solution with payment integration.</p>
+                            <a href="{% url 'portfolio:portfolio_detail' 1 %}" class="btn btn-primary">View Project</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6 col-lg-4">
+                    <div class="card h-100">
+                        <div class="card-body">
+                            <h5 class="card-title">Mobile Banking App</h5>
+                            <p class="card-text">Cross-platform mobile application for banking services.</p>
+                            <a href="{% url 'portfolio:portfolio_detail' 2 %}" class="btn btn-primary">View Project</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6 col-lg-4">
+                    <div class="card h-100">
+                        <div class="card-body">
+                            <h5 class="card-title">UI/UX Design System</h5>
+                            <p class="card-text">Comprehensive design system with reusable components.</p>
+                            <a href="{% url 'portfolio:portfolio_detail' 3 %}" class="btn btn-primary">View Project</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %} 

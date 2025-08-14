@@ -1,0 +1,251 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}GiftNest - Find the Perfect Gift{% endblock %}
+
+{% block content %}
+<!-- Hero Section -->
+<section class="hero-section">
+    <div class="container">
+        <div class="row align-items-center">
+            <div class="col-lg-6">
+                <div class="text-center mb-4">
+                    <!-- Logo removed -->
+                </div>
+                <h1 class="hero-title text-gradient">
+                    Find the Perfect Gift for Every Occasion
+                </h1>
+                <p class="hero-subtitle">
+                    Discover unique, thoughtful gifts that bring joy and create unforgettable moments. From birthdays to anniversaries, we have everything you need.
+                </p>
+                <div class="d-flex gap-3 justify-content-center justify-content-lg-start">
+                    <a href="{% url 'products:product_list' %}" class="btn btn-primary btn-lg">
+                        <i class="fas fa-gift me-2"></i>Shop Now
+                    </a>
+                    <a href="{% url 'about' %}" class="btn btn-secondary btn-lg">
+                        <i class="fas fa-info-circle me-2"></i>Learn More
+                    </a>
+                </div>
+            </div>
+            <div class="col-lg-6">
+                <div class="text-center">
+                    <img src="https://static.vecteezy.com/system/resources/thumbnails/008/327/507/small_2x/hand-holding-mobile-phone-with-gift-box-on-screen-gift-online-win-online-online-gift-delivery-celebration-party-concept-illustration-vector.jpg" alt="Gift Collection" class="img-fluid rounded-4 shadow-lg">
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Features Section -->
+<section class="py-5">
+    <div class="container">
+        <div class="row text-center mb-5">
+            <div class="col-12">
+                <h2 class="display-5 fw-bold mb-3" style="color: #2C3E50;">Why Choose GiftNest?</h2>
+                <p class="lead text-muted">We make gift-giving easy, thoughtful, and memorable</p>
+            </div>
+        </div>
+        <div class="row g-4">
+            <div class="col-lg-4 col-md-6">
+                <div class="card h-100 text-center border-0 shadow-sm">
+                    <div class="card-body p-4">
+                        <div class="mb-3">
+                            <i class="fas fa-heart fa-3x" style="color: #FF6B6B;"></i>
+                        </div>
+                        <h5 class="card-title">Thoughtful Selection</h5>
+                        <p class="card-text">Carefully curated gifts that show you care and make every occasion special.</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-4 col-md-6">
+                <div class="card h-100 text-center border-0 shadow-sm">
+                    <div class="card-body p-4">
+                        <div class="mb-3">
+                            <i class="fas fa-shipping-fast fa-3x" style="color: #4ECDC4;"></i>
+                        </div>
+                        <h5 class="card-title">Fast Delivery</h5>
+                        <p class="card-text">Quick and reliable shipping to ensure your gifts arrive on time, every time.</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-4 col-md-6">
+                <div class="card h-100 text-center border-0 shadow-sm">
+                    <div class="card-body p-4">
+                        <div class="mb-3">
+                            <i class="fas fa-shield-alt fa-3x" style="color: #FFE66D;"></i>
+                        </div>
+                        <h5 class="card-title">Quality Guarantee</h5>
+                        <p class="card-text">Premium quality products backed by our satisfaction guarantee.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Categories Section -->
+<section class="py-5" style="background: linear-gradient(135deg, #F8F9FA 0%, #E9ECEF 100%);">
+    <div class="container">
+        <div class="row text-center mb-5">
+            <div class="col-12">
+                <h2 class="display-5 fw-bold mb-3" style="color: #2C3E50;">Popular Categories</h2>
+                <p class="lead text-muted">Find the perfect gift for any occasion</p>
+            </div>
+        </div>
+        <div class="row g-4">
+            <div class="col-lg-3 col-md-6">
+                <div class="card category-card border-0 shadow-sm text-center">
+                    <div class="card-body p-4">
+                        <div class="mb-3">
+                            <i class="fas fa-birthday-cake fa-3x" style="color: #FF6B6B;"></i>
+                        </div>
+                        <h5 class="card-title">Birthday Gifts</h5>
+                        <p class="card-text">Make their special day unforgettable</p>
+                        <a href="{% url 'products:product_list' %}" class="btn btn-outline-primary">Shop Now</a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-3 col-md-6">
+                <div class="card category-card border-0 shadow-sm text-center">
+                    <div class="card-body p-4">
+                        <div class="mb-3">
+                            <i class="fas fa-heart fa-3x" style="color: #4ECDC4;"></i>
+                        </div>
+                        <h5 class="card-title">Anniversary Gifts</h5>
+                        <p class="card-text">Celebrate love and commitment</p>
+                        <a href="{% url 'products:product_list' %}" class="btn btn-outline-primary">Shop Now</a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-3 col-md-6">
+                <div class="card category-card border-0 shadow-sm text-center">
+                    <div class="card-body p-4">
+                        <div class="mb-3">
+                            <i class="fas fa-ring fa-3x" style="color: #FFE66D;"></i>
+                        </div>
+                        <h5 class="card-title">Wedding Gifts</h5>
+                        <p class="card-text">Perfect gifts for the happy couple</p>
+                        <a href="{% url 'products:product_list' %}" class="btn btn-outline-primary">Shop Now</a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-3 col-md-6">
+                <div class="card category-card border-0 shadow-sm text-center">
+                    <div class="card-body p-4">
+                        <div class="mb-3">
+                            <i class="fas fa-briefcase fa-3x" style="color: #2ECC71;"></i>
+                        </div>
+                        <h5 class="card-title">Corporate Gifts</h5>
+                        <p class="card-text">Professional and thoughtful gifts for your business</p>
+                        <a href="{% url 'products:product_list' %}" class="btn btn-outline-primary">Shop Now</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Testimonials Section -->
+<section class="py-5">
+    <div class="container">
+        <div class="row text-center mb-5">
+            <div class="col-12">
+                <h2 class="display-5 fw-bold mb-3" style="color: #2C3E50;">What Our Customers Say</h2>
+                <p class="lead text-muted">Real stories from happy customers</p>
+            </div>
+        </div>
+        <div class="row g-4">
+            <div class="col-lg-4">
+                <div class="card border-0 shadow-sm">
+                    <div class="card-body p-4">
+                        <div class="mb-3">
+                            <div class="rating-stars">
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                            </div>
+                        </div>
+                        <p class="card-text">"Amazing selection of gifts! The quality is outstanding and delivery was super fast. Highly recommend!"</p>
+                        <div class="d-flex align-items-center">
+                            <div class="flex-shrink-0">
+                                <img src="https://via.placeholder.com/50x50/FF6B6B/ffffff?text=J" alt="Customer" class="rounded-circle">
+                            </div>
+                            <div class="flex-grow-1 ms-3">
+                                <h6 class="mb-0">John Smith</h6>
+                                <small class="text-muted">Verified Customer</small>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-4">
+                <div class="card border-0 shadow-sm">
+                    <div class="card-body p-4">
+                        <div class="mb-3">
+                            <div class="rating-stars">
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                            </div>
+                        </div>
+                        <p class="card-text">"Found the perfect anniversary gift here. My partner loved it! The packaging was beautiful too."</p>
+                        <div class="d-flex align-items-center">
+                            <div class="flex-shrink-0">
+                                <img src="https://via.placeholder.com/50x50/4ECDC4/ffffff?text=S" alt="Customer" class="rounded-circle">
+                            </div>
+                            <div class="flex-grow-1 ms-3">
+                                <h6 class="mb-0">Sarah Johnson</h6>
+                                <small class="text-muted">Verified Customer</small>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-4">
+                <div class="card border-0 shadow-sm">
+                    <div class="card-body p-4">
+                        <div class="mb-3">
+                            <div class="rating-stars">
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                            </div>
+                        </div>
+                        <p class="card-text">"Excellent customer service and great product quality. Will definitely shop here again!"</p>
+                        <div class="d-flex align-items-center">
+                            <div class="flex-shrink-0">
+                                <img src="https://via.placeholder.com/50x50/FFE66D/ffffff?text=M" alt="Customer" class="rounded-circle">
+                            </div>
+                            <div class="flex-grow-1 ms-3">
+                                <h6 class="mb-0">Mike Davis</h6>
+                                <small class="text-muted">Verified Customer</small>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- CTA Section -->
+<section class="py-5" style="background: linear-gradient(135deg, #FF6B6B 0%, #FF8E8E 100%);">
+    <div class="container">
+        <div class="row text-center">
+            <div class="col-12">
+                <h2 class="display-5 fw-bold mb-3 text-white">Ready to Find the Perfect Gift?</h2>
+                <p class="lead mb-4 text-white opacity-90">Join thousands of happy customers who trust GiftNest for their gift-giving needs.</p>
+                <a href="{% url 'products:product_list' %}" class="btn btn-light btn-lg">
+                    <i class="fas fa-shopping-cart me-2"></i>Start Shopping
+                </a>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}

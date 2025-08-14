@@ -1,0 +1,481 @@
+{% extends "base.html" %}
+{% block title %}Products - GiftNest{% endblock %}
+
+{% block content %}
+<!-- Page Header -->
+<section class="py-5 bg-gradient-primary text-white">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12 text-center">
+                <h1 class="hero-title mb-3">
+                    <i class="fas fa-gift me-3"></i>Our Products
+                </h1>
+                <p class="lead">Discover unique and thoughtful gifts for every occasion</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Products Section -->
+<section class="py-5">
+    <div class="container">
+        <div class="row">
+            <!-- Filters Sidebar -->
+            <div class="col-lg-3">
+                <div class="card filter-card sticky-top" style="top: 100px;">
+                    <div class="card-body">
+                        <h5 class="card-title mb-4">
+                            <i class="fas fa-filter me-2"></i>Search & Filters
+                        </h5>
+                        <form method="get" id="filter-form">
+                            <!-- Search -->
+                            <div class="mb-4">
+                                <label for="search" class="form-label">
+                                    <i class="fas fa-search me-2"></i>Search Products
+                                </label>
+                                <div class="input-group">
+                                    <input type="text" class="form-control" id="search" name="search" 
+                                           value="{{ search_query }}" placeholder="Search gifts...">
+                                    <button class="btn btn-outline-primary" type="submit">
+                                        <i class="fas fa-search"></i>
+                                    </button>
+                                </div>
+                            </div>
+
+                            <!-- Price Range -->
+                            <div class="mb-4">
+                                <label class="form-label">
+                                    <i class="fas fa-dollar-sign me-2"></i>Price Range
+                                </label>
+                                <div class="row g-2">
+                                    <div class="col">
+                                        <input type="number" class="form-control" name="min_price" 
+                                               value="{{ min_price }}" placeholder="Min" min="0" step="0.01">
+                                    </div>
+                                    <div class="col">
+                                        <input type="number" class="form-control" name="max_price" 
+                                               value="{{ max_price }}" placeholder="Max" min="0" step="0.01">
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Stock Filter -->
+                            <div class="mb-4">
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" id="in_stock" 
+                                           name="in_stock" {% if in_stock %}checked{% endif %}>
+                                    <label class="form-check-label" for="in_stock">
+                                        <i class="fas fa-check-circle me-2"></i>In Stock Only
+                                    </label>
+                                </div>
+                            </div>
+
+                            <!-- Sort Options -->
+                            <div class="mb-4">
+                                <label for="sort" class="form-label">
+                                    <i class="fas fa-sort me-2"></i>Sort By
+                                </label>
+                                <select class="form-select" id="sort" name="sort">
+                                    <option value="name" {% if sort_by == 'name' %}selected{% endif %}>
+                                        Name (A-Z)
+                                    </option>
+                                    <option value="price_low" {% if sort_by == 'price_low' %}selected{% endif %}>
+                                        Price (Low to High)
+                                    </option>
+                                    <option value="price_high" {% if sort_by == 'price_high' %}selected{% endif %}>
+                                        Price (High to Low)
+                                    </option>
+                                    <option value="newest" {% if sort_by == 'newest' %}selected{% endif %}>
+                                        Newest First
+                                    </option>
+                                </select>
+                            </div>
+
+                            <button type="submit" class="btn btn-primary w-100 mb-3">
+                                <i class="fas fa-filter me-2"></i>Apply Filters
+                            </button>
+                            {% if search_query or min_price or max_price or in_stock or sort_by != 'name' %}
+                                <a href="{% url 'products:product_list' %}" class="btn btn-outline-secondary w-100">
+                                    <i class="fas fa-times me-2"></i>Clear Filters
+                                </a>
+                            {% endif %}
+                        </form>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Products Grid -->
+            <div class="col-lg-9">
+                {% if search_query %}
+                    <div class="alert alert-info animate-fade-in">
+                        <i class="fas fa-search me-2"></i>
+                        Search results for: "<strong>{{ search_query }}</strong>"
+                        <a href="{% url 'products:product_list' %}" class="btn btn-sm btn-outline-primary ms-3">
+                            <i class="fas fa-times me-1"></i>Clear Search
+                        </a>
+                    </div>
+                {% endif %}
+
+                <!-- Products Count -->
+                <div class="d-flex justify-content-between align-items-center mb-4">
+                    <h5 class="mb-0">
+                        <i class="fas fa-th-large me-2"></i>
+                        {{ products.paginator.count }} Products Found
+                    </h5>
+                    <div class="btn-group" role="group">
+                        <button type="button" class="btn btn-outline-primary active" id="grid-view">
+                            <i class="fas fa-th"></i>
+                        </button>
+                        <button type="button" class="btn btn-outline-primary" id="list-view">
+                            <i class="fas fa-list"></i>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Products Grid -->
+                <div class="row g-4" id="products-container">
+                    {% for product in products %}
+                        <div class="col-lg-4 col-md-6 animate-fade-in">
+                            <div class="card product-card h-100" data-product-id="{{ product.id }}" style="cursor:pointer;">
+                                {% if product.featured %}
+                                    <span class="badge bg-gradient-secondary position-absolute top-0 end-0 m-2">
+                                        <i class="fas fa-star me-1"></i>Featured
+                                    </span>
+                                {% endif %}
+                                {% if product.stock <= 0 %}
+                                    <span class="badge bg-danger position-absolute top-0 start-0 m-2">
+                                        <i class="fas fa-times me-1"></i>Out of Stock
+                                    </span>
+                                {% endif %}
+                                
+                                <div class="product-image-container">
+                                    {% if product.image %}
+                                        <img src="{{ product.image.url }}" class="card-img-top" alt="{{ product.name }}">
+                                    {% else %}
+                                        <img src="https://images.unsplash.com/photo-1549465220-1a8b9238cd48?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80" class="card-img-top" alt="{{ product.name }}">
+                                    {% endif %}
+                                    <div class="product-overlay">
+                                        <div class="product-actions">
+                                            <button class="btn btn-light btn-sm view-details-btn" data-product-id="{{ product.id }}" type="button">
+                                                <i class="fas fa-eye"></i>
+                                            </button>
+                                            {% if product.stock > 0 %}
+                                                <form action="{% url 'cart:cart_add' product.id %}" method="post" class="d-inline">
+                                                    {% csrf_token %}
+                                                    <button type="submit" class="btn btn-primary btn-sm">
+                                                        <i class="fas fa-shopping-cart"></i>
+                                                    </button>
+                                                </form>
+                                            {% endif %}
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                <div class="card-body">
+                                    <h5 class="card-title">{{ product.name }}</h5>
+                                    <p class="card-text text-muted">{{ product.description|truncatewords:15 }}</p>
+                                    
+                                    <div class="product-rating mb-2">
+                                        <i class="fas fa-star text-warning"></i>
+                                        <i class="fas fa-star text-warning"></i>
+                                        <i class="fas fa-star text-warning"></i>
+                                        <i class="fas fa-star text-warning"></i>
+                                        <i class="fas fa-star text-warning"></i>
+                                        <span class="ms-2 text-muted">(4.5)</span>
+                                    </div>
+                                    
+                                    <div class="d-flex justify-content-between align-items-center">
+                                        <div class="product-price">${{ product.price }}</div>
+                                        <div class="product-stock">
+                                            {% if product.stock > 0 %}
+                                                <span class="text-success">
+                                                    <i class="fas fa-check-circle me-1"></i>In Stock
+                                                </span>
+                                            {% else %}
+                                                <span class="text-danger">
+                                                    <i class="fas fa-times-circle me-1"></i>Out of Stock
+                                                </span>
+                                            {% endif %}
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                <div class="card-footer bg-transparent border-0">
+                                    <div class="d-grid gap-2">
+                                        <button class="btn btn-primary view-details-btn" data-product-id="{{ product.id }}" type="button">
+                                            <i class="fas fa-eye me-2"></i>View Details
+                                        </button>
+                                        {% if product.stock > 0 %}
+                                            <form action="{% url 'cart:cart_add' product.id %}" method="post">
+                                                {% csrf_token %}
+                                                <button type="submit" class="btn btn-outline-primary">
+                                                    <i class="fas fa-shopping-cart me-2"></i>Add to Cart
+                                                </button>
+                                            </form>
+                                        {% endif %}
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    {% empty %}
+                        <div class="col-12">
+                            <div class="text-center py-5">
+                                <i class="fas fa-search fa-3x text-muted mb-3"></i>
+                                <h4 class="text-muted">No products found</h4>
+                                <p class="text-muted">Try adjusting your search criteria or browse our categories.</p>
+                                <a href="{% url 'products:product_list' %}" class="btn btn-primary">
+                                    <i class="fas fa-home me-2"></i>Browse All Products
+                                </a>
+                            </div>
+                        </div>
+                    {% endfor %}
+                </div>
+
+                <!-- Pagination -->
+                {% if products.paginator.num_pages > 1 %}
+                    <nav aria-label="Page navigation" class="mt-5">
+                        <ul class="pagination justify-content-center">
+                            {% if products.has_previous %}
+                                <li class="page-item">
+                                    <a class="page-link" href="?page=1{% if search_query %}&search={{ search_query }}{% endif %}{% if min_price %}&min_price={{ min_price }}{% endif %}{% if max_price %}&max_price={{ max_price }}{% endif %}{% if in_stock %}&in_stock=on{% endif %}{% if sort_by %}&sort={{ sort_by }}{% endif %}">
+                                        <i class="fas fa-angle-double-left"></i>
+                                    </a>
+                                </li>
+                                <li class="page-item">
+                                    <a class="page-link" href="?page={{ products.previous_page_number }}{% if search_query %}&search={{ search_query }}{% endif %}{% if min_price %}&min_price={{ min_price }}{% endif %}{% if max_price %}&max_price={{ max_price }}{% endif %}{% if in_stock %}&in_stock=on{% endif %}{% if sort_by %}&sort={{ sort_by }}{% endif %}">
+                                        <i class="fas fa-angle-left"></i>
+                                    </a>
+                                </li>
+                            {% endif %}
+
+                            {% for num in products.paginator.page_range %}
+                                {% if num == products.number %}
+                                    <li class="page-item active">
+                                        <span class="page-link">{{ num }}</span>
+                                    </li>
+                                {% elif num > products.number|add:'-3' and num < products.number|add:'3' %}
+                                    <li class="page-item">
+                                        <a class="page-link" href="?page={{ num }}{% if search_query %}&search={{ search_query }}{% endif %}{% if min_price %}&min_price={{ min_price }}{% endif %}{% if max_price %}&max_price={{ max_price }}{% endif %}{% if in_stock %}&in_stock=on{% endif %}{% if sort_by %}&sort={{ sort_by }}{% endif %}">{{ num }}</a>
+                                    </li>
+                                {% endif %}
+                            {% endfor %}
+
+                            {% if products.has_next %}
+                                <li class="page-item">
+                                    <a class="page-link" href="?page={{ products.next_page_number }}{% if search_query %}&search={{ search_query }}{% endif %}{% if min_price %}&min_price={{ min_price }}{% endif %}{% if max_price %}&max_price={{ max_price }}{% endif %}{% if in_stock %}&in_stock=on{% endif %}{% if sort_by %}&sort={{ sort_by }}{% endif %}">
+                                        <i class="fas fa-angle-right"></i>
+                                    </a>
+                                </li>
+                                <li class="page-item">
+                                    <a class="page-link" href="?page={{ products.paginator.num_pages }}{% if search_query %}&search={{ search_query }}{% endif %}{% if min_price %}&min_price={{ min_price }}{% endif %}{% if max_price %}&max_price={{ max_price }}{% endif %}{% if in_stock %}&in_stock=on{% endif %}{% if sort_by %}&sort={{ sort_by }}{% endif %}">
+                                        <i class="fas fa-angle-double-right"></i>
+                                    </a>
+                                </li>
+                            {% endif %}
+                        </ul>
+                    </nav>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Product Details Modal -->
+<div class="modal fade" id="productDetailModal" tabindex="-1" aria-labelledby="productDetailModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-lg modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="productDetailModalLabel">Product Details</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body" id="productDetailModalBody">
+        <!-- Product details yahan AJAX se load honge -->
+        <div class="text-center py-5">
+          <div class="spinner-border text-primary" role="status">
+            <span class="visually-hidden">Loading...</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<style>
+/* Filter Card */
+.filter-card {
+    background: rgba(255, 255, 255, 0.9);
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    border-radius: var(--border-radius-lg);
+    box-shadow: var(--shadow-md);
+}
+
+/* Product Cards */
+.product-card {
+    position: relative;
+    overflow: hidden;
+    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.product-image-container {
+    position: relative;
+    overflow: hidden;
+}
+
+.product-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.7);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+.product-card:hover .product-overlay {
+    opacity: 1;
+}
+
+.product-actions {
+    display: flex;
+    gap: 0.5rem;
+}
+
+.product-actions .btn {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.3s ease;
+}
+
+.product-actions .btn:hover {
+    transform: scale(1.1);
+}
+
+/* Product Info */
+.product-price {
+    font-size: 1.25rem;
+    font-weight: 700;
+    color: var(--primary-color);
+}
+
+.product-stock {
+    font-size: 0.875rem;
+}
+
+/* Pagination */
+.pagination .page-link {
+    border: none;
+    margin: 0 2px;
+    border-radius: var(--border-radius);
+    color: var(--gray-700);
+    transition: all 0.3s ease;
+}
+
+.pagination .page-link:hover {
+    background: var(--primary-color);
+    color: white;
+    transform: translateY(-2px);
+}
+
+.pagination .page-item.active .page-link {
+    background: var(--gradient-primary);
+    color: white;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .filter-card {
+        position: static !important;
+        margin-bottom: 2rem;
+    }
+    
+    .product-card {
+        margin-bottom: 1rem;
+    }
+}
+</style>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    // Auto-submit form when sort option changes
+    document.getElementById('sort').addEventListener('change', function() {
+        document.getElementById('filter-form').submit();
+    });
+
+    // Price range validation
+    const minPrice = document.querySelector('input[name="min_price"]');
+    const maxPrice = document.querySelector('input[name="max_price"]');
+
+    function validatePrices() {
+        if (minPrice.value && maxPrice.value) {
+            if (parseFloat(minPrice.value) > parseFloat(maxPrice.value)) {
+                maxPrice.setCustomValidity('Maximum price must be greater than minimum price');
+            } else {
+                maxPrice.setCustomValidity('');
+            }
+        } else {
+            maxPrice.setCustomValidity('');
+        }
+    }
+
+    minPrice.addEventListener('input', validatePrices);
+    maxPrice.addEventListener('input', validatePrices);
+
+    // View toggle functionality
+    const gridView = document.getElementById('grid-view');
+    const listView = document.getElementById('list-view');
+    const productsContainer = document.getElementById('products-container');
+
+    gridView.addEventListener('click', function() {
+        productsContainer.className = 'row g-4';
+        gridView.classList.add('active');
+        listView.classList.remove('active');
+    });
+
+    listView.addEventListener('click', function() {
+        productsContainer.className = 'row g-3';
+        listView.classList.add('active');
+        gridView.classList.remove('active');
+    });
+
+    // Product Details Modal Logic
+    function showProductModal(productId) {
+        const modal = new bootstrap.Modal(document.getElementById('productDetailModal'));
+        const modalBody = document.getElementById('productDetailModalBody');
+        modalBody.innerHTML = `<div class='text-center py-5'><div class='spinner-border text-primary' role='status'><span class='visually-hidden'>Loading...</span></div></div>`;
+        modal.show();
+        fetch(`/products/${productId}/modal/`)
+            .then(response => response.text())
+            .then(html => {
+                modalBody.innerHTML = html;
+            })
+            .catch(() => {
+                modalBody.innerHTML = '<div class="alert alert-danger">Failed to load product details.</div>';
+            });
+    }
+    document.querySelectorAll('.view-details-btn').forEach(btn => {
+        btn.addEventListener('click', function(e) {
+            e.stopPropagation();
+            const productId = this.getAttribute('data-product-id');
+            showProductModal(productId);
+        });
+    });
+    document.querySelectorAll('.product-card').forEach(card => {
+        card.addEventListener('click', function(e) {
+            // Prevent if click was on a button inside card
+            if(e.target.closest('button')) return;
+            const productId = this.getAttribute('data-product-id');
+            showProductModal(productId);
+        });
+    });
+});
+</script>
+{% endblock %}

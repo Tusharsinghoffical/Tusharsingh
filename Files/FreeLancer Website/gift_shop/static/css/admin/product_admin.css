@@ -1,0 +1,60 @@
+/* Admin styles for product management */
+.field-image_preview img {
+    border-radius: 4px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    transition: transform 0.2s ease;
+}
+
+.field-image_preview img:hover {
+    transform: scale(1.5);
+}
+
+/* Improved fieldset styling */
+.module h2 {
+    background: #4CAF50;
+    color: white;
+}
+
+/* Custom button styling */
+.submit-row input {
+    background: #4CAF50;
+    border-color: #43A047;
+}
+
+.submit-row input:hover {
+    background: #43A047;
+}
+
+/* Status indicators */
+.field-available .true,
+.field-featured .true {
+    color: #4CAF50;
+    font-weight: bold;
+}
+
+.field-stock {
+    font-weight: bold;
+}
+
+/* Low stock warning */
+.low-stock {
+    color: #f44336;
+}
+
+/* Price formatting */
+.field-price {
+    font-family: monospace;
+}
+
+/* Category badges */
+.field-category {
+    font-weight: 500;
+    color: #2196F3;
+}
+
+/* Date fields */
+.field-created,
+.field-updated {
+    color: #757575;
+    font-size: 0.9em;
+}

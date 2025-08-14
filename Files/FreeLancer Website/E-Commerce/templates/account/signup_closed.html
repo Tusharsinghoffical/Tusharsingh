@@ -1,0 +1,138 @@
+{% extends "base.html" %}
+
+{% block title %}Signup Complete - FreelancerPro{% endblock %}
+
+{% block extra_css %}
+<style>
+    .signup-success-hero {
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        color: white;
+        padding: 80px 0 60px;
+        border-radius: 0 0 40px 40px;
+        box-shadow: 0 10px 40px rgba(102,126,234,0.10);
+        position: relative;
+        overflow: hidden;
+    }
+    .signup-success-hero::before {
+        content: '';
+        position: absolute;
+        top: 0; left: 0; right: 0; bottom: 0;
+        background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><defs><pattern id="grain" width="100" height="100" patternUnits="userSpaceOnUse"><circle cx="50" cy="50" r="1" fill="white" opacity="0.08"/></pattern></defs><rect width="100" height="100" fill="url(%23grain)"/></svg>');
+        opacity: 0.2;
+    }
+    .success-card {
+        background: rgba(255,255,255,0.95);
+        border-radius: 24px;
+        box-shadow: 0 10px 40px rgba(102,126,234,0.10);
+        border: 1px solid rgba(102,126,234,0.08);
+        padding: 3rem 2rem;
+        margin-top: -60px;
+        position: relative;
+        z-index: 2;
+    }
+    .success-icon {
+        width: 80px;
+        height: 80px;
+        background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin: 0 auto 2rem;
+        color: white;
+        font-size: 2rem;
+    }
+    .btn-primary-custom {
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        border: none;
+        border-radius: 12px;
+        padding: 12px 30px;
+        font-weight: 600;
+        transition: all 0.3s ease;
+    }
+    .btn-primary-custom:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 10px 20px rgba(102,126,234,0.3);
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<!-- Hero Section -->
+<section class="signup-success-hero mb-5">
+    <div class="container position-relative">
+        <div class="row align-items-center">
+            <div class="col-lg-8 mx-auto text-center">
+                <h1 class="display-4 mb-2">Account Created Successfully!</h1>
+                <p class="lead mb-0">Welcome to FreelancerPro. Please verify your email to get started.</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Success Section -->
+<section class="py-5">
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-lg-8">
+                <div class="card success-card">
+                    <div class="text-center">
+                        <div class="success-icon">
+                            <i class="fas fa-check"></i>
+                        </div>
+                        <h2 class="mb-3">Welcome to FreelancerPro!</h2>
+                        <p class="text-muted mb-4">
+                            Your account has been created successfully. We've sent a verification email to your inbox. 
+                            Please check your email and click the verification link to activate your account.
+                        </p>
+                        
+                        <div class="alert alert-info">
+                            <i class="fas fa-info-circle me-2"></i>
+                            <strong>Next Steps:</strong> Check your email and click the verification link to access your dashboard.
+                        </div>
+                        
+                        <div class="mt-4">
+                            <a href="{% url 'account_login' %}" class="btn btn-primary-custom btn-lg me-3">
+                                <i class="fas fa-sign-in-alt me-2"></i>Go to Login
+                            </a>
+                            <a href="{% url 'core:home' %}" class="btn btn-outline-secondary btn-lg">
+                                <i class="fas fa-home me-2"></i>Back to Homepage
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- What's Next -->
+                <div class="card mt-4">
+                    <div class="card-body">
+                        <h5 class="card-title"><i class="fas fa-rocket me-2"></i>What happens after verification?</h5>
+                        <div class="row">
+                            <div class="col-md-4 text-center mb-3">
+                                <div class="bg-light rounded-circle d-inline-flex align-items-center justify-content-center mb-2" style="width: 60px; height: 60px;">
+                                    <i class="fas fa-tachometer-alt text-primary"></i>
+                                </div>
+                                <h6>Access Dashboard</h6>
+                                <p class="text-muted small">Manage your profile and view your activity</p>
+                            </div>
+                            <div class="col-md-4 text-center mb-3">
+                                <div class="bg-light rounded-circle d-inline-flex align-items-center justify-content-center mb-2" style="width: 60px; height: 60px;">
+                                    <i class="fas fa-envelope text-primary"></i>
+                                </div>
+                                <h6>Send Messages</h6>
+                                <p class="text-muted small">Contact us for any inquiries</p>
+                            </div>
+                            <div class="col-md-4 text-center mb-3">
+                                <div class="bg-light rounded-circle d-inline-flex align-items-center justify-content-center mb-2" style="width: 60px; height: 60px;">
+                                    <i class="fas fa-user text-primary"></i>
+                                </div>
+                                <h6>Update Profile</h6>
+                                <p class="text-muted small">Add your profile picture and details</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %} 

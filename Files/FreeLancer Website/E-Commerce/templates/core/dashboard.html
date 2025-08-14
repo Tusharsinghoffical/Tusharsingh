@@ -1,0 +1,274 @@
+{% extends 'base.html' %}
+
+{% block title %}Dashboard - FreelancerPro{% endblock %}
+
+{% block extra_css %}
+<style>
+    .dashboard-hero {
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        color: white;
+        padding: 60px 0 40px;
+        border-radius: 0 0 40px 40px;
+        box-shadow: 0 10px 40px rgba(102,126,234,0.10);
+        position: relative;
+        overflow: hidden;
+    }
+    .dashboard-hero::before {
+        content: '';
+        position: absolute;
+        top: 0; left: 0; right: 0; bottom: 0;
+        background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><defs><pattern id="grain" width="100" height="100" patternUnits="userSpaceOnUse"><circle cx="50" cy="50" r="1" fill="white" opacity="0.08"/></pattern></defs><rect width="100" height="100" fill="url(%23grain)"/></svg>');
+        opacity: 0.2;
+    }
+    .dashboard-hero h1 {
+        font-weight: 700;
+        letter-spacing: -1px;
+    }
+    .dashboard-section {
+        margin-top: -60px;
+        z-index: 2;
+        position: relative;
+    }
+    .user-details-card {
+        background: rgba(255,255,255,0.95);
+        border-radius: 24px;
+        box-shadow: 0 10px 40px rgba(102,126,234,0.10);
+        border: 1px solid rgba(102,126,234,0.08);
+        padding: 2.5rem 1.5rem 2rem 1.5rem;
+        margin-bottom: 2rem;
+        transition: box-shadow 0.3s;
+    }
+    .user-details-card:hover {
+        box-shadow: 0 20px 60px rgba(102,126,234,0.18);
+    }
+    .user-details-card img {
+        border: 4px solid #667eea;
+        box-shadow: 0 4px 24px rgba(102,126,234,0.10);
+    }
+    .user-details-card .gradient-text {
+        background: linear-gradient(135deg, #667eea, #764ba2);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+    }
+    .user-details-card .badge {
+        font-size: 0.95rem;
+        margin-bottom: 0.3rem;
+        background: #f3f4f6;
+        color: #374151;
+        border-radius: 8px;
+        padding: 0.5em 1em;
+    }
+    .user-details-card .btn-outline-primary {
+        border-radius: 999px;
+    }
+    .dashboard-table-card {
+        background: rgba(255,255,255,0.95);
+        border-radius: 24px;
+        box-shadow: 0 10px 40px rgba(102,126,234,0.10);
+        border: 1px solid rgba(102,126,234,0.08);
+        margin-bottom: 2rem;
+    }
+    .dashboard-table-card .card-header {
+        background: transparent;
+        border-bottom: none;
+        font-weight: 600;
+        font-size: 1.1rem;
+    }
+    .dashboard-table-card .table {
+        margin-bottom: 0;
+    }
+    .dashboard-table-card .badge {
+        font-size: 0.95rem;
+        border-radius: 8px;
+        padding: 0.4em 1em;
+    }
+    .dashboard-table-card .btn-primary {
+        border-radius: 999px;
+        font-size: 0.95rem;
+    }
+    .quick-actions-card {
+        background: rgba(255,255,255,0.95);
+        border-radius: 24px;
+        box-shadow: 0 10px 40px rgba(102,126,234,0.10);
+        border: 1px solid rgba(102,126,234,0.08);
+    }
+    .quick-actions-card .btn {
+        border-radius: 999px;
+        font-size: 1rem;
+        margin-bottom: 0.7rem;
+    }
+    .profile-image-upload {
+        position: relative;
+        display: inline-block;
+    }
+    .profile-image-upload input[type="file"] {
+        opacity: 0;
+        width: 0.1px;
+        height: 0.1px;
+        position: absolute;
+        z-index: -1;
+    }
+    .profile-image-upload label {
+        display: inline-block;
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        color: #fff;
+        padding: 7px 18px;
+        border-radius: 999px;
+        font-size: 0.95rem;
+        font-weight: 500;
+        cursor: pointer;
+        margin-bottom: 0;
+        margin-top: 10px;
+        transition: background 0.3s;
+    }
+    .profile-image-upload label:hover {
+        background: linear-gradient(135deg, #764ba2 0%, #667eea 100%);
+    }
+    .profile-image-upload .btn-update {
+        margin-left: 10px;
+        border-radius: 999px;
+        font-size: 0.95rem;
+        padding: 7px 18px;
+    }
+    .alert {
+        border-radius: 12px;
+        border: none;
+        box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+    }
+    @media (max-width: 991px) {
+        .dashboard-section {
+            margin-top: 0;
+        }
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<!-- Hero Section -->
+<section class="dashboard-hero mb-5">
+    <div class="container position-relative">
+        <div class="row align-items-center">
+            <div class="col-lg-8 mx-auto text-center">
+                <h1 class="display-4 mb-2">Welcome, {{ user.first_name|default:user.username }}!</h1>
+                <p class="lead mb-0">Your personal dashboard to manage your account and activity.</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Dashboard Main Section -->
+<section class="dashboard-section">
+    <div class="container">
+        <!-- Messages -->
+        {% if messages %}
+            <div class="row mb-4">
+                <div class="col-12">
+                    {% for message in messages %}
+                        <div class="alert alert-{{ message.tags }} alert-dismissible fade show" role="alert">
+                            {{ message }}
+                            <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+                        </div>
+                    {% endfor %}
+                </div>
+            </div>
+        {% endif %}
+        
+        <div class="row g-4">
+            <div class="col-lg-4">
+                <div class="card user-details-card text-center">
+                    <form method="post" enctype="multipart/form-data" class="mb-3">
+                        {% csrf_token %}
+                        <div class="mb-3">
+                            {% if user.profile.image and user.profile.image.url %}
+                                <img src="{{ user.profile.get_image_url }}" alt="Profile" class="rounded-circle shadow" style="width: 100px; height: 100px; object-fit: cover;">
+                            {% else %}
+                                <div class="rounded-circle bg-primary d-inline-flex align-items-center justify-content-center shadow" style="width: 100px; height: 100px; font-size: 2.5rem; color: white;">
+                                    <i class="fas fa-user"></i>
+                                </div>
+                            {% endif %}
+                        </div>
+                        <div class="profile-image-upload">
+                            <input type="file" name="image" id="id_image" accept="image/*">
+                            <label for="id_image"><i class="fas fa-upload me-2"></i>Choose Image</label>
+                            <button type="submit" class="btn btn-sm btn-outline-primary btn-update">Update Image</button>
+                        </div>
+                    </form>
+                    <h4 class="fw-bold mb-1 gradient-text">
+                        {% if user.first_name or user.last_name %}
+                            {{ user.first_name }} {{ user.last_name }}
+                        {% else %}
+                            {{ user.username }}
+                        {% endif %}
+                    </h4>
+                    <p class="text-muted mb-2">{{ user.email }}</p>
+                    <div class="d-flex flex-column align-items-center mb-3">
+                        <span class="badge mb-1"><strong>Username:</strong> {{ user.username }}</span>
+                        <span class="badge mb-1"><strong>Joined:</strong> {{ user.date_joined|date:"M d, Y" }}</span>
+                        <span class="badge"><strong>Last Login:</strong> {{ user.last_login|date:"M d, Y H:i" }}</span>
+                    </div>
+                </div>
+                <div class="card quick-actions-card mt-3">
+                    <div class="card-header">
+                        <h5 class="mb-0"><i class="fas fa-cog me-2"></i>Quick Actions</h5>
+                    </div>
+                    <div class="card-body">
+                        <a href="{% url 'contact:contact' %}" class="btn btn-primary w-100 mb-2">
+                            <i class="fas fa-envelope me-2"></i>Send Message
+                        </a>
+                        <a href="{% url 'core:home' %}" class="btn btn-outline-primary w-100 mb-2">
+                            <i class="fas fa-home me-2"></i>Go to Homepage
+                        </a>
+                        <a href="{% url 'account_logout' %}" class="btn btn-outline-danger w-100">
+                            <i class="fas fa-sign-out-alt me-2"></i>Logout
+                        </a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-8">
+                <div class="card dashboard-table-card">
+                    <div class="card-header">
+                        <h5 class="mb-0"><i class="fas fa-envelope me-2"></i>Your Contact Messages</h5>
+                    </div>
+                    <div class="card-body">
+                        {% if user_contacts %}
+                            <div class="table-responsive">
+                                <table class="table table-hover align-middle">
+                                    <thead>
+                                        <tr>
+                                            <th>Date</th>
+                                            <th>Subject</th>
+                                            <th>Status</th>
+                                            <th>Actions</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        {% for contact in user_contacts %}
+                                        <tr>
+                                            <td>{{ contact.created_at|date:"M d, Y" }}</td>
+                                            <td>{{ contact.subject }}</td>
+                                            <td>
+                                                {% if contact.is_read %}
+                                                    <span class="badge bg-success">Read</span>
+                                                {% else %}
+                                                    <span class="badge bg-warning">New</span>
+                                                {% endif %}
+                                            </td>
+                                            <td>
+                                                <button class="btn btn-sm btn-primary">View</button>
+                                            </td>
+                                        </tr>
+                                        {% endfor %}
+                                    </tbody>
+                                </table>
+                            </div>
+                        {% else %}
+                            <p class="text-muted">No contact messages yet.</p>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %} 

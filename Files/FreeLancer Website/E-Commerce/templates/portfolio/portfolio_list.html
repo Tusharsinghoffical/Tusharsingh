@@ -1,0 +1,561 @@
+{% extends 'base.html' %}
+
+{% block title %}Our Portfolio - FreelancerPro{% endblock %}
+
+{% block extra_css %}
+<style>
+    .portfolio-hero {
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        color: white;
+        padding: 80px 0;
+        position: relative;
+        overflow: hidden;
+    }
+    .portfolio-hero::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><defs><pattern id="grain" width="100" height="100" patternUnits="userSpaceOnUse"><circle cx="50" cy="50" r="1" fill="white" opacity="0.1"/></pattern></defs><rect width="100" height="100" fill="url(%23grain)"/></svg>');
+        opacity: 0.3;
+    }
+    .portfolio-item {
+        border-radius: 20px;
+        overflow: hidden;
+        box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+        transition: all 0.3s ease;
+        position: relative;
+    }
+    .portfolio-item:hover {
+        transform: scale(1.02);
+        box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+    }
+    .portfolio-item.featured {
+        border: 2px solid #667eea;
+        box-shadow: 0 15px 35px rgba(102, 126, 234, 0.2);
+    }
+    .featured-badge {
+        position: absolute;
+        top: 15px;
+        right: 15px;
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        color: white;
+        padding: 5px 15px;
+        border-radius: 20px;
+        font-size: 0.8rem;
+        font-weight: 600;
+        z-index: 10;
+    }
+    .category-filter {
+        background: white;
+        border-radius: 12px;
+        padding: 1rem;
+        box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+        margin-bottom: 2rem;
+    }
+    .category-btn {
+        border: 2px solid #e5e7eb;
+        background: white;
+        color: #6b7280;
+        border-radius: 8px;
+        padding: 8px 16px;
+        margin: 0 5px 5px 0;
+        transition: all 0.3s ease;
+        text-decoration: none;
+    }
+    .category-btn:hover, .category-btn.active {
+        border-color: #667eea;
+        background: #667eea;
+        color: white;
+    }
+    .tech-stack {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 5px;
+        margin: 10px 0;
+    }
+    .tech-badge {
+        background: #f3f4f6;
+        color: #374151;
+        padding: 4px 8px;
+        border-radius: 6px;
+        font-size: 0.75rem;
+        font-weight: 500;
+    }
+    .project-overlay {
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: rgba(102, 126, 234, 0.9);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        opacity: 0;
+        transition: opacity 0.3s ease;
+    }
+    .portfolio-item:hover .project-overlay {
+        opacity: 1;
+    }
+    .overlay-content {
+        text-align: center;
+        color: white;
+    }
+    .stats-section {
+        background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%);
+        padding: 60px 0;
+        margin: 60px 0;
+    }
+    .stat-item {
+        text-align: center;
+        padding: 20px;
+    }
+    .stat-number {
+        font-size: 3rem;
+        font-weight: 800;
+        color: #667eea;
+        margin-bottom: 10px;
+    }
+    .stat-label {
+        color: #6b7280;
+        font-weight: 600;
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<!-- Hero Section -->
+<section class="portfolio-hero">
+    <div class="container position-relative">
+        <div class="row align-items-center">
+            <div class="col-lg-8 mx-auto text-center">
+                <h1 class="display-4 fw-bold mb-4">Our Portfolio</h1>
+                <p class="lead mb-4">Explore our latest projects and see how we've helped businesses achieve their digital goals. From web applications to mobile apps, each project showcases our expertise and creativity.</p>
+                <div class="d-flex flex-wrap justify-content-center gap-3">
+                    <div class="d-flex align-items-center text-white-50">
+                        <i class="fas fa-check-circle text-success me-2"></i>
+                        <span>50+ Projects Completed</span>
+                    </div>
+                    <div class="d-flex align-items-center text-white-50">
+                        <i class="fas fa-check-circle text-success me-2"></i>
+                        <span>100% Client Satisfaction</span>
+                    </div>
+                    <div class="d-flex align-items-center text-white-50">
+                        <i class="fas fa-check-circle text-success me-2"></i>
+                        <span>Modern Technologies</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Stats Section -->
+<section class="stats-section">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-3">
+                <div class="stat-item">
+                    <div class="stat-number">50+</div>
+                    <div class="stat-label">Projects Completed</div>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="stat-item">
+                    <div class="stat-number">30+</div>
+                    <div class="stat-label">Happy Clients</div>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="stat-item">
+                    <div class="stat-number">5+</div>
+                    <div class="stat-label">Years Experience</div>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="stat-item">
+                    <div class="stat-number">100%</div>
+                    <div class="stat-label">Success Rate</div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Portfolio Section -->
+<section class="py-5">
+    <div class="container">
+        <!-- Category Filter -->
+        <div class="category-filter">
+            <h5 class="mb-3">Filter by Category:</h5>
+            <div class="d-flex flex-wrap">
+                <a href="?category=all" class="category-btn {% if current_category == 'all' or not current_category %}active{% endif %}">All Projects</a>
+                <a href="?category=web" class="category-btn {% if current_category == 'web' %}active{% endif %}">Web Development</a>
+                <a href="?category=mobile" class="category-btn {% if current_category == 'mobile' %}active{% endif %}">Mobile Development</a>
+                <a href="?category=design" class="category-btn {% if current_category == 'design' %}active{% endif %}">UI/UX Design</a>
+                <a href="?category=other" class="category-btn {% if current_category == 'other' %}active{% endif %}">Other</a>
+            </div>
+        </div>
+
+        <div class="row g-4">
+            {% for project in projects %}
+            <div class="col-md-6 col-lg-4">
+                <div class="card portfolio-item h-100 {% if project.is_featured %}featured{% endif %}">
+                    {% if project.is_featured %}
+                    <div class="featured-badge">
+                        <i class="fas fa-star me-1"></i>Featured
+                    </div>
+                    {% endif %}
+                    
+                    <div class="position-relative">
+                        {% if project.image %}
+                        <img src="{{ project.image.url }}" class="card-img-top" alt="{{ project.title }}" style="height: 200px; object-fit: cover;">
+                        {% else %}
+                        <div class="card-img-top bg-light d-flex align-items-center justify-content-center" style="height: 200px;">
+                            <i class="fas fa-image fa-3x text-muted"></i>
+                        </div>
+                        {% endif %}
+                        
+                        <div class="project-overlay">
+                            <div class="overlay-content">
+                                <h5 class="mb-3">{{ project.title }}</h5>
+                                <div class="d-flex gap-2 justify-content-center">
+                                    {% if project.live_url %}
+                                    <a href="{{ project.live_url }}" class="btn btn-light btn-sm" target="_blank">
+                                        <i class="fas fa-external-link-alt me-1"></i>Live Demo
+                                    </a>
+                                    {% else %}
+                                    <a href="{% url 'portfolio:portfolio_detail' project.pk %}" class="btn btn-light btn-sm">
+                                        <i class="fas fa-external-link-alt me-1"></i>View Project
+                                    </a>
+                                    {% endif %}
+                                    {% if project.github_url %}
+                                    <a href="{{ project.github_url }}" class="btn btn-light btn-sm" target="_blank">
+                                        <i class="fab fa-github me-1"></i>View Code
+                                    </a>
+                                    {% else %}
+                                    <a href="{% url 'portfolio:portfolio_detail' project.pk %}" class="btn btn-light btn-sm">
+                                        <i class="fab fa-github me-1"></i>View Details
+                                    </a>
+                                    {% endif %}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="card-body">
+                        <h5 class="card-title">{{ project.title }}</h5>
+                        <p class="card-text text-muted">{{ project.description|truncatewords:15 }}</p>
+                        
+                        <div class="mb-3">
+                            <span class="badge bg-primary">{{ project.get_category_display }}</span>
+                        </div>
+                        
+                        {% if project.technologies %}
+                        <div class="tech-stack">
+                            {% for tech in project.technologies.split|slice:":4" %}
+                            <span class="tech-badge">{{ tech }}</span>
+                            {% endfor %}
+                        </div>
+                        {% endif %}
+                        
+                        <div class="d-flex justify-content-between align-items-center mt-3">
+                            <small class="text-muted">{{ project.created_at|date:"M Y" }}</small>
+                            <a href="{% url 'portfolio:portfolio_detail' project.pk %}" class="btn btn-outline-primary btn-sm">
+                                View Details
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            {% empty %}
+            <!-- Sample Projects when no projects exist -->
+            <div class="col-12 text-center mb-4">
+                <h3 class="text-muted">Featured Projects</h3>
+                <p class="text-muted">Here are some of our recent projects:</p>
+            </div>
+            
+            <!-- Sample Project 1 -->
+            <div class="col-md-6 col-lg-4">
+                <div class="card portfolio-item h-100 featured">
+                    <div class="featured-badge">
+                        <i class="fas fa-star me-1"></i>Featured
+                    </div>
+                    
+                    <div class="position-relative">
+                        <img src="https://images.unsplash.com/photo-1556742049-0cfed4f6a45d?w=500&h=300&fit=crop" class="card-img-top" alt="E-Commerce Platform" style="height: 200px; object-fit: cover;">
+                        <div class="project-overlay">
+                            <div class="overlay-content">
+                                <h5 class="mb-3">E-Commerce Platform</h5>
+                                <div class="d-flex gap-2 justify-content-center">
+                                    <a href="{% url 'portfolio:portfolio_detail' 1 %}" class="btn btn-light btn-sm">
+                                        <i class="fas fa-external-link-alt me-1"></i>View Project
+                                    </a>
+                                    <a href="https://github.com/freelancerpro/ecommerce-platform" class="btn btn-light btn-sm" target="_blank">
+                                        <i class="fab fa-github me-1"></i>View Code
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="card-body">
+                        <h5 class="card-title">E-Commerce Platform</h5>
+                        <p class="card-text text-muted">Full-stack e-commerce solution with payment integration and admin dashboard.</p>
+                        
+                        <div class="mb-3">
+                            <span class="badge bg-primary">Web Development</span>
+                        </div>
+                        
+                        <div class="tech-stack">
+                            <span class="tech-badge">React</span>
+                            <span class="tech-badge">Node.js</span>
+                            <span class="tech-badge">MongoDB</span>
+                            <span class="tech-badge">Stripe</span>
+                        </div>
+                        
+                        <div class="d-flex justify-content-between align-items-center mt-3">
+                            <small class="text-muted">Dec 2024</small>
+                            <a href="#" class="btn btn-outline-primary btn-sm">View Details</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Sample Project 2 -->
+            <div class="col-md-6 col-lg-4">
+                <div class="card portfolio-item h-100 featured">
+                    <div class="featured-badge">
+                        <i class="fas fa-star me-1"></i>Featured
+                    </div>
+                    
+                    <div class="position-relative">
+                        <img src="https://images.unsplash.com/photo-1563013544-824ae1b704d3?w=500&h=300&fit=crop" class="card-img-top" alt="Mobile Banking App" style="height: 200px; object-fit: cover;">
+                        <div class="project-overlay">
+                            <div class="overlay-content">
+                                <h5 class="mb-3">Mobile Banking App</h5>
+                                <div class="d-flex gap-2 justify-content-center">
+                                    <a href="{% url 'portfolio:portfolio_detail' 2 %}" class="btn btn-light btn-sm">
+                                        <i class="fas fa-external-link-alt me-1"></i>View Project
+                                    </a>
+                                    <a href="https://github.com/freelancerpro/mobile-banking-app" class="btn btn-light btn-sm" target="_blank">
+                                        <i class="fab fa-github me-1"></i>View Code
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="card-body">
+                        <h5 class="card-title">Mobile Banking App</h5>
+                        <p class="card-text text-muted">Cross-platform mobile application for banking services with biometric authentication.</p>
+                        
+                        <div class="mb-3">
+                            <span class="badge bg-success">Mobile Development</span>
+                        </div>
+                        
+                        <div class="tech-stack">
+                            <span class="tech-badge">React Native</span>
+                            <span class="tech-badge">Firebase</span>
+                            <span class="tech-badge">Redux</span>
+                            <span class="tech-badge">TypeScript</span>
+                        </div>
+                        
+                        <div class="d-flex justify-content-between align-items-center mt-3">
+                            <small class="text-muted">Nov 2024</small>
+                            <a href="#" class="btn btn-outline-primary btn-sm">View Details</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Sample Project 3 -->
+            <div class="col-md-6 col-lg-4">
+                <div class="card portfolio-item h-100 featured">
+                    <div class="featured-badge">
+                        <i class="fas fa-star me-1"></i>Featured
+                    </div>
+                    
+                    <div class="position-relative">
+                        <img src="https://images.unsplash.com/photo-1561070791-2526d30994b5?w=500&h=300&fit=crop" class="card-img-top" alt="UI/UX Design System" style="height: 200px; object-fit: cover;">
+                        <div class="project-overlay">
+                            <div class="overlay-content">
+                                <h5 class="mb-3">UI/UX Design System</h5>
+                                <div class="d-flex gap-2 justify-content-center">
+                                    <a href="{% url 'portfolio:portfolio_detail' 3 %}" class="btn btn-light btn-sm">
+                                        <i class="fas fa-external-link-alt me-1"></i>View Project
+                                    </a>
+                                    <a href="https://github.com/freelancerpro/ui-ux-design-system" class="btn btn-light btn-sm" target="_blank">
+                                        <i class="fab fa-github me-1"></i>View Code
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="card-body">
+                        <h5 class="card-title">UI/UX Design System</h5>
+                        <p class="card-text text-muted">Comprehensive design system with reusable components and documentation.</p>
+                        
+                        <div class="mb-3">
+                            <span class="badge bg-warning">UI/UX Design</span>
+                        </div>
+                        
+                        <div class="tech-stack">
+                            <span class="tech-badge">Figma</span>
+                            <span class="tech-badge">Storybook</span>
+                            <span class="tech-badge">Design Tokens</span>
+                            <span class="tech-badge">Accessibility</span>
+                        </div>
+                        
+                        <div class="d-flex justify-content-between align-items-center mt-3">
+                            <small class="text-muted">Oct 2024</small>
+                            <a href="#" class="btn btn-outline-primary btn-sm">View Details</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Sample Project 4 -->
+            <div class="col-md-6 col-lg-4">
+                <div class="card portfolio-item h-100">
+                    <div class="position-relative">
+                        <img src="https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=500&h=300&fit=crop" class="card-img-top" alt="Analytics Dashboard" style="height: 200px; object-fit: cover;">
+                        <div class="project-overlay">
+                            <div class="overlay-content">
+                                <h5 class="mb-3">Analytics Dashboard</h5>
+                                <div class="d-flex gap-2 justify-content-center">
+                                    <a href="#" class="btn btn-light btn-sm">
+                                        <i class="fas fa-external-link-alt me-1"></i>Live Demo
+                                    </a>
+                                    <a href="#" class="btn btn-light btn-sm">
+                                        <i class="fab fa-github me-1"></i>View Code
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="card-body">
+                        <h5 class="card-title">Analytics Dashboard</h5>
+                        <p class="card-text text-muted">Real-time analytics dashboard with interactive charts and data visualization.</p>
+                        
+                        <div class="mb-3">
+                            <span class="badge bg-primary">Web Development</span>
+                        </div>
+                        
+                        <div class="tech-stack">
+                            <span class="tech-badge">Vue.js</span>
+                            <span class="tech-badge">D3.js</span>
+                            <span class="tech-badge">Python</span>
+                            <span class="tech-badge">PostgreSQL</span>
+                        </div>
+                        
+                        <div class="d-flex justify-content-between align-items-center mt-3">
+                            <small class="text-muted">Sep 2024</small>
+                            <a href="#" class="btn btn-outline-primary btn-sm">View Details</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Sample Project 5 -->
+            <div class="col-md-6 col-lg-4">
+                <div class="card portfolio-item h-100">
+                    <div class="position-relative">
+                        <img src="https://images.unsplash.com/photo-1551650975-87deedd944c3?w=500&h=300&fit=crop" class="card-img-top" alt="Food Delivery App" style="height: 200px; object-fit: cover;">
+                        <div class="project-overlay">
+                            <div class="overlay-content">
+                                <h5 class="mb-3">Food Delivery App</h5>
+                                <div class="d-flex gap-2 justify-content-center">
+                                    <a href="{% url 'portfolio:portfolio_detail' 5 %}" class="btn btn-primary flex-fill">View Project</a>
+                                    <a href="https://github.com/freelancerpro/food-delivery-app" class="btn btn-outline-secondary" target="_blank">View Code</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="card-body">
+                        <h5 class="card-title">Food Delivery App</h5>
+                        <p class="card-text text-muted">Mobile app for food delivery with real-time tracking and payment integration.</p>
+                        
+                        <div class="mb-3">
+                            <span class="badge bg-success">Mobile Development</span>
+                        </div>
+                        
+                        <div class="tech-stack">
+                            <span class="tech-badge">Flutter</span>
+                            <span class="tech-badge">Firebase</span>
+                            <span class="tech-badge">Google Maps</span>
+                            <span class="tech-badge">Stripe</span>
+                        </div>
+                        
+                        <div class="d-flex justify-content-between align-items-center mt-3">
+                            <small class="text-muted">Aug 2024</small>
+                            <a href="#" class="btn btn-outline-primary btn-sm">View Details</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Sample Project 6 -->
+            <div class="col-md-6 col-lg-4">
+                <div class="card portfolio-item h-100">
+                    <div class="position-relative">
+                        <img src="https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=500&h=300&fit=crop" class="card-img-top" alt="CRM System" style="height: 200px; object-fit: cover;">
+                        <div class="project-overlay">
+                            <div class="overlay-content">
+                                <h5 class="mb-3">CRM System</h5>
+                                <div class="d-flex gap-2 justify-content-center">
+                                    <a href="#" class="btn btn-light btn-sm">
+                                        <i class="fas fa-external-link-alt me-1"></i>Live Demo
+                                    </a>
+                                    <a href="#" class="btn btn-light btn-sm">
+                                        <i class="fab fa-github me-1"></i>View Code
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="card-body">
+                        <h5 class="card-title">CRM System</h5>
+                        <p class="card-text text-muted">Comprehensive customer relationship management system with advanced features.</p>
+                        
+                        <div class="mb-3">
+                            <span class="badge bg-primary">Web Development</span>
+                        </div>
+                        
+                        <div class="tech-stack">
+                            <span class="tech-badge">Angular</span>
+                            <span class="tech-badge">Laravel</span>
+                            <span class="tech-badge">MySQL</span>
+                            <span class="tech-badge">Redis</span>
+                        </div>
+                        
+                        <div class="d-flex justify-content-between align-items-center mt-3">
+                            <small class="text-muted">Jul 2024</small>
+                            <a href="#" class="btn btn-outline-primary btn-sm">View Details</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+        
+        <!-- Call to Action -->
+        <div class="text-center mt-5">
+            <div class="bg-light rounded-3 p-5">
+                <h3 class="mb-3">Ready to Start Your Project?</h3>
+                <p class="lead text-muted mb-4">Let's create something amazing together. Get in touch to discuss your project.</p>
+                <a href="{% url 'contact:contact' %}" class="btn btn-primary btn-lg">
+                    <i class="fas fa-paper-plane me-2"></i>Start Your Project
+                </a>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %} 

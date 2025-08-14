@@ -1,0 +1,95 @@
+{% extends 'base.html' %}
+{% block title %}Manage Products - Seller{% endblock %}
+{% block content %}
+<div class="container py-5">
+  <div class="d-flex justify-content-between align-items-center mb-4">
+    <h2>Manage Products</h2>
+    <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#productModal" id="addProductBtn">
+      <i class="fas fa-plus"></i> Add Product
+    </button>
+  </div>
+  <div class="card shadow">
+    <div class="card-body">
+      <div class="table-responsive">
+        <table class="table table-bordered align-middle">
+          <thead class="table-light">
+            <tr>
+              <th>Name</th>
+              <th>Price</th>
+              <th>Stock</th>
+              <th>Available</th>
+              <th>Featured</th>
+              <th>Actions</th>
+            </tr>
+          </thead>
+          <tbody>
+            {% for product in products %}
+            <tr>
+              <td>{{ product.name }}</td>
+              <td>${{ product.price }}</td>
+              <td>{{ product.stock }}</td>
+              <td>{% if product.available %}<span class="badge bg-success">Yes</span>{% else %}<span class="badge bg-danger">No</span>{% endif %}</td>
+              <td>{% if product.featured %}<span class="badge bg-warning text-dark">Yes</span>{% else %}<span class="badge bg-secondary">No</span>{% endif %}</td>
+              <td>
+                <button class="btn btn-sm btn-info edit-product-btn" data-id="{{ product.id }}" data-bs-toggle="modal" data-bs-target="#productModal">Edit</button>
+                <form action="{% url 'products:edit_product' product.id %}" method="get" class="d-inline">
+                  <button type="submit" class="btn btn-sm btn-outline-info d-none edit-product-link">Edit (Page)</button>
+                </form>
+                <form action="{% url 'products:delete_product' product.id %}" method="post" class="d-inline" onsubmit="return confirm('Are you sure you want to delete this product?');">
+                  {% csrf_token %}
+                  <button type="submit" class="btn btn-sm btn-danger">Delete</button>
+                </form>
+              </td>
+            </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <!-- Product Modal (for Add/Edit) -->
+  <div class="modal fade" id="productModal" tabindex="-1" aria-labelledby="productModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="productModalLabel">Add Product</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <form id="productForm" method="post" enctype="multipart/form-data">
+            {% csrf_token %}
+            <div id="modal-form-fields">
+              {{ form.as_p }}
+            </div>
+            <button type="submit" class="btn btn-primary" id="modalSubmitBtn">Add Product</button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+// Modal Add/Edit logic
+let currentEditId = null;
+document.getElementById('addProductBtn').addEventListener('click', function() {
+  currentEditId = null;
+  document.getElementById('productModalLabel').innerText = 'Add Product';
+  document.getElementById('modalSubmitBtn').innerText = 'Add Product';
+  document.getElementById('productForm').action = "{% url 'products:add_product' %}";
+  // Clear form fields (reload page for now)
+  document.getElementById('modal-form-fields').innerHTML = `{{ form.as_p|escapejs }}`;
+});
+document.querySelectorAll('.edit-product-btn').forEach(btn => {
+  btn.addEventListener('click', function() {
+    currentEditId = this.getAttribute('data-id');
+    document.getElementById('productModalLabel').innerText = 'Edit Product';
+    document.getElementById('modalSubmitBtn').innerText = 'Update Product';
+    document.getElementById('productForm').action = `/products/${currentEditId}/edit/`;
+    // For simplicity, reload page for now to get pre-filled form (can be improved with AJAX)
+    window.location.href = `/products/${currentEditId}/edit/`;
+  });
+});
+</script>
+{% endblock %}
