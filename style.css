@@ -370,7 +370,7 @@ main {
   opacity: 0.8;
   font-weight: 500;
 }
-
+/* 
 /* Footer */
 footer {
   position: relative;
@@ -465,7 +465,34 @@ footer::before {
   color: var(--text-color);
   opacity: 0.7;
   font-size: 0.95rem;
+} 
+
+
+/* Logo */
+.footer-section .logo h3 {
+  color: #6748ff;
+  font-size: 22px;
+  font-weight: 700;
+  margin-bottom: 10px;
 }
+
+/* Social Links */
+.social-links {
+  margin: 15px 0;
+}
+
+.social-links a {
+  color: #747477;
+  font-size: 20px;
+  margin-right: 12px;
+  transition: color 0.3s, transform 0.3s;
+}
+
+.social-links a:hover {
+  color: #2bff00;
+  transform: translateY(-3px);
+}
+
 
 /* Mobile Responsive */
 @media (max-width: 768px) {
@@ -1303,7 +1330,7 @@ body {
   gap: 1rem;
   flex-wrap: wrap;
 }
-
+/* 
 .circle-btn {
   padding: 1rem 2rem;
   border-radius: 50px;
@@ -1338,6 +1365,36 @@ body {
   background: linear-gradient(135deg, #94a3b8, #64748b);
   color: white;
 }
+.red {
+  background: linear-gradient(135deg, #ff5a57, #cb0000);
+  color: white;
+} */
+
+.circle-btn {
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-decoration: none;
+  color: white;
+  font-size: 22px; /* icon size */
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.circle-btn:hover {
+  transform: scale(1.1);
+  box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+}
+
+.green { background-color: #28a745; }
+.orange { background-color: #ff7f00; }
+.blue { background-color: #24292f; } /* GitHub dark */
+.red { background-color: #ff0000; }
+.gray { background-color: #6c757d; }
+
+
 
 /* Contact Form */
 .contact-form {
